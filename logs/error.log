@@ -14489,3 +14489,310 @@ AggregateError [ECONNREFUSED]:
     at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
     at async PostgreSQLManager.connect (C:\Users\gaurav sharma\OneDrive\Desktop\Gps\backend\gps-nodejs\config\postgresql.js:25:22)
     at async startServer (C:\Users\gaurav sharma\OneDrive\Desktop\Gps\backend\gps-nodejs\server.js:98:7)
+2025-12-31 12:02:09 [ERROR]: PostgreSQL connection failed: {"service":"gps-tracker","code":"ECONNREFUSED"}
+AggregateError [ECONNREFUSED]: 
+    at G:\javascript\gps-nodejs\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async PostgreSQLManager.connect (G:\javascript\gps-nodejs\config\postgresql.js:25:22)
+    at async startServer (G:\javascript\gps-nodejs\server.js:98:7)
+2025-12-31 13:32:55 [ERROR]: PostgreSQL connection failed: connect ECONNREFUSED 127.0.0.1:5432 {"service":"gps-tracker","errno":-4078,"code":"ECONNREFUSED","syscall":"connect","address":"127.0.0.1","port":5432}
+Error: connect ECONNREFUSED 127.0.0.1:5432
+    at G:\javascript\gps-nodejs\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async PostgreSQLManager.connect (G:\javascript\gps-nodejs\config\postgresql.js:25:22)
+    at async startServer (G:\javascript\gps-nodejs\server.js:98:7)
+2025-12-31 13:40:31 [ERROR]: PostgreSQL connection failed: connect ECONNREFUSED 127.0.0.1:5432 {"service":"gps-tracker","errno":-4078,"code":"ECONNREFUSED","syscall":"connect","address":"127.0.0.1","port":5432}
+Error: connect ECONNREFUSED 127.0.0.1:5432
+    at G:\javascript\gps-nodejs\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async PostgreSQLManager.connect (G:\javascript\gps-nodejs\config\postgresql.js:25:22)
+    at async startServer (G:\javascript\gps-nodejs\server.js:98:7)
+2025-12-31 13:45:00 [ERROR]: Device status check failed: Device.cleanupOfflineDevices is not a function {"service":"gps-tracker"}
+TypeError: Device.cleanupOfflineDevices is not a function
+    at Task._execution (G:\javascript\gps-nodejs\server.js:408:20)
+    at Task.execute (G:\javascript\gps-nodejs\node_modules\node-cron\src\task.js:17:25)
+    at ScheduledTask.now (G:\javascript\gps-nodejs\node_modules\node-cron\src\scheduled-task.js:38:33)
+    at Scheduler.<anonymous> (G:\javascript\gps-nodejs\node_modules\node-cron\src\scheduled-task.js:25:18)
+    at Scheduler.emit (node:events:518:28)
+    at Timeout.matchTime [as _onTimeout] (G:\javascript\gps-nodejs\node_modules\node-cron\src\scheduler.js:30:26)
+    at listOnTimeout (node:internal/timers:588:17)
+    at process.processTimers (node:internal/timers:523:7)
+2025-12-31 13:50:00 [ERROR]: Device status check failed: Device.cleanupOfflineDevices is not a function {"service":"gps-tracker"}
+TypeError: Device.cleanupOfflineDevices is not a function
+    at Task._execution (G:\javascript\gps-nodejs\server.js:408:20)
+    at Task.execute (G:\javascript\gps-nodejs\node_modules\node-cron\src\task.js:17:25)
+    at ScheduledTask.now (G:\javascript\gps-nodejs\node_modules\node-cron\src\scheduled-task.js:38:33)
+    at Scheduler.<anonymous> (G:\javascript\gps-nodejs\node_modules\node-cron\src\scheduled-task.js:25:18)
+    at Scheduler.emit (node:events:518:28)
+    at Timeout.matchTime [as _onTimeout] (G:\javascript\gps-nodejs\node_modules\node-cron\src\scheduler.js:30:26)
+    at listOnTimeout (node:internal/timers:588:17)
+    at process.processTimers (node:internal/timers:523:7)
+2025-12-31 13:55:00 [ERROR]: Device status check failed: Device.cleanupOfflineDevices is not a function {"service":"gps-tracker"}
+TypeError: Device.cleanupOfflineDevices is not a function
+    at Task._execution (G:\javascript\gps-nodejs\server.js:408:20)
+    at Task.execute (G:\javascript\gps-nodejs\node_modules\node-cron\src\task.js:17:25)
+    at ScheduledTask.now (G:\javascript\gps-nodejs\node_modules\node-cron\src\scheduled-task.js:38:33)
+    at Scheduler.<anonymous> (G:\javascript\gps-nodejs\node_modules\node-cron\src\scheduled-task.js:25:18)
+    at Scheduler.emit (node:events:518:28)
+    at Timeout.matchTime [as _onTimeout] (G:\javascript\gps-nodejs\node_modules\node-cron\src\scheduler.js:30:26)
+    at listOnTimeout (node:internal/timers:588:17)
+    at process.processTimers (node:internal/timers:523:7)
+2025-12-31 13:58:31 [ERROR]: PostgreSQL connection failed: connect ECONNREFUSED 127.0.0.1:5432 {"service":"gps-tracker","errno":-4078,"code":"ECONNREFUSED","syscall":"connect","address":"127.0.0.1","port":5432}
+Error: connect ECONNREFUSED 127.0.0.1:5432
+    at G:\javascript\gps-nodejs\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async PostgreSQLManager.connect (G:\javascript\gps-nodejs\config\postgresql.js:25:22)
+    at async startServer (G:\javascript\gps-nodejs\server.js:98:7)
+2025-12-31 13:59:10 [ERROR]: PostgreSQL connection failed: connect ECONNREFUSED 127.0.0.1:5432 {"service":"gps-tracker","errno":-4078,"code":"ECONNREFUSED","syscall":"connect","address":"127.0.0.1","port":5432}
+Error: connect ECONNREFUSED 127.0.0.1:5432
+    at G:\javascript\gps-nodejs\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async PostgreSQLManager.connect (G:\javascript\gps-nodejs\config\postgresql.js:25:22)
+    at async startServer (G:\javascript\gps-nodejs\server.js:98:7)
+2025-12-31 13:59:49 [ERROR]: PostgreSQL connection failed: connect ECONNREFUSED 127.0.0.1:5432 {"service":"gps-tracker","errno":-4078,"code":"ECONNREFUSED","syscall":"connect","address":"127.0.0.1","port":5432}
+Error: connect ECONNREFUSED 127.0.0.1:5432
+    at G:\javascript\gps-nodejs\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async PostgreSQLManager.connect (G:\javascript\gps-nodejs\config\postgresql.js:25:22)
+    at async startServer (G:\javascript\gps-nodejs\server.js:98:7)
+2025-12-31 14:00:00 [ERROR]: Device status check failed: Device.cleanupOfflineDevices is not a function {"service":"gps-tracker"}
+TypeError: Device.cleanupOfflineDevices is not a function
+    at Task._execution (G:\javascript\gps-nodejs\server.js:408:20)
+    at Task.execute (G:\javascript\gps-nodejs\node_modules\node-cron\src\task.js:17:25)
+    at ScheduledTask.now (G:\javascript\gps-nodejs\node_modules\node-cron\src\scheduled-task.js:38:33)
+    at Scheduler.<anonymous> (G:\javascript\gps-nodejs\node_modules\node-cron\src\scheduled-task.js:25:18)
+    at Scheduler.emit (node:events:518:28)
+    at Timeout.matchTime [as _onTimeout] (G:\javascript\gps-nodejs\node_modules\node-cron\src\scheduler.js:30:26)
+    at listOnTimeout (node:internal/timers:588:17)
+    at process.processTimers (node:internal/timers:523:7)
+2025-12-31 14:00:00 [ERROR]: Scheduled cleanup failed: connect ECONNREFUSED 127.0.0.1:5432 {"service":"gps-tracker","errno":-4078,"code":"ECONNREFUSED","syscall":"connect","address":"127.0.0.1","port":5432}
+Error: connect ECONNREFUSED 127.0.0.1:5432
+    at G:\javascript\gps-nodejs\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async PostgreSQLManager.archiveOldData (G:\javascript\gps-nodejs\config\postgresql.js:313:20)
+    at async Task._execution (G:\javascript\gps-nodejs\server.js:395:7)
+2025-12-31 14:00:16 [ERROR]: PostgreSQL connection failed: connect ECONNREFUSED 127.0.0.1:5432 {"service":"gps-tracker","errno":-4078,"code":"ECONNREFUSED","syscall":"connect","address":"127.0.0.1","port":5432}
+Error: connect ECONNREFUSED 127.0.0.1:5432
+    at G:\javascript\gps-nodejs\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async PostgreSQLManager.connect (G:\javascript\gps-nodejs\config\postgresql.js:25:22)
+    at async startServer (G:\javascript\gps-nodejs\server.js:98:7)
+2025-12-31 14:00:35 [ERROR]: PostgreSQL connection failed: connect ECONNREFUSED 127.0.0.1:5432 {"service":"gps-tracker","errno":-4078,"code":"ECONNREFUSED","syscall":"connect","address":"127.0.0.1","port":5432}
+Error: connect ECONNREFUSED 127.0.0.1:5432
+    at G:\javascript\gps-nodejs\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async PostgreSQLManager.connect (G:\javascript\gps-nodejs\config\postgresql.js:25:22)
+    at async startServer (G:\javascript\gps-nodejs\server.js:98:7)
+2025-12-31 14:01:40 [ERROR]: Uncaught Exception: listen EADDRINUSE: address already in use :::3000 {"service":"gps-tracker","code":"EADDRINUSE","errno":-4091,"syscall":"listen","address":"::","port":3000}
+Error: listen EADDRINUSE: address already in use :::3000
+    at Server.setupListenHandle [as _listen2] (node:net:1940:16)
+    at listenInCluster (node:net:1997:12)
+    at Server.listen (node:net:2102:7)
+    at startServer (G:\javascript\gps-nodejs\server.js:354:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-12-31 14:02:21 [ERROR]: Uncaught Exception: listen EADDRINUSE: address already in use :::3000 {"service":"gps-tracker","code":"EADDRINUSE","errno":-4091,"syscall":"listen","address":"::","port":3000}
+Error: listen EADDRINUSE: address already in use :::3000
+    at Server.setupListenHandle [as _listen2] (node:net:1940:16)
+    at listenInCluster (node:net:1997:12)
+    at Server.listen (node:net:2102:7)
+    at startServer (G:\javascript\gps-nodejs\server.js:354:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-12-31 14:06:02 [ERROR]: PostgreSQL health check failed: Cannot read properties of null (reading 'connect') {"service":"gps-tracker"}
+TypeError: Cannot read properties of null (reading 'connect')
+    at PostgreSQLManager.healthCheck (G:\javascript\gps-nodejs\config\postgresql.js:365:38)
+    at G:\javascript\gps-nodejs\server.js:177:48
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-12-31 14:06:32 [ERROR]: PostgreSQL health check failed: Cannot read properties of null (reading 'connect') {"service":"gps-tracker"}
+TypeError: Cannot read properties of null (reading 'connect')
+    at PostgreSQLManager.healthCheck (G:\javascript\gps-nodejs\config\postgresql.js:365:38)
+    at G:\javascript\gps-nodejs\server.js:177:48
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-12-31 14:07:02 [ERROR]: PostgreSQL health check failed: Cannot read properties of null (reading 'connect') {"service":"gps-tracker"}
+TypeError: Cannot read properties of null (reading 'connect')
+    at PostgreSQLManager.healthCheck (G:\javascript\gps-nodejs\config\postgresql.js:365:38)
+    at G:\javascript\gps-nodejs\server.js:177:48
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-12-31 14:07:32 [ERROR]: PostgreSQL health check failed: Cannot read properties of null (reading 'connect') {"service":"gps-tracker"}
+TypeError: Cannot read properties of null (reading 'connect')
+    at PostgreSQLManager.healthCheck (G:\javascript\gps-nodejs\config\postgresql.js:365:38)
+    at G:\javascript\gps-nodejs\server.js:177:48
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-12-31 14:08:02 [ERROR]: PostgreSQL health check failed: Cannot read properties of null (reading 'connect') {"service":"gps-tracker"}
+TypeError: Cannot read properties of null (reading 'connect')
+    at PostgreSQLManager.healthCheck (G:\javascript\gps-nodejs\config\postgresql.js:365:38)
+    at G:\javascript\gps-nodejs\server.js:177:48
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-12-31 14:08:32 [ERROR]: PostgreSQL health check failed: Cannot read properties of null (reading 'connect') {"service":"gps-tracker"}
+TypeError: Cannot read properties of null (reading 'connect')
+    at PostgreSQLManager.healthCheck (G:\javascript\gps-nodejs\config\postgresql.js:365:38)
+    at G:\javascript\gps-nodejs\server.js:177:48
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-12-31 14:09:02 [ERROR]: PostgreSQL health check failed: Cannot read properties of null (reading 'connect') {"service":"gps-tracker"}
+TypeError: Cannot read properties of null (reading 'connect')
+    at PostgreSQLManager.healthCheck (G:\javascript\gps-nodejs\config\postgresql.js:365:38)
+    at G:\javascript\gps-nodejs\server.js:177:48
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-12-31 14:09:32 [ERROR]: PostgreSQL health check failed: Cannot read properties of null (reading 'connect') {"service":"gps-tracker"}
+TypeError: Cannot read properties of null (reading 'connect')
+    at PostgreSQLManager.healthCheck (G:\javascript\gps-nodejs\config\postgresql.js:365:38)
+    at G:\javascript\gps-nodejs\server.js:177:48
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-12-31 14:10:00 [ERROR]: Device status check failed: Device.cleanupOfflineDevices is not a function {"service":"gps-tracker"}
+TypeError: Device.cleanupOfflineDevices is not a function
+    at Task._execution (G:\javascript\gps-nodejs\server.js:408:20)
+    at Task.execute (G:\javascript\gps-nodejs\node_modules\node-cron\src\task.js:17:25)
+    at ScheduledTask.now (G:\javascript\gps-nodejs\node_modules\node-cron\src\scheduled-task.js:38:33)
+    at Scheduler.<anonymous> (G:\javascript\gps-nodejs\node_modules\node-cron\src\scheduled-task.js:25:18)
+    at Scheduler.emit (node:events:518:28)
+    at Timeout.matchTime [as _onTimeout] (G:\javascript\gps-nodejs\node_modules\node-cron\src\scheduler.js:30:26)
+    at listOnTimeout (node:internal/timers:588:17)
+    at process.processTimers (node:internal/timers:523:7)
+2025-12-31 14:10:27 [ERROR]: PostgreSQL health check failed: Cannot read properties of null (reading 'connect') {"service":"gps-tracker"}
+TypeError: Cannot read properties of null (reading 'connect')
+    at PostgreSQLManager.healthCheck (G:\javascript\gps-nodejs\config\postgresql.js:365:38)
+    at G:\javascript\gps-nodejs\server.js:177:48
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2025-12-31 16:40:00 [ERROR]: Device status check failed: Device.cleanupOfflineDevices is not a function {"service":"gps-tracker"}
+TypeError: Device.cleanupOfflineDevices is not a function
+    at Task._execution (G:\javascript\gps-nodejs\server.js:408:20)
+    at Task.execute (G:\javascript\gps-nodejs\node_modules\node-cron\src\task.js:17:25)
+    at ScheduledTask.now (G:\javascript\gps-nodejs\node_modules\node-cron\src\scheduled-task.js:38:33)
+    at Scheduler.<anonymous> (G:\javascript\gps-nodejs\node_modules\node-cron\src\scheduled-task.js:25:18)
+    at Scheduler.emit (node:events:518:28)
+    at Timeout.matchTime [as _onTimeout] (G:\javascript\gps-nodejs\node_modules\node-cron\src\scheduler.js:30:26)
+    at listOnTimeout (node:internal/timers:588:17)
+    at process.processTimers (node:internal/timers:523:7)
+2025-12-31 16:45:00 [ERROR]: Device status check failed: Device.cleanupOfflineDevices is not a function {"service":"gps-tracker"}
+TypeError: Device.cleanupOfflineDevices is not a function
+    at Task._execution (G:\javascript\gps-nodejs\server.js:408:20)
+    at Task.execute (G:\javascript\gps-nodejs\node_modules\node-cron\src\task.js:17:25)
+    at ScheduledTask.now (G:\javascript\gps-nodejs\node_modules\node-cron\src\scheduled-task.js:38:33)
+    at Scheduler.<anonymous> (G:\javascript\gps-nodejs\node_modules\node-cron\src\scheduled-task.js:25:18)
+    at Scheduler.emit (node:events:518:28)
+    at Timeout.matchTime [as _onTimeout] (G:\javascript\gps-nodejs\node_modules\node-cron\src\scheduler.js:30:26)
+    at listOnTimeout (node:internal/timers:588:17)
+    at process.processTimers (node:internal/timers:523:7)
+2025-12-31 16:50:00 [ERROR]: Device status check failed: Device.cleanupOfflineDevices is not a function {"service":"gps-tracker"}
+TypeError: Device.cleanupOfflineDevices is not a function
+    at Task._execution (G:\javascript\gps-nodejs\server.js:408:20)
+    at Task.execute (G:\javascript\gps-nodejs\node_modules\node-cron\src\task.js:17:25)
+    at ScheduledTask.now (G:\javascript\gps-nodejs\node_modules\node-cron\src\scheduled-task.js:38:33)
+    at Scheduler.<anonymous> (G:\javascript\gps-nodejs\node_modules\node-cron\src\scheduled-task.js:25:18)
+    at Scheduler.emit (node:events:518:28)
+    at Timeout.matchTime [as _onTimeout] (G:\javascript\gps-nodejs\node_modules\node-cron\src\scheduler.js:30:26)
+    at listOnTimeout (node:internal/timers:588:17)
+    at process.processTimers (node:internal/timers:523:7)
+2025-12-31 16:55:00 [ERROR]: Device status check failed: Device.cleanupOfflineDevices is not a function {"service":"gps-tracker"}
+TypeError: Device.cleanupOfflineDevices is not a function
+    at Task._execution (G:\javascript\gps-nodejs\server.js:408:20)
+    at Task.execute (G:\javascript\gps-nodejs\node_modules\node-cron\src\task.js:17:25)
+    at ScheduledTask.now (G:\javascript\gps-nodejs\node_modules\node-cron\src\scheduled-task.js:38:33)
+    at Scheduler.<anonymous> (G:\javascript\gps-nodejs\node_modules\node-cron\src\scheduled-task.js:25:18)
+    at Scheduler.emit (node:events:518:28)
+    at Timeout.matchTime [as _onTimeout] (G:\javascript\gps-nodejs\node_modules\node-cron\src\scheduler.js:30:26)
+    at listOnTimeout (node:internal/timers:588:17)
+    at process.processTimers (node:internal/timers:523:7)
+2025-12-31 17:00:00 [ERROR]: Scheduled cleanup failed: Cannot read properties of null (reading 'connect') {"service":"gps-tracker"}
+TypeError: Cannot read properties of null (reading 'connect')
+    at PostgreSQLManager.archiveOldData (G:\javascript\gps-nodejs\config\postgresql.js:320:36)
+    at Task._execution (G:\javascript\gps-nodejs\server.js:395:29)
+    at processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at runNextTicks (node:internal/process/task_queues:69:3)
+    at listOnTimeout (node:internal/timers:549:9)
+    at process.processTimers (node:internal/timers:523:7)
+2025-12-31 17:00:00 [ERROR]: Device status check failed: Device.cleanupOfflineDevices is not a function {"service":"gps-tracker"}
+TypeError: Device.cleanupOfflineDevices is not a function
+    at Task._execution (G:\javascript\gps-nodejs\server.js:408:20)
+    at Task.execute (G:\javascript\gps-nodejs\node_modules\node-cron\src\task.js:17:25)
+    at ScheduledTask.now (G:\javascript\gps-nodejs\node_modules\node-cron\src\scheduled-task.js:38:33)
+    at Scheduler.<anonymous> (G:\javascript\gps-nodejs\node_modules\node-cron\src\scheduled-task.js:25:18)
+    at Scheduler.emit (node:events:518:28)
+    at Timeout.matchTime [as _onTimeout] (G:\javascript\gps-nodejs\node_modules\node-cron\src\scheduler.js:30:26)
+    at listOnTimeout (node:internal/timers:588:17)
+    at process.processTimers (node:internal/timers:523:7)
+2025-12-31 17:05:00 [ERROR]: Device status check failed: Device.cleanupOfflineDevices is not a function {"service":"gps-tracker"}
+TypeError: Device.cleanupOfflineDevices is not a function
+    at Task._execution (G:\javascript\gps-nodejs\server.js:408:20)
+    at Task.execute (G:\javascript\gps-nodejs\node_modules\node-cron\src\task.js:17:25)
+    at ScheduledTask.now (G:\javascript\gps-nodejs\node_modules\node-cron\src\scheduled-task.js:38:33)
+    at Scheduler.<anonymous> (G:\javascript\gps-nodejs\node_modules\node-cron\src\scheduled-task.js:25:18)
+    at Scheduler.emit (node:events:518:28)
+    at Timeout.matchTime [as _onTimeout] (G:\javascript\gps-nodejs\node_modules\node-cron\src\scheduler.js:30:26)
+    at listOnTimeout (node:internal/timers:588:17)
+    at process.processTimers (node:internal/timers:523:7)
+2025-12-31 17:10:00 [ERROR]: Device status check failed: Device.cleanupOfflineDevices is not a function {"service":"gps-tracker"}
+TypeError: Device.cleanupOfflineDevices is not a function
+    at Task._execution (G:\javascript\gps-nodejs\server.js:408:20)
+    at Task.execute (G:\javascript\gps-nodejs\node_modules\node-cron\src\task.js:17:25)
+    at ScheduledTask.now (G:\javascript\gps-nodejs\node_modules\node-cron\src\scheduled-task.js:38:33)
+    at Scheduler.<anonymous> (G:\javascript\gps-nodejs\node_modules\node-cron\src\scheduled-task.js:25:18)
+    at Scheduler.emit (node:events:518:28)
+    at Timeout.matchTime [as _onTimeout] (G:\javascript\gps-nodejs\node_modules\node-cron\src\scheduler.js:30:26)
+    at listOnTimeout (node:internal/timers:588:17)
+    at process.processTimers (node:internal/timers:523:7)
+2025-12-31 17:15:00 [ERROR]: Device status check failed: Device.cleanupOfflineDevices is not a function {"service":"gps-tracker"}
+TypeError: Device.cleanupOfflineDevices is not a function
+    at Task._execution (G:\javascript\gps-nodejs\server.js:408:20)
+    at Task.execute (G:\javascript\gps-nodejs\node_modules\node-cron\src\task.js:17:25)
+    at ScheduledTask.now (G:\javascript\gps-nodejs\node_modules\node-cron\src\scheduled-task.js:38:33)
+    at Scheduler.<anonymous> (G:\javascript\gps-nodejs\node_modules\node-cron\src\scheduled-task.js:25:18)
+    at Scheduler.emit (node:events:518:28)
+    at Timeout.matchTime [as _onTimeout] (G:\javascript\gps-nodejs\node_modules\node-cron\src\scheduler.js:30:26)
+    at listOnTimeout (node:internal/timers:588:17)
+    at process.processTimers (node:internal/timers:523:7)
+2025-12-31 17:20:00 [ERROR]: Device status check failed: Device.cleanupOfflineDevices is not a function {"service":"gps-tracker"}
+TypeError: Device.cleanupOfflineDevices is not a function
+    at Task._execution (G:\javascript\gps-nodejs\server.js:408:20)
+    at Task.execute (G:\javascript\gps-nodejs\node_modules\node-cron\src\task.js:17:25)
+    at ScheduledTask.now (G:\javascript\gps-nodejs\node_modules\node-cron\src\scheduled-task.js:38:33)
+    at Scheduler.<anonymous> (G:\javascript\gps-nodejs\node_modules\node-cron\src\scheduled-task.js:25:18)
+    at Scheduler.emit (node:events:518:28)
+    at Timeout.matchTime [as _onTimeout] (G:\javascript\gps-nodejs\node_modules\node-cron\src\scheduler.js:30:26)
+    at listOnTimeout (node:internal/timers:588:17)
+    at process.processTimers (node:internal/timers:523:7)
+2025-12-31 17:25:00 [ERROR]: Device status check failed: Device.cleanupOfflineDevices is not a function {"service":"gps-tracker"}
+TypeError: Device.cleanupOfflineDevices is not a function
+    at Task._execution (G:\javascript\gps-nodejs\server.js:408:20)
+    at Task.execute (G:\javascript\gps-nodejs\node_modules\node-cron\src\task.js:17:25)
+    at ScheduledTask.now (G:\javascript\gps-nodejs\node_modules\node-cron\src\scheduled-task.js:38:33)
+    at Scheduler.<anonymous> (G:\javascript\gps-nodejs\node_modules\node-cron\src\scheduled-task.js:25:18)
+    at Scheduler.emit (node:events:518:28)
+    at Timeout.matchTime [as _onTimeout] (G:\javascript\gps-nodejs\node_modules\node-cron\src\scheduler.js:30:26)
+    at listOnTimeout (node:internal/timers:588:17)
+    at process.processTimers (node:internal/timers:523:7)
+2025-12-31 17:30:00 [ERROR]: Device status check failed: Device.cleanupOfflineDevices is not a function {"service":"gps-tracker"}
+TypeError: Device.cleanupOfflineDevices is not a function
+    at Task._execution (G:\javascript\gps-nodejs\server.js:408:20)
+    at Task.execute (G:\javascript\gps-nodejs\node_modules\node-cron\src\task.js:17:25)
+    at ScheduledTask.now (G:\javascript\gps-nodejs\node_modules\node-cron\src\scheduled-task.js:38:33)
+    at Scheduler.<anonymous> (G:\javascript\gps-nodejs\node_modules\node-cron\src\scheduled-task.js:25:18)
+    at Scheduler.emit (node:events:518:28)
+    at Timeout.matchTime [as _onTimeout] (G:\javascript\gps-nodejs\node_modules\node-cron\src\scheduler.js:30:26)
+    at listOnTimeout (node:internal/timers:588:17)
+    at process.processTimers (node:internal/timers:523:7)
+2025-12-31 17:35:00 [ERROR]: Device status check failed: Device.cleanupOfflineDevices is not a function {"service":"gps-tracker"}
+TypeError: Device.cleanupOfflineDevices is not a function
+    at Task._execution (G:\javascript\gps-nodejs\server.js:408:20)
+    at Task.execute (G:\javascript\gps-nodejs\node_modules\node-cron\src\task.js:17:25)
+    at ScheduledTask.now (G:\javascript\gps-nodejs\node_modules\node-cron\src\scheduled-task.js:38:33)
+    at Scheduler.<anonymous> (G:\javascript\gps-nodejs\node_modules\node-cron\src\scheduled-task.js:25:18)
+    at Scheduler.emit (node:events:518:28)
+    at Timeout.matchTime [as _onTimeout] (G:\javascript\gps-nodejs\node_modules\node-cron\src\scheduler.js:30:26)
+    at listOnTimeout (node:internal/timers:588:17)
+    at process.processTimers (node:internal/timers:523:7)
+2025-12-31 17:39:47 [ERROR]: PostgreSQL connection failed: password authentication failed for user "postgres" {"service":"gps-tracker","length":104,"name":"error","severity":"FATAL","code":"28P01","file":"auth.c","line":"320","routine":"auth_failed"}
+error: password authentication failed for user "postgres"
+    at G:\javascript\gps-nodejs\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async PostgreSQLManager.connect (G:\javascript\gps-nodejs\config\postgresql.js:32:22)
+    at async startServer (G:\javascript\gps-nodejs\server.js:98:7)
+2025-12-31 17:40:00 [ERROR]: Device status check failed: Device.cleanupOfflineDevices is not a function {"service":"gps-tracker"}
+TypeError: Device.cleanupOfflineDevices is not a function
+    at Task._execution (G:\javascript\gps-nodejs\server.js:408:20)
+    at Task.execute (G:\javascript\gps-nodejs\node_modules\node-cron\src\task.js:17:25)
+    at ScheduledTask.now (G:\javascript\gps-nodejs\node_modules\node-cron\src\scheduled-task.js:38:33)
+    at Scheduler.<anonymous> (G:\javascript\gps-nodejs\node_modules\node-cron\src\scheduled-task.js:25:18)
+    at Scheduler.emit (node:events:518:28)
+    at Timeout.matchTime [as _onTimeout] (G:\javascript\gps-nodejs\node_modules\node-cron\src\scheduler.js:30:26)
+    at listOnTimeout (node:internal/timers:588:17)
+    at process.processTimers (node:internal/timers:523:7)
