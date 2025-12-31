@@ -16416,3 +16416,32 @@ TypeError: Device.cleanupOfflineDevices is not a function
     at listOnTimeout (node:internal/timers:588:17)
     at process.processTimers (node:internal/timers:523:7)
 2025-12-31 17:40:17 [INFO]: Shutting down logger... {"service":"gps-tracker"}
+2025-12-31 17:57:35 [INFO]: Redis connected successfully {"service":"gps-tracker"}
+2025-12-31 17:57:35 [INFO]: Redis connected successfully {"service":"gps-tracker"}
+2025-12-31 17:57:35 [INFO]: PostgreSQL tables created/verified {"service":"gps-tracker"}
+2025-12-31 17:57:35 [INFO]: PostgreSQL connected successfully {"service":"gps-tracker"}
+2025-12-31 17:57:35 [INFO]: PostgreSQL connected successfully {"service":"gps-tracker"}
+2025-12-31 17:57:35 [INFO]: GPS Tracking Server started successfully {"service":"gps-tracker","pid":13388,"ports":{"http":"3000","gt06":5023,"teltonika":5027}}
+2025-12-31 17:57:35 [INFO]: HTTP Server running on port 3000 {"service":"gps-tracker","pid":13388,"env":"development"}
+2025-12-31 17:57:35 [INFO]: Dashboard: http://localhost:3000 {"service":"gps-tracker"}
+2025-12-31 17:57:35 [INFO]: GPS Server (GT06 Protocol) listening on port 5023 {"service":"gps-tracker"}
+2025-12-31 17:57:35 [INFO]: GPS Server (Teltonika Protocol) listening on port 5027 {"service":"gps-tracker"}
+2025-12-31 18:00:00 [INFO]: Running scheduled cleanup task {"service":"gps-tracker"}
+2025-12-31 18:00:00 [INFO]: GPS Protocol cleanup completed {"service":"gps-tracker"}
+2025-12-31 18:00:00 [ERROR]: Device status check failed: Device.cleanupOfflineDevices is not a function {"service":"gps-tracker"}
+TypeError: Device.cleanupOfflineDevices is not a function
+    at Task._execution (G:\javascript\gps-nodejs\server.js:408:20)
+    at Task.execute (G:\javascript\gps-nodejs\node_modules\node-cron\src\task.js:17:25)
+    at ScheduledTask.now (G:\javascript\gps-nodejs\node_modules\node-cron\src\scheduled-task.js:38:33)
+    at Scheduler.<anonymous> (G:\javascript\gps-nodejs\node_modules\node-cron\src\scheduled-task.js:25:18)
+    at Scheduler.emit (node:events:518:28)
+    at Timeout.matchTime [as _onTimeout] (G:\javascript\gps-nodejs\node_modules\node-cron\src\scheduler.js:30:26)
+    at listOnTimeout (node:internal/timers:588:17)
+    at process.processTimers (node:internal/timers:523:7)
+2025-12-31 18:00:00 [INFO]: Performance metric: gps_sessions = 0 {"service":"gps-tracker","metric":"gps_sessions","value":0,"unit":""}
+2025-12-31 18:00:00 [INFO]: Performance metric: messages_processed = 0 {"service":"gps-tracker","metric":"messages_processed","value":0,"unit":""}
+2025-12-31 18:00:00 [INFO]: Performance metric: memory_usage = 28.44256591796875MB {"service":"gps-tracker","metric":"memory_usage","value":28.44256591796875,"unit":"MB"}
+2025-12-31 18:00:00 [INFO]: Performance metric: uptime = 147.9867479seconds {"service":"gps-tracker","metric":"uptime","value":147.9867479,"unit":"seconds"}
+2025-12-31 18:00:00 [INFO]: Archived 0 location records {"service":"gps-tracker"}
+2025-12-31 18:00:00 [INFO]: Cleaned up 0 archived records {"service":"gps-tracker"}
+2025-12-31 18:00:00 [INFO]: Scheduled cleanup completed {"service":"gps-tracker"}
