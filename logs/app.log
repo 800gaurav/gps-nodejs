@@ -1,0 +1,102 @@
+2025-12-31 18:10:00 [ERROR]: Device status check failed: Device.cleanupOfflineDevices is not a function {"service":"gps-tracker"}
+TypeError: Device.cleanupOfflineDevices is not a function
+    at Task._execution (G:\javascript\gps-nodejs\server.js:408:20)
+    at Task.execute (G:\javascript\gps-nodejs\node_modules\node-cron\src\task.js:17:25)
+    at ScheduledTask.now (G:\javascript\gps-nodejs\node_modules\node-cron\src\scheduled-task.js:38:33)
+    at Scheduler.<anonymous> (G:\javascript\gps-nodejs\node_modules\node-cron\src\scheduled-task.js:25:18)
+    at Scheduler.emit (node:events:518:28)
+    at Timeout.matchTime [as _onTimeout] (G:\javascript\gps-nodejs\node_modules\node-cron\src\scheduler.js:30:26)
+    at listOnTimeout (node:internal/timers:588:17)
+    at process.processTimers (node:internal/timers:523:7)
+2025-12-31 18:11:56 [INFO]: Shutting down logger... {"service":"gps-tracker"}
+2025-12-31 18:12:08 [INFO]: Redis connected successfully {"service":"gps-tracker"}
+2025-12-31 18:12:08 [INFO]: Redis connected successfully {"service":"gps-tracker"}
+2025-12-31 18:12:08 [INFO]: PostgreSQL tables created/verified {"service":"gps-tracker"}
+2025-12-31 18:12:08 [INFO]: PostgreSQL connected successfully {"service":"gps-tracker"}
+2025-12-31 18:12:08 [INFO]: PostgreSQL connected successfully {"service":"gps-tracker"}
+2025-12-31 18:12:08 [INFO]: GPS Tracking Server started successfully {"service":"gps-tracker","pid":14936,"ports":{"http":"3000","gt06":5023,"teltonika":5027}}
+2025-12-31 18:12:08 [INFO]: HTTP Server running on port 3000 {"service":"gps-tracker","pid":14936,"env":"development"}
+2025-12-31 18:12:08 [INFO]: Dashboard: http://localhost:3000 {"service":"gps-tracker"}
+2025-12-31 18:12:08 [INFO]: GPS Server (GT06 Protocol) listening on port 5023 {"service":"gps-tracker"}
+2025-12-31 18:12:08 [INFO]: GPS Server (Teltonika Protocol) listening on port 5027 {"service":"gps-tracker"}
+2025-12-31 18:12:31 [INFO]: GET /health {"service":"gps-tracker","ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36"}
+2025-12-31 18:12:31 [INFO]: Client connected to WebSocket {"service":"gps-tracker","socketId":"uO3xRpCXRLDaAePGAAAB"}
+2025-12-31 18:12:31 [INFO]: GET /favicon.ico {"service":"gps-tracker","ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36"}
+2025-12-31 18:12:33 [INFO]: GET /firebase-messaging-sw.js {"service":"gps-tracker","ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36"}
+2025-12-31 18:13:01 [INFO]: GET /health {"service":"gps-tracker","ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36"}
+2025-12-31 18:13:31 [INFO]: GET /health {"service":"gps-tracker","ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36"}
+2025-12-31 18:13:54 [INFO]: Client disconnected from WebSocket {"service":"gps-tracker","socketId":"uO3xRpCXRLDaAePGAAAB"}
+2025-12-31 18:13:55 [INFO]: GET /health {"service":"gps-tracker","ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36"}
+2025-12-31 18:13:55 [INFO]: Client connected to WebSocket {"service":"gps-tracker","socketId":"yyzqKnQst6kev8MmAAAD"}
+2025-12-31 18:13:56 [INFO]: GET /firebase-messaging-sw.js {"service":"gps-tracker","ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36"}
+2025-12-31 18:14:25 [INFO]: GET /health {"service":"gps-tracker","ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36"}
+2025-12-31 18:14:55 [INFO]: GET /health {"service":"gps-tracker","ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36"}
+2025-12-31 18:15:00 [INFO]: Performance metric: gps_sessions = 0 {"service":"gps-tracker","metric":"gps_sessions","value":0,"unit":""}
+2025-12-31 18:15:00 [INFO]: Performance metric: messages_processed = 0 {"service":"gps-tracker","metric":"messages_processed","value":0,"unit":""}
+2025-12-31 18:15:00 [INFO]: Performance metric: memory_usage = 30.367530822753906MB {"service":"gps-tracker","metric":"memory_usage","value":30.367530822753906,"unit":"MB"}
+2025-12-31 18:15:00 [INFO]: Performance metric: uptime = 174.5421107seconds {"service":"gps-tracker","metric":"uptime","value":174.5421107,"unit":"seconds"}
+2025-12-31 18:15:25 [INFO]: GET /health {"service":"gps-tracker","ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36"}
+2025-12-31 18:15:55 [INFO]: GET /health {"service":"gps-tracker","ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36"}
+2025-12-31 18:16:25 [INFO]: GET /health {"service":"gps-tracker","ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36"}
+2025-12-31 18:16:55 [INFO]: GET /health {"service":"gps-tracker","ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36"}
+2025-12-31 18:17:25 [INFO]: GET /health {"service":"gps-tracker","ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36"}
+2025-12-31 18:17:55 [INFO]: GET /health {"service":"gps-tracker","ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36"}
+2025-12-31 18:18:25 [INFO]: GET /health {"service":"gps-tracker","ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36"}
+2025-12-31 18:18:55 [INFO]: GET /health {"service":"gps-tracker","ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36"}
+2025-12-31 18:19:25 [INFO]: GET /health {"service":"gps-tracker","ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36"}
+2025-12-31 18:19:55 [INFO]: GET /health {"service":"gps-tracker","ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36"}
+2025-12-31 18:20:25 [INFO]: GET /health {"service":"gps-tracker","ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36"}
+2025-12-31 18:20:55 [INFO]: GET /health {"service":"gps-tracker","ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36"}
+2025-12-31 18:21:25 [INFO]: GET /health {"service":"gps-tracker","ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36"}
+2025-12-31 18:21:55 [INFO]: GET /health {"service":"gps-tracker","ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36"}
+2025-12-31 18:22:25 [INFO]: GET /health {"service":"gps-tracker","ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36"}
+2025-12-31 18:22:55 [INFO]: GET /health {"service":"gps-tracker","ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36"}
+2025-12-31 18:23:25 [INFO]: GET /health {"service":"gps-tracker","ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36"}
+2025-12-31 18:24:26 [INFO]: GET /health {"service":"gps-tracker","ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36"}
+2025-12-31 18:25:27 [INFO]: GET /health {"service":"gps-tracker","ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36"}
+2025-12-31 18:26:28 [INFO]: GET /health {"service":"gps-tracker","ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36"}
+2025-12-31 18:27:29 [INFO]: GET /health {"service":"gps-tracker","ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36"}
+2025-12-31 18:28:30 [INFO]: GET /health {"service":"gps-tracker","ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36"}
+2025-12-31 18:29:16 [INFO]: GET /health {"service":"gps-tracker","ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36"}
+2025-12-31 18:29:25 [INFO]: GET /health {"service":"gps-tracker","ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36"}
+2025-12-31 18:29:55 [INFO]: GET /health {"service":"gps-tracker","ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36"}
+2025-12-31 18:30:00 [INFO]: Performance metric: gps_sessions = 0 {"service":"gps-tracker","metric":"gps_sessions","value":0,"unit":""}
+2025-12-31 18:30:00 [INFO]: Performance metric: messages_processed = 0 {"service":"gps-tracker","metric":"messages_processed","value":0,"unit":""}
+2025-12-31 18:30:00 [INFO]: Performance metric: memory_usage = 32.005767822265625MB {"service":"gps-tracker","metric":"memory_usage","value":32.005767822265625,"unit":"MB"}
+2025-12-31 18:30:00 [INFO]: Performance metric: uptime = 1074.7609474seconds {"service":"gps-tracker","metric":"uptime","value":1074.7609474,"unit":"seconds"}
+2025-12-31 18:30:25 [INFO]: GET /health {"service":"gps-tracker","ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36"}
+2025-12-31 18:30:55 [INFO]: GET /health {"service":"gps-tracker","ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36"}
+2025-12-31 18:31:48 [INFO]: GET /health {"service":"gps-tracker","ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36"}
+2025-12-31 18:32:30 [INFO]: GET /health {"service":"gps-tracker","ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36"}
+2025-12-31 18:32:55 [INFO]: GET /health {"service":"gps-tracker","ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36"}
+2025-12-31 18:33:25 [INFO]: GET /health {"service":"gps-tracker","ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36"}
+2025-12-31 18:33:55 [INFO]: GET /health {"service":"gps-tracker","ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36"}
+2025-12-31 18:34:25 [INFO]: GET /health {"service":"gps-tracker","ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36"}
+2025-12-31 18:34:55 [INFO]: GET /health {"service":"gps-tracker","ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36"}
+2025-12-31 18:35:25 [INFO]: GET /health {"service":"gps-tracker","ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36"}
+2025-12-31 18:36:01 [INFO]: GET /health {"service":"gps-tracker","ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36"}
+2025-12-31 18:36:25 [INFO]: GET /health {"service":"gps-tracker","ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36"}
+2025-12-31 18:36:55 [INFO]: GET /health {"service":"gps-tracker","ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36"}
+2025-12-31 18:37:48 [INFO]: GET /health {"service":"gps-tracker","ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36"}
+2025-12-31 18:38:48 [INFO]: GET /health {"service":"gps-tracker","ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36"}
+2025-12-31 18:39:48 [INFO]: GET /health {"service":"gps-tracker","ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36"}
+2025-12-31 18:40:48 [INFO]: GET /health {"service":"gps-tracker","ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36"}
+2025-12-31 18:41:48 [INFO]: GET /health {"service":"gps-tracker","ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36"}
+2025-12-31 18:42:48 [INFO]: GET /health {"service":"gps-tracker","ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36"}
+2025-12-31 18:43:48 [INFO]: GET /health {"service":"gps-tracker","ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36"}
+2025-12-31 18:44:48 [INFO]: GET /health {"service":"gps-tracker","ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36"}
+2025-12-31 18:45:00 [INFO]: Performance metric: gps_sessions = 0 {"service":"gps-tracker","metric":"gps_sessions","value":0,"unit":""}
+2025-12-31 18:45:00 [INFO]: Performance metric: messages_processed = 0 {"service":"gps-tracker","metric":"messages_processed","value":0,"unit":""}
+2025-12-31 18:45:00 [INFO]: Performance metric: memory_usage = 32.621421813964844MB {"service":"gps-tracker","metric":"memory_usage","value":32.621421813964844,"unit":"MB"}
+2025-12-31 18:45:00 [INFO]: Performance metric: uptime = 1974.8153087seconds {"service":"gps-tracker","metric":"uptime","value":1974.8153087,"unit":"seconds"}
+2025-12-31 18:45:48 [INFO]: GET /health {"service":"gps-tracker","ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36"}
+2025-12-31 18:46:48 [INFO]: GET /health {"service":"gps-tracker","ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36"}
+2025-12-31 18:47:48 [INFO]: GET /health {"service":"gps-tracker","ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36"}
+2025-12-31 18:48:48 [INFO]: GET /health {"service":"gps-tracker","ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36"}
+2025-12-31 18:49:48 [INFO]: GET /health {"service":"gps-tracker","ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36"}
+2025-12-31 18:49:56 [INFO]: GET /health {"service":"gps-tracker","ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36"}
+2025-12-31 18:49:58 [INFO]: Client disconnected from WebSocket {"service":"gps-tracker","socketId":"yyzqKnQst6kev8MmAAAD"}
+2025-12-31 18:49:58 [INFO]: GET /health {"service":"gps-tracker","ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36"}
+2025-12-31 18:49:58 [INFO]: Client connected to WebSocket {"service":"gps-tracker","socketId":"-2-v5e_IZ9oe1-ltAAAF"}
+2025-12-31 18:50:00 [INFO]: GET /firebase-messaging-sw.js {"service":"gps-tracker","ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36"}
+2025-12-31 18:50:05 [INFO]: Client disconnected from WebSocket {"service":"gps-tracker","socketId":"-2-v5e_IZ9oe1-ltAAAF"}

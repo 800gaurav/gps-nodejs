@@ -1,0 +1,10 @@
+2025-12-31 18:10:00 [ERROR]: Device status check failed: Device.cleanupOfflineDevices is not a function {"service":"gps-tracker"}
+TypeError: Device.cleanupOfflineDevices is not a function
+    at Task._execution (G:\javascript\gps-nodejs\server.js:408:20)
+    at Task.execute (G:\javascript\gps-nodejs\node_modules\node-cron\src\task.js:17:25)
+    at ScheduledTask.now (G:\javascript\gps-nodejs\node_modules\node-cron\src\scheduled-task.js:38:33)
+    at Scheduler.<anonymous> (G:\javascript\gps-nodejs\node_modules\node-cron\src\scheduled-task.js:25:18)
+    at Scheduler.emit (node:events:518:28)
+    at Timeout.matchTime [as _onTimeout] (G:\javascript\gps-nodejs\node_modules\node-cron\src\scheduler.js:30:26)
+    at listOnTimeout (node:internal/timers:588:17)
+    at process.processTimers (node:internal/timers:523:7)

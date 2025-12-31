@@ -40,6 +40,15 @@ const userSchema = new mongoose.Schema({
     enum: ['active', 'inactive'],
     default: 'active'
   },
+  fcmTokens: [{
+    type: String,
+    trim: true
+  }],
+  notificationSettings: {
+    ignition: { type: Boolean, default: true },
+    alerts: { type: Boolean, default: true },
+    reports: { type: Boolean, default: false }
+  },
   lastLogin: Date
 }, {
   timestamps: true
