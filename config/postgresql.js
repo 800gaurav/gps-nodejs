@@ -9,6 +9,13 @@ class PostgreSQLManager {
   }
 
   async connect() {
+    // Check if PostgreSQL is enabled
+    if (process.env.PG_ENABLED === 'false') {
+      logger.info('PostgreSQL is disabled in configuration');
+      this.isConnected = false;
+      return false;
+    }
+
     try {
       this.pool = new Pool({
         host: process.env.PG_HOST || 'localhost',

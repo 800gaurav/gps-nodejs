@@ -7,6 +7,13 @@ class RedisManager {
   }
 
   async connect() {
+    // Check if Redis is enabled
+    if (process.env.REDIS_ENABLED === 'false') {
+      logger.info('Redis is disabled in configuration');
+      this.isConnected = false;
+      return false;
+    }
+
     try {
       // Try to connect to Redis, but don't fail if it's not available
       const Redis = require('ioredis');

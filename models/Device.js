@@ -311,4 +311,24 @@ deviceSchema.statics.getStatistics = async function(userId = null) {
   };
 };
 
+// Static method to cleanup offline devices
+deviceSchema.statics.cleanupOfflineDevices = async function(daysOffline = 1) {
+  const cutoffTime = new Date(Date.now() - (daysOffline * 24 * 60 * 60 * 1000));
+  
+  const result = await this.updateMany(
+    { 
+      lastSeen: { $lt: cutoffTime },
+      online: true
+    },
+    { 
+      $set: { 
+        online: false,
+        status: 'offline'
+      }
+    }
+  );
+  
+  return result;
+};
+
 module.exports = mongoose.model('Device', deviceSchema);

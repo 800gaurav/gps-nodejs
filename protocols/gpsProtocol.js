@@ -208,6 +208,17 @@ class GPSProtocol extends EventEmitter {
       if (result.position && connection.deviceId) {
         result.position.deviceId = connection.deviceId;
         
+        // Check for ignition change and send notification
+        const lastLocation = await redisManager.getLastLocation(connection.deviceId);
+        if (lastLocation && lastLocation.ignition !== result.position.ignition) {
+          const notificationService = require('../services/notificationService');
+          await notificationService.sendIgnitionNotification(
+            connection.deviceId,
+            result.position.ignition,
+            result.position
+          );
+        }
+        
         // Add to batch for bulk processing
         this.locationBatch.push(result.position);
         
@@ -221,7 +232,7 @@ class GPSProtocol extends EventEmitter {
           timestamp: new Date()
         });
 
-        // Check for alarms
+        // Check for alarms and send notifications
         if (result.position.alarms && result.position.alarms.length > 0) {
           const alertData = {
             deviceId: connection.deviceId,
@@ -232,6 +243,16 @@ class GPSProtocol extends EventEmitter {
           
           io.emit('deviceAlert', alertData);
           await redisManager.publishDeviceAlert(connection.deviceId, alertData);
+          
+          // Send push notifications for each alarm
+          const notificationService = require('../services/notificationService');
+          for (const alarm of result.position.alarms) {
+            await notificationService.sendAlertNotification(
+              connection.deviceId,
+              alarm,
+              result.position
+            );
+          }
           
           logger.alert(connection.deviceId, result.position.alarms.join(','), 'Device alarm triggered');
         }

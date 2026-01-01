@@ -29,6 +29,7 @@ const userRoutes = require('./routes/users');
 const alertRoutes = require('./routes/alerts');
 const reportRoutes = require('./routes/reports');
 const commandRoutes = require('./routes/commands');
+const notificationRoutes = require('./routes/notifications');
 
 // Enhanced clustering for high-load GPS tracking
 if (cluster.isMaster && (process.env.CLUSTER_MODE === 'true' || process.env.NODE_ENV === 'production')) {
@@ -169,6 +170,7 @@ async function startServer() {
     app.use('/api/alerts', alertRoutes);
     app.use('/api/reports', reportRoutes);
     app.use('/api/commands', commandRoutes);
+    app.use('/api/notifications', notificationRoutes);
 
     // Health check endpoint
     app.get('/health', async (req, res) => {
