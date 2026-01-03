@@ -8,3 +8,37 @@ TypeError: Device.cleanupOfflineDevices is not a function
     at Timeout.matchTime [as _onTimeout] (G:\javascript\gps-nodejs\node_modules\node-cron\src\scheduler.js:30:26)
     at listOnTimeout (node:internal/timers:588:17)
     at process.processTimers (node:internal/timers:523:7)
+2026-01-02 22:46:21 [ERROR]: PostgreSQL connection failed: Connection terminated due to connection timeout {"service":"gps-tracker","cause":{}}
+Error: Connection terminated due to connection timeout
+    at C:\Users\gaurav sharma\OneDrive\Desktop\Gps\backend\gps-node\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async PostgreSQLManager.connect (C:\Users\gaurav sharma\OneDrive\Desktop\Gps\backend\gps-node\config\postgresql.js:32:22)
+    at async startServer (C:\Users\gaurav sharma\OneDrive\Desktop\Gps\backend\gps-node\server.js:99:7)
+2026-01-04 00:50:33 [ERROR]: Login error: Invalid credentials {"service":"gps-tracker"}
+Error: Invalid credentials
+    at userSchema.statics.findByCredentials (C:\Users\gaurav sharma\OneDrive\Desktop\Gps\backend\gps-node\models\User.js:93:11)
+    at async C:\Users\gaurav sharma\OneDrive\Desktop\Gps\backend\gps-node\routes\auth.js:183:20
+2026-01-04 01:16:01 [ERROR]: Failed to start server: Router.use() requires a middleware function but got a Object {"service":"gps-tracker"}
+TypeError: Router.use() requires a middleware function but got a Object
+    at Function.use (C:\Users\gaurav sharma\OneDrive\Desktop\Gps\backend\gps-node\node_modules\express\lib\router\index.js:469:13)
+    at Function.<anonymous> (C:\Users\gaurav sharma\OneDrive\Desktop\Gps\backend\gps-node\node_modules\express\lib\application.js:227:21)
+    at Array.forEach (<anonymous>)
+    at Function.use (C:\Users\gaurav sharma\OneDrive\Desktop\Gps\backend\gps-node\node_modules\express\lib\application.js:224:7)
+    at startServer (C:\Users\gaurav sharma\OneDrive\Desktop\Gps\backend\gps-node\server.js:172:9)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2026-01-04 01:16:11 [ERROR]: Failed to start server: Router.use() requires a middleware function but got a Object {"service":"gps-tracker"}
+TypeError: Router.use() requires a middleware function but got a Object
+    at Function.use (C:\Users\gaurav sharma\OneDrive\Desktop\Gps\backend\gps-node\node_modules\express\lib\router\index.js:469:13)
+    at Function.<anonymous> (C:\Users\gaurav sharma\OneDrive\Desktop\Gps\backend\gps-node\node_modules\express\lib\application.js:227:21)
+    at Array.forEach (<anonymous>)
+    at Function.use (C:\Users\gaurav sharma\OneDrive\Desktop\Gps\backend\gps-node\node_modules\express\lib\application.js:224:7)
+    at startServer (C:\Users\gaurav sharma\OneDrive\Desktop\Gps\backend\gps-node\server.js:172:9)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+2026-01-04 01:16:20 [ERROR]: Failed to start server: Router.use() requires a middleware function but got a Object {"service":"gps-tracker"}
+TypeError: Router.use() requires a middleware function but got a Object
+    at Function.use (C:\Users\gaurav sharma\OneDrive\Desktop\Gps\backend\gps-node\node_modules\express\lib\router\index.js:469:13)
+    at Function.<anonymous> (C:\Users\gaurav sharma\OneDrive\Desktop\Gps\backend\gps-node\node_modules\express\lib\application.js:227:21)
+    at Array.forEach (<anonymous>)
+    at Function.use (C:\Users\gaurav sharma\OneDrive\Desktop\Gps\backend\gps-node\node_modules\express\lib\application.js:224:7)
+    at startServer (C:\Users\gaurav sharma\OneDrive\Desktop\Gps\backend\gps-node\server.js:173:9)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)

@@ -37,27 +37,32 @@ router.get('/', auth, async (req, res) => {
 
     const total = await Device.countDocuments(query);
     
-    // Get real-time status from Redis
+    // Get real-time status from Redis if available
     const devicesWithStatus = await Promise.all(devices.map(async (device) => {
-      const status = await redisManager.getDeviceStatus(device.deviceId);
-      const lastLocation = await redisManager.getLastLocation(device.deviceId);
+      let status = null;
+      let lastLocation = null;
+      
+      try {
+        if (redisManager && redisManager.getDeviceStatus) {
+          status = await redisManager.getDeviceStatus(device.deviceId);
+          lastLocation = await redisManager.getLastLocation(device.deviceId);
+        }
+      } catch (err) {
+        // Redis not available, continue without real-time data
+      }
       
       return {
         ...device.toJSON(),
+        isActive: device.status === 'active',
+        engineLocked: device.engineLocked || false,
+        lastSeen: device.lastSeen || device.updatedAt,
         realtimeStatus: status,
         realtimeLocation: lastLocation
       };
     }));
 
-    res.json({
-      devices: devicesWithStatus,
-      pagination: {
-        page: parseInt(page),
-        limit: parseInt(limit),
-        total,
-        pages: Math.ceil(total / parseInt(limit))
-      }
-    });
+    // Return simple array for frontend compatibility
+    res.json(devicesWithStatus);
   } catch (error) {
     logger.error('Error fetching devices:', error);
     res.status(500).json({ error: 'Failed to fetch devices' });
@@ -140,11 +145,6 @@ router.post('/',
         return res.status(400).json({ errors: errors.array() });
       }
 
-      // Check permissions
-      if (req.user.role !== 'admin' && device.userId.toString() !== req.user._id.toString()) {
-        return res.status(403).json({ error: 'Insufficient permissions' });
-      }
-
       const deviceData = req.body;
       
       // Set userId based on role
@@ -178,16 +178,23 @@ router.post('/',
         }
       }
 
+      // Set default values
+      deviceData.status = 'active';
+      deviceData.engineLocked = false;
+      deviceData.lastSeen = new Date();
+
       const device = new Device(deviceData);
       await device.save();
 
-      logger.deviceActivity(device.deviceId, 'device_created', { 
-        createdBy: req.user.username 
-      });
+      if (logger && logger.deviceActivity) {
+        logger.deviceActivity(device.deviceId, 'device_created', { 
+          createdBy: req.user.username 
+        });
+      }
 
       res.status(201).json(device);
     } catch (error) {
-      logger.error('Error creating device:', error);
+      console.error('Error creating device:', error);
       
       if (error.code === 11000) {
         const field = Object.keys(error.keyPattern)[0];

@@ -24,6 +24,12 @@ const GPSProtocol = require('./protocols/gpsProtocol');
 // Import routes
 const authRoutes = require('./routes/auth');
 const deviceRoutes = require('./routes/devices');
+const adminDevicesRoutes = require('./routes/adminDevices');
+const simpleDeviceRoutes = require('./routes/simpleDevice');
+const realTimeDeviceRoutes = require('./routes/realTimeDevice');
+const deviceDataRoutes = require('./routes/deviceData');
+const testDeviceRoutes = require('./routes/testDevice');
+const userManagementRoutes = require('./routes/userManagement');
 const locationRoutes = require('./routes/locations');
 const userRoutes = require('./routes/users');
 const alertRoutes = require('./routes/alerts');
@@ -166,6 +172,12 @@ async function startServer() {
     app.use('/api/auth', authRoutes);
     app.use('/api/users', userRoutes);
     app.use('/api/devices', deviceRoutes);
+    app.use('/api/admin/devices', adminDevicesRoutes);
+    app.use('/api/device', simpleDeviceRoutes);
+    app.use('/api/live', realTimeDeviceRoutes);
+    app.use('/api/device-data', deviceDataRoutes);
+    app.use('/api/test-device', testDeviceRoutes);
+    app.use('/api/admin/users', userManagementRoutes);
     app.use('/api/locations', locationRoutes);
     app.use('/api/alerts', alertRoutes);
     app.use('/api/reports', reportRoutes);

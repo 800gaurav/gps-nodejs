@@ -100,3 +100,408 @@ TypeError: Device.cleanupOfflineDevices is not a function
 2025-12-31 18:49:58 [INFO]: Client connected to WebSocket {"service":"gps-tracker","socketId":"-2-v5e_IZ9oe1-ltAAAF"}
 2025-12-31 18:50:00 [INFO]: GET /firebase-messaging-sw.js {"service":"gps-tracker","ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36"}
 2025-12-31 18:50:05 [INFO]: Client disconnected from WebSocket {"service":"gps-tracker","socketId":"-2-v5e_IZ9oe1-ltAAAF"}
+2026-01-02 00:12:43 [WARN]: Firebase service account not configured {"service":"gps-tracker"}
+2026-01-02 00:18:37 [WARN]: Firebase service account not configured {"service":"gps-tracker"}
+2026-01-02 00:18:40 [INFO]: Redis connected successfully {"service":"gps-tracker"}
+2026-01-02 00:18:40 [INFO]: Redis connected successfully {"service":"gps-tracker"}
+2026-01-02 00:18:41 [INFO]: PostgreSQL tables created/verified {"service":"gps-tracker"}
+2026-01-02 00:18:41 [INFO]: PostgreSQL connected successfully {"service":"gps-tracker"}
+2026-01-02 00:18:41 [INFO]: PostgreSQL connected successfully {"service":"gps-tracker"}
+2026-01-02 00:18:41 [INFO]: GPS Tracking Server started successfully {"service":"gps-tracker","pid":2684,"ports":{"http":"3000","gt06":5023,"teltonika":5027}}
+2026-01-02 00:18:41 [INFO]: HTTP Server running on port 3000 {"service":"gps-tracker","pid":2684,"env":"development"}
+2026-01-02 00:18:41 [INFO]: Dashboard: http://localhost:3000 {"service":"gps-tracker"}
+2026-01-02 00:18:41 [INFO]: GPS Server (GT06 Protocol) listening on port 5023 {"service":"gps-tracker"}
+2026-01-02 00:18:41 [INFO]: GPS Server (Teltonika Protocol) listening on port 5027 {"service":"gps-tracker"}
+2026-01-02 22:46:17 [WARN]: Firebase service account not configured {"service":"gps-tracker"}
+2026-01-02 22:46:19 [INFO]: Redis connected successfully {"service":"gps-tracker"}
+2026-01-02 22:46:19 [INFO]: Redis connected successfully {"service":"gps-tracker"}
+2026-01-02 22:46:21 [ERROR]: PostgreSQL connection failed: Connection terminated due to connection timeout {"service":"gps-tracker","cause":{}}
+Error: Connection terminated due to connection timeout
+    at C:\Users\gaurav sharma\OneDrive\Desktop\Gps\backend\gps-node\node_modules\pg-pool\index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async PostgreSQLManager.connect (C:\Users\gaurav sharma\OneDrive\Desktop\Gps\backend\gps-node\config\postgresql.js:32:22)
+    at async startServer (C:\Users\gaurav sharma\OneDrive\Desktop\Gps\backend\gps-node\server.js:99:7)
+2026-01-02 22:46:22 [INFO]: PostgreSQL connected successfully {"service":"gps-tracker"}
+2026-01-02 22:46:22 [INFO]: GPS Tracking Server started successfully {"service":"gps-tracker","pid":24572,"ports":{"http":"3000","gt06":5023,"teltonika":5027}}
+2026-01-02 22:46:22 [INFO]: HTTP Server running on port 3000 {"service":"gps-tracker","pid":24572,"env":"development"}
+2026-01-02 22:46:22 [INFO]: Dashboard: http://localhost:3000 {"service":"gps-tracker"}
+2026-01-02 22:46:22 [INFO]: GPS Server (GT06 Protocol) listening on port 5023 {"service":"gps-tracker"}
+2026-01-02 22:46:22 [INFO]: GPS Server (Teltonika Protocol) listening on port 5027 {"service":"gps-tracker"}
+2026-01-02 22:53:00 [INFO]: Shutting down logger... {"service":"gps-tracker"}
+2026-01-02 22:53:27 [WARN]: Firebase service account not configured {"service":"gps-tracker"}
+2026-01-02 22:53:27 [INFO]: Redis connected successfully {"service":"gps-tracker"}
+2026-01-02 22:53:28 [INFO]: Redis connected successfully {"service":"gps-tracker"}
+2026-01-02 22:53:29 [INFO]: PostgreSQL tables created/verified {"service":"gps-tracker"}
+2026-01-02 22:53:29 [INFO]: PostgreSQL connected successfully {"service":"gps-tracker"}
+2026-01-02 22:53:29 [INFO]: PostgreSQL connected successfully {"service":"gps-tracker"}
+2026-01-02 22:53:29 [INFO]: GPS Tracking Server started successfully {"service":"gps-tracker","pid":25144,"ports":{"http":"3000","gt06":5023,"teltonika":5027}}
+2026-01-02 22:53:29 [INFO]: HTTP Server running on port 3000 {"service":"gps-tracker","pid":25144,"env":"development"}
+2026-01-02 22:53:29 [INFO]: Dashboard: http://localhost:3000 {"service":"gps-tracker"}
+2026-01-02 22:53:29 [INFO]: GPS Server (GT06 Protocol) listening on port 5023 {"service":"gps-tracker"}
+2026-01-02 22:53:30 [INFO]: GPS Server (Teltonika Protocol) listening on port 5027 {"service":"gps-tracker"}
+2026-01-02 22:54:38 [WARN]: Firebase service account not configured {"service":"gps-tracker"}
+2026-01-02 22:54:38 [INFO]: Redis connected successfully {"service":"gps-tracker"}
+2026-01-02 22:54:38 [INFO]: Redis connected successfully {"service":"gps-tracker"}
+2026-01-02 22:54:39 [INFO]: PostgreSQL tables created/verified {"service":"gps-tracker"}
+2026-01-02 22:54:39 [INFO]: PostgreSQL connected successfully {"service":"gps-tracker"}
+2026-01-02 22:54:39 [INFO]: PostgreSQL connected successfully {"service":"gps-tracker"}
+2026-01-02 22:54:39 [INFO]: GPS Tracking Server started successfully {"service":"gps-tracker","pid":9764,"ports":{"http":"3000","gt06":5023,"teltonika":5027}}
+2026-01-02 22:54:39 [INFO]: HTTP Server running on port 3000 {"service":"gps-tracker","pid":9764,"env":"development"}
+2026-01-02 22:54:39 [INFO]: Dashboard: http://localhost:3000 {"service":"gps-tracker"}
+2026-01-02 22:54:39 [INFO]: GPS Server (GT06 Protocol) listening on port 5023 {"service":"gps-tracker"}
+2026-01-02 22:54:39 [INFO]: GPS Server (Teltonika Protocol) listening on port 5027 {"service":"gps-tracker"}
+2026-01-02 22:54:42 [WARN]: Firebase service account not configured {"service":"gps-tracker"}
+2026-01-02 22:54:42 [INFO]: Redis connected successfully {"service":"gps-tracker"}
+2026-01-02 22:54:42 [INFO]: Redis connected successfully {"service":"gps-tracker"}
+2026-01-02 22:54:42 [INFO]: PostgreSQL tables created/verified {"service":"gps-tracker"}
+2026-01-02 22:54:42 [INFO]: PostgreSQL connected successfully {"service":"gps-tracker"}
+2026-01-02 22:54:42 [INFO]: PostgreSQL connected successfully {"service":"gps-tracker"}
+2026-01-02 22:54:42 [INFO]: GPS Tracking Server started successfully {"service":"gps-tracker","pid":21044,"ports":{"http":"3000","gt06":5023,"teltonika":5027}}
+2026-01-02 22:54:42 [INFO]: HTTP Server running on port 3000 {"service":"gps-tracker","pid":21044,"env":"development"}
+2026-01-02 22:54:42 [INFO]: Dashboard: http://localhost:3000 {"service":"gps-tracker"}
+2026-01-02 22:54:42 [INFO]: GPS Server (GT06 Protocol) listening on port 5023 {"service":"gps-tracker"}
+2026-01-02 22:54:42 [INFO]: GPS Server (Teltonika Protocol) listening on port 5027 {"service":"gps-tracker"}
+2026-01-02 22:54:55 [INFO]: Shutting down logger... {"service":"gps-tracker"}
+2026-01-02 22:57:53 [WARN]: Firebase service account not configured {"service":"gps-tracker"}
+2026-01-02 22:57:54 [INFO]: Redis connected successfully {"service":"gps-tracker"}
+2026-01-02 22:57:54 [INFO]: Redis connected successfully {"service":"gps-tracker"}
+2026-01-02 22:57:54 [INFO]: PostgreSQL tables created/verified {"service":"gps-tracker"}
+2026-01-02 22:57:54 [INFO]: PostgreSQL connected successfully {"service":"gps-tracker"}
+2026-01-02 22:57:54 [INFO]: PostgreSQL connected successfully {"service":"gps-tracker"}
+2026-01-02 22:57:54 [INFO]: GPS Tracking Server started successfully {"service":"gps-tracker","pid":24900,"ports":{"http":"3000","gt06":5023,"teltonika":5027}}
+2026-01-02 22:57:54 [INFO]: HTTP Server running on port 3000 {"service":"gps-tracker","pid":24900,"env":"development"}
+2026-01-02 22:57:54 [INFO]: Dashboard: http://localhost:3000 {"service":"gps-tracker"}
+2026-01-02 22:57:54 [INFO]: GPS Server (GT06 Protocol) listening on port 5023 {"service":"gps-tracker"}
+2026-01-02 22:57:54 [INFO]: GPS Server (Teltonika Protocol) listening on port 5027 {"service":"gps-tracker"}
+2026-01-02 22:58:02 [INFO]: POST /api/auth/admin/register {"service":"gps-tracker","ip":"::1","userAgent":"PostmanRuntime/7.49.1"}
+2026-01-02 22:58:06 [INFO]: Admin registered successfully {"service":"gps-tracker","userId":"6958002254b5e3fd6aa7926d","username":"testadmin"}
+2026-01-02 22:58:15 [INFO]: POST /api/auth/register {"service":"gps-tracker","ip":"::1","userAgent":"PostmanRuntime/7.49.1"}
+2026-01-02 22:58:18 [INFO]: User registered successfully {"service":"gps-tracker","userId":"6958002f54b5e3fd6aa79270","username":"testuser"}
+2026-01-02 22:59:24 [INFO]: GET /api/auth/login {"service":"gps-tracker","ip":"::1","userAgent":"PostmanRuntime/7.49.1"}
+2026-01-02 22:59:32 [INFO]: POST /api/auth/login {"service":"gps-tracker","ip":"::1","userAgent":"PostmanRuntime/7.49.1"}
+2026-01-02 22:59:33 [INFO]: User logged in successfully {"service":"gps-tracker","userId":"6958002f54b5e3fd6aa79270","username":"testuser"}
+2026-01-02 23:00:00 [INFO]: Running scheduled cleanup task {"service":"gps-tracker"}
+2026-01-02 23:00:00 [INFO]: GPS Protocol cleanup completed {"service":"gps-tracker"}
+2026-01-02 23:00:00 [INFO]: Performance metric: gps_sessions = 0 {"service":"gps-tracker","metric":"gps_sessions","value":0,"unit":""}
+2026-01-02 23:00:00 [INFO]: Performance metric: messages_processed = 0 {"service":"gps-tracker","metric":"messages_processed","value":0,"unit":""}
+2026-01-02 23:00:00 [INFO]: Performance metric: memory_usage = 31.848670959472656MB {"service":"gps-tracker","metric":"memory_usage","value":31.848670959472656,"unit":"MB"}
+2026-01-02 23:00:00 [INFO]: Performance metric: uptime = 129.4705411seconds {"service":"gps-tracker","metric":"uptime","value":129.4705411,"unit":"seconds"}
+2026-01-02 23:00:00 [INFO]: Archived 0 location records {"service":"gps-tracker"}
+2026-01-02 23:00:00 [INFO]: Cleaned up 0 archived records {"service":"gps-tracker"}
+2026-01-02 23:00:00 [INFO]: Scheduled cleanup completed {"service":"gps-tracker"}
+2026-01-02 23:02:05 [INFO]: POST /api/auth/login {"service":"gps-tracker","ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36"}
+2026-01-02 23:02:06 [INFO]: User logged in successfully {"service":"gps-tracker","userId":"6958002f54b5e3fd6aa79270","username":"testuser"}
+2026-01-04 00:04:05 [WARN]: Firebase service account not configured {"service":"gps-tracker"}
+2026-01-04 00:04:05 [INFO]: Redis connected successfully {"service":"gps-tracker"}
+2026-01-04 00:04:05 [INFO]: Redis connected successfully {"service":"gps-tracker"}
+2026-01-04 00:04:06 [INFO]: PostgreSQL tables created/verified {"service":"gps-tracker"}
+2026-01-04 00:04:06 [INFO]: PostgreSQL connected successfully {"service":"gps-tracker"}
+2026-01-04 00:04:06 [INFO]: PostgreSQL connected successfully {"service":"gps-tracker"}
+2026-01-04 00:04:06 [INFO]: GPS Tracking Server started successfully {"service":"gps-tracker","pid":14088,"ports":{"http":"3000","gt06":5023,"teltonika":5027}}
+2026-01-04 00:04:06 [INFO]: HTTP Server running on port 3000 {"service":"gps-tracker","pid":14088,"env":"development"}
+2026-01-04 00:04:06 [INFO]: Dashboard: http://localhost:3000 {"service":"gps-tracker"}
+2026-01-04 00:04:06 [INFO]: GPS Server (GT06 Protocol) listening on port 5023 {"service":"gps-tracker"}
+2026-01-04 00:04:06 [INFO]: GPS Server (Teltonika Protocol) listening on port 5027 {"service":"gps-tracker"}
+2026-01-04 00:14:06 [INFO]: GET /api/devices {"service":"gps-tracker","ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36"}
+2026-01-04 00:14:07 [INFO]: GET /api/locations/live {"service":"gps-tracker","ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36"}
+2026-01-04 00:14:52 [INFO]: GET /api/locations/live {"service":"gps-tracker","ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36"}
+2026-01-04 00:14:52 [INFO]: GET /api/devices {"service":"gps-tracker","ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36"}
+2026-01-04 00:14:54 [INFO]: GET /api/locations/live {"service":"gps-tracker","ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36"}
+2026-01-04 00:14:54 [INFO]: GET /api/devices {"service":"gps-tracker","ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36"}
+2026-01-04 00:15:00 [INFO]: Performance metric: gps_sessions = 0 {"service":"gps-tracker","metric":"gps_sessions","value":0,"unit":""}
+2026-01-04 00:15:00 [INFO]: Performance metric: messages_processed = 0 {"service":"gps-tracker","metric":"messages_processed","value":0,"unit":""}
+2026-01-04 00:15:00 [INFO]: Performance metric: memory_usage = 31.140029907226562MB {"service":"gps-tracker","metric":"memory_usage","value":31.140029907226562,"unit":"MB"}
+2026-01-04 00:15:00 [INFO]: Performance metric: uptime = 657.8222189seconds {"service":"gps-tracker","metric":"uptime","value":657.8222189,"unit":"seconds"}
+2026-01-04 00:16:04 [INFO]: GET /api/devices {"service":"gps-tracker","ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36"}
+2026-01-04 00:16:04 [INFO]: GET /api/locations/live {"service":"gps-tracker","ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36"}
+2026-01-04 00:16:05 [INFO]: GET /api/devices {"service":"gps-tracker","ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36"}
+2026-01-04 00:16:05 [INFO]: GET /api/locations/live {"service":"gps-tracker","ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36"}
+2026-01-04 00:17:29 [INFO]: GET /api/devices {"service":"gps-tracker","ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36"}
+2026-01-04 00:17:30 [INFO]: GET /api/locations/live {"service":"gps-tracker","ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36"}
+2026-01-04 00:17:43 [INFO]: GET /api/devices {"service":"gps-tracker","ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36"}
+2026-01-04 00:17:43 [INFO]: GET /api/locations/live {"service":"gps-tracker","ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36"}
+2026-01-04 00:17:45 [INFO]: GET /api/devices {"service":"gps-tracker","ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36"}
+2026-01-04 00:17:45 [INFO]: GET /api/locations/live {"service":"gps-tracker","ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36"}
+2026-01-04 00:17:45 [INFO]: GET /api/devices {"service":"gps-tracker","ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36"}
+2026-01-04 00:17:46 [INFO]: GET /api/devices {"service":"gps-tracker","ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36"}
+2026-01-04 00:17:48 [INFO]: GET /api/devices {"service":"gps-tracker","ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36"}
+2026-01-04 00:19:33 [INFO]: POST /api/devices {"service":"gps-tracker","ip":"::1","userAgent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36"}
+2026-01-04 00:19:55 [INFO]: POST /api/devices {"service":"gps-tracker","ip":"::1","userAgent":"Mozilla/5.0 (Linux; Android 8.0.0; SM-G955U Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Mobile Safari/537.36"}
+2026-01-04 00:20:39 [INFO]: Shutting down logger... {"service":"gps-tracker"}
+2026-01-04 00:22:51 [WARN]: Firebase service account not configured {"service":"gps-tracker"}
+2026-01-04 00:22:52 [INFO]: Redis connected successfully {"service":"gps-tracker"}
+2026-01-04 00:22:52 [INFO]: Redis connected successfully {"service":"gps-tracker"}
+2026-01-04 00:22:52 [INFO]: PostgreSQL tables created/verified {"service":"gps-tracker"}
+2026-01-04 00:22:52 [INFO]: PostgreSQL connected successfully {"service":"gps-tracker"}
+2026-01-04 00:22:52 [INFO]: PostgreSQL connected successfully {"service":"gps-tracker"}
+2026-01-04 00:22:53 [INFO]: GPS Tracking Server started successfully {"service":"gps-tracker","pid":19024,"ports":{"http":"3000","gt06":5023,"teltonika":5027}}
+2026-01-04 00:22:53 [INFO]: HTTP Server running on port 3000 {"service":"gps-tracker","pid":19024,"env":"development"}
+2026-01-04 00:22:53 [INFO]: Dashboard: http://localhost:3000 {"service":"gps-tracker"}
+2026-01-04 00:22:53 [INFO]: GPS Server (GT06 Protocol) listening on port 5023 {"service":"gps-tracker"}
+2026-01-04 00:22:53 [INFO]: GPS Server (Teltonika Protocol) listening on port 5027 {"service":"gps-tracker"}
+2026-01-04 00:30:00 [INFO]: Performance metric: gps_sessions = 0 {"service":"gps-tracker","metric":"gps_sessions","value":0,"unit":""}
+2026-01-04 00:30:00 [INFO]: Performance metric: messages_processed = 0 {"service":"gps-tracker","metric":"messages_processed","value":0,"unit":""}
+2026-01-04 00:30:00 [INFO]: Performance metric: memory_usage = 29.941871643066406MB {"service":"gps-tracker","metric":"memory_usage","value":29.941871643066406,"unit":"MB"}
+2026-01-04 00:30:00 [INFO]: Performance metric: uptime = 433.6068438seconds {"service":"gps-tracker","metric":"uptime","value":433.6068438,"unit":"seconds"}
+2026-01-04 00:45:00 [INFO]: Performance metric: gps_sessions = 0 {"service":"gps-tracker","metric":"gps_sessions","value":0,"unit":""}
+2026-01-04 00:45:00 [INFO]: Performance metric: messages_processed = 0 {"service":"gps-tracker","metric":"messages_processed","value":0,"unit":""}
+2026-01-04 00:45:00 [INFO]: Performance metric: memory_usage = 30.577552795410156MB {"service":"gps-tracker","metric":"memory_usage","value":30.577552795410156,"unit":"MB"}
+2026-01-04 00:45:00 [INFO]: Performance metric: uptime = 1333.9383852seconds {"service":"gps-tracker","metric":"uptime","value":1333.9383852,"unit":"seconds"}
+2026-01-04 00:47:29 [INFO]: POST /api/admin/devices/add%20 {"service":"gps-tracker","ip":"::1","userAgent":"PostmanRuntime/7.51.0"}
+2026-01-04 00:48:02 [INFO]: POST /api/admin/devices/add {"service":"gps-tracker","ip":"::1","userAgent":"PostmanRuntime/7.51.0"}
+2026-01-04 00:48:35 [INFO]: Shutting down logger... {"service":"gps-tracker"}
+2026-01-04 00:48:47 [WARN]: Firebase service account not configured {"service":"gps-tracker"}
+2026-01-04 00:48:47 [INFO]: Redis connected successfully {"service":"gps-tracker"}
+2026-01-04 00:48:47 [INFO]: Redis connected successfully {"service":"gps-tracker"}
+2026-01-04 00:48:47 [INFO]: PostgreSQL tables created/verified {"service":"gps-tracker"}
+2026-01-04 00:48:47 [INFO]: PostgreSQL connected successfully {"service":"gps-tracker"}
+2026-01-04 00:48:47 [INFO]: PostgreSQL connected successfully {"service":"gps-tracker"}
+2026-01-04 00:48:47 [INFO]: GPS Tracking Server started successfully {"service":"gps-tracker","pid":17600,"ports":{"http":"3000","gt06":5023,"teltonika":5027}}
+2026-01-04 00:48:47 [INFO]: HTTP Server running on port 3000 {"service":"gps-tracker","pid":17600,"env":"development"}
+2026-01-04 00:48:47 [INFO]: Dashboard: http://localhost:3000 {"service":"gps-tracker"}
+2026-01-04 00:48:47 [INFO]: GPS Server (GT06 Protocol) listening on port 5023 {"service":"gps-tracker"}
+2026-01-04 00:48:47 [INFO]: GPS Server (Teltonika Protocol) listening on port 5027 {"service":"gps-tracker"}
+2026-01-04 00:48:51 [INFO]: POST /api/admin/devices/add {"service":"gps-tracker","ip":"::1","userAgent":"PostmanRuntime/7.51.0"}
+2026-01-04 00:49:06 [INFO]: POST /api/auth/register {"service":"gps-tracker","ip":"::1","userAgent":"PostmanRuntime/7.51.0"}
+2026-01-04 00:49:47 [INFO]: POST /api/auth/login {"service":"gps-tracker","ip":"::1","userAgent":"PostmanRuntime/7.51.0"}
+2026-01-04 00:49:47 [INFO]: User logged in successfully {"service":"gps-tracker","userId":"6958002f54b5e3fd6aa79270","username":"testuser"}
+2026-01-04 00:50:19 [INFO]: POST /api/admin/devices/add {"service":"gps-tracker","ip":"::1","userAgent":"PostmanRuntime/7.51.0"}
+2026-01-04 00:50:32 [INFO]: POST /api/auth/login {"service":"gps-tracker","ip":"::1","userAgent":"PostmanRuntime/7.51.0"}
+2026-01-04 00:50:33 [ERROR]: Login error: Invalid credentials {"service":"gps-tracker"}
+Error: Invalid credentials
+    at userSchema.statics.findByCredentials (C:\Users\gaurav sharma\OneDrive\Desktop\Gps\backend\gps-node\models\User.js:93:11)
+    at async C:\Users\gaurav sharma\OneDrive\Desktop\Gps\backend\gps-node\routes\auth.js:183:20
+2026-01-04 00:50:44 [INFO]: POST /api/auth/admin/register {"service":"gps-tracker","ip":"::1","userAgent":"PostmanRuntime/7.51.0"}
+2026-01-04 00:51:08 [INFO]: POST /api/auth/login {"service":"gps-tracker","ip":"::1","userAgent":"PostmanRuntime/7.51.0"}
+2026-01-04 00:51:09 [INFO]: User logged in successfully {"service":"gps-tracker","userId":"6958002254b5e3fd6aa7926d","username":"testadmin"}
+2026-01-04 00:52:28 [INFO]: POST /api/admin/devices/add {"service":"gps-tracker","ip":"::1","userAgent":"PostmanRuntime/7.51.0"}
+2026-01-04 00:53:32 [INFO]: POST /api/admin/devices/add {"service":"gps-tracker","ip":"::1","userAgent":"PostmanRuntime/7.51.0"}
+2026-01-04 00:53:38 [INFO]: POST /api/admin/devices/add {"service":"gps-tracker","ip":"::1","userAgent":"PostmanRuntime/7.51.0"}
+2026-01-04 00:53:42 [INFO]: Shutting down logger... {"service":"gps-tracker"}
+2026-01-04 00:54:04 [WARN]: Firebase service account not configured {"service":"gps-tracker"}
+2026-01-04 00:54:04 [INFO]: Redis connected successfully {"service":"gps-tracker"}
+2026-01-04 00:54:04 [INFO]: Redis connected successfully {"service":"gps-tracker"}
+2026-01-04 00:54:04 [INFO]: PostgreSQL tables created/verified {"service":"gps-tracker"}
+2026-01-04 00:54:04 [INFO]: PostgreSQL connected successfully {"service":"gps-tracker"}
+2026-01-04 00:54:04 [INFO]: PostgreSQL connected successfully {"service":"gps-tracker"}
+2026-01-04 00:54:04 [INFO]: GPS Tracking Server started successfully {"service":"gps-tracker","pid":12596,"ports":{"http":"3000","gt06":5023,"teltonika":5027}}
+2026-01-04 00:54:04 [INFO]: HTTP Server running on port 3000 {"service":"gps-tracker","pid":12596,"env":"development"}
+2026-01-04 00:54:04 [INFO]: Dashboard: http://localhost:3000 {"service":"gps-tracker"}
+2026-01-04 00:54:04 [INFO]: GPS Server (GT06 Protocol) listening on port 5023 {"service":"gps-tracker"}
+2026-01-04 00:54:04 [INFO]: GPS Server (Teltonika Protocol) listening on port 5027 {"service":"gps-tracker"}
+2026-01-04 00:54:04 [INFO]: POST /api/admin/devices/add {"service":"gps-tracker","ip":"::1","userAgent":"PostmanRuntime/7.51.0"}
+2026-01-04 00:55:08 [INFO]: GET /api/admin/devices/%20 {"service":"gps-tracker","ip":"::1","userAgent":"PostmanRuntime/7.51.0"}
+2026-01-04 00:55:43 [INFO]: GET /api/admin/devices {"service":"gps-tracker","ip":"::1","userAgent":"PostmanRuntime/7.51.0"}
+2026-01-04 00:55:49 [INFO]: GET /api/admin/devices/ {"service":"gps-tracker","ip":"::1","userAgent":"PostmanRuntime/7.51.0"}
+2026-01-04 00:55:56 [INFO]: GET /api/admin/devices/ {"service":"gps-tracker","ip":"::1","userAgent":"PostmanRuntime/7.51.0"}
+2026-01-04 01:00:00 [INFO]: Running scheduled cleanup task {"service":"gps-tracker"}
+2026-01-04 01:00:00 [INFO]: GPS Protocol cleanup completed {"service":"gps-tracker"}
+2026-01-04 01:00:00 [INFO]: Performance metric: gps_sessions = 0 {"service":"gps-tracker","metric":"gps_sessions","value":0,"unit":""}
+2026-01-04 01:00:00 [INFO]: Performance metric: messages_processed = 0 {"service":"gps-tracker","metric":"messages_processed","value":0,"unit":""}
+2026-01-04 01:00:00 [INFO]: Performance metric: memory_usage = 31.943016052246094MB {"service":"gps-tracker","metric":"memory_usage","value":31.943016052246094,"unit":"MB"}
+2026-01-04 01:00:00 [INFO]: Performance metric: uptime = 357.9388575seconds {"service":"gps-tracker","metric":"uptime","value":357.9388575,"unit":"seconds"}
+2026-01-04 01:00:00 [INFO]: Archived 0 location records {"service":"gps-tracker"}
+2026-01-04 01:00:00 [INFO]: Cleaned up 0 archived records {"service":"gps-tracker"}
+2026-01-04 01:00:00 [INFO]: Scheduled cleanup completed {"service":"gps-tracker"}
+2026-01-04 01:00:43 [INFO]: PUT /api/admin/devices/123456789012345 {"service":"gps-tracker","ip":"::1","userAgent":"PostmanRuntime/7.51.0"}
+2026-01-04 01:00:51 [INFO]: PUT /api/admin/devices/123456789012345 {"service":"gps-tracker","ip":"::1","userAgent":"PostmanRuntime/7.51.0"}
+2026-01-04 01:01:50 [INFO]: PUT /api/admin/devices/123456789012345 {"service":"gps-tracker","ip":"::1","userAgent":"PostmanRuntime/7.51.0"}
+2026-01-04 01:02:06 [INFO]: PUT /api/admin/devices/123456789012345 {"service":"gps-tracker","ip":"::1","userAgent":"PostmanRuntime/7.51.0"}
+2026-01-04 01:07:34 [WARN]: Firebase service account not configured {"service":"gps-tracker"}
+2026-01-04 01:07:34 [INFO]: Redis connected successfully {"service":"gps-tracker"}
+2026-01-04 01:07:34 [INFO]: Redis connected successfully {"service":"gps-tracker"}
+2026-01-04 01:07:34 [INFO]: PostgreSQL tables created/verified {"service":"gps-tracker"}
+2026-01-04 01:07:34 [INFO]: PostgreSQL connected successfully {"service":"gps-tracker"}
+2026-01-04 01:07:34 [INFO]: PostgreSQL connected successfully {"service":"gps-tracker"}
+2026-01-04 01:07:34 [INFO]: GPS Tracking Server started successfully {"service":"gps-tracker","pid":25324,"ports":{"http":"3000","gt06":5023,"teltonika":5027}}
+2026-01-04 01:07:34 [INFO]: HTTP Server running on port 3000 {"service":"gps-tracker","pid":25324,"env":"development"}
+2026-01-04 01:07:34 [INFO]: Dashboard: http://localhost:3000 {"service":"gps-tracker"}
+2026-01-04 01:07:34 [INFO]: GPS Server (GT06 Protocol) listening on port 5023 {"service":"gps-tracker"}
+2026-01-04 01:07:34 [INFO]: GPS Server (Teltonika Protocol) listening on port 5027 {"service":"gps-tracker"}
+2026-01-04 01:07:48 [WARN]: Firebase service account not configured {"service":"gps-tracker"}
+2026-01-04 01:07:48 [INFO]: Redis connected successfully {"service":"gps-tracker"}
+2026-01-04 01:07:48 [INFO]: Redis connected successfully {"service":"gps-tracker"}
+2026-01-04 01:07:48 [INFO]: PostgreSQL tables created/verified {"service":"gps-tracker"}
+2026-01-04 01:07:48 [INFO]: PostgreSQL connected successfully {"service":"gps-tracker"}
+2026-01-04 01:07:48 [INFO]: PostgreSQL connected successfully {"service":"gps-tracker"}
+2026-01-04 01:07:48 [INFO]: GPS Tracking Server started successfully {"service":"gps-tracker","pid":13280,"ports":{"http":"3000","gt06":5023,"teltonika":5027}}
+2026-01-04 01:07:48 [INFO]: HTTP Server running on port 3000 {"service":"gps-tracker","pid":13280,"env":"development"}
+2026-01-04 01:07:48 [INFO]: Dashboard: http://localhost:3000 {"service":"gps-tracker"}
+2026-01-04 01:07:48 [INFO]: GPS Server (GT06 Protocol) listening on port 5023 {"service":"gps-tracker"}
+2026-01-04 01:07:48 [INFO]: GPS Server (Teltonika Protocol) listening on port 5027 {"service":"gps-tracker"}
+2026-01-04 01:10:11 [WARN]: Firebase service account not configured {"service":"gps-tracker"}
+2026-01-04 01:10:11 [INFO]: Redis connected successfully {"service":"gps-tracker"}
+2026-01-04 01:10:11 [INFO]: Redis connected successfully {"service":"gps-tracker"}
+2026-01-04 01:10:11 [INFO]: PostgreSQL tables created/verified {"service":"gps-tracker"}
+2026-01-04 01:10:11 [INFO]: PostgreSQL connected successfully {"service":"gps-tracker"}
+2026-01-04 01:10:11 [INFO]: PostgreSQL connected successfully {"service":"gps-tracker"}
+2026-01-04 01:10:11 [INFO]: GPS Tracking Server started successfully {"service":"gps-tracker","pid":13632,"ports":{"http":"3000","gt06":5023,"teltonika":5027}}
+2026-01-04 01:10:11 [INFO]: HTTP Server running on port 3000 {"service":"gps-tracker","pid":13632,"env":"development"}
+2026-01-04 01:10:11 [INFO]: Dashboard: http://localhost:3000 {"service":"gps-tracker"}
+2026-01-04 01:10:11 [INFO]: GPS Server (GT06 Protocol) listening on port 5023 {"service":"gps-tracker"}
+2026-01-04 01:10:11 [INFO]: GPS Server (Teltonika Protocol) listening on port 5027 {"service":"gps-tracker"}
+2026-01-04 01:10:33 [INFO]: PUT /api/admin/devices/add-by-imei {"service":"gps-tracker","ip":"::1","userAgent":"PostmanRuntime/7.51.0"}
+2026-01-04 01:10:44 [INFO]: PUT /api/admin/devices/add-by-imei {"service":"gps-tracker","ip":"::1","userAgent":"PostmanRuntime/7.51.0"}
+2026-01-04 01:13:20 [INFO]: PUT /api/admin/devices/add-by-imei {"service":"gps-tracker","ip":"::1","userAgent":"PostmanRuntime/7.51.0"}
+2026-01-04 01:14:06 [WARN]: Firebase service account not configured {"service":"gps-tracker"}
+2026-01-04 01:14:07 [INFO]: Redis connected successfully {"service":"gps-tracker"}
+2026-01-04 01:14:07 [INFO]: Redis connected successfully {"service":"gps-tracker"}
+2026-01-04 01:14:07 [INFO]: PostgreSQL tables created/verified {"service":"gps-tracker"}
+2026-01-04 01:14:07 [INFO]: PostgreSQL connected successfully {"service":"gps-tracker"}
+2026-01-04 01:14:07 [INFO]: PostgreSQL connected successfully {"service":"gps-tracker"}
+2026-01-04 01:14:07 [INFO]: GPS Tracking Server started successfully {"service":"gps-tracker","pid":23216,"ports":{"http":"3000","gt06":5023,"teltonika":5027}}
+2026-01-04 01:14:07 [INFO]: HTTP Server running on port 3000 {"service":"gps-tracker","pid":23216,"env":"development"}
+2026-01-04 01:14:07 [INFO]: Dashboard: http://localhost:3000 {"service":"gps-tracker"}
+2026-01-04 01:14:07 [INFO]: GPS Server (GT06 Protocol) listening on port 5023 {"service":"gps-tracker"}
+2026-01-04 01:14:07 [INFO]: GPS Server (Teltonika Protocol) listening on port 5027 {"service":"gps-tracker"}
+2026-01-04 01:14:15 [WARN]: Firebase service account not configured {"service":"gps-tracker"}
+2026-01-04 01:14:15 [INFO]: Redis connected successfully {"service":"gps-tracker"}
+2026-01-04 01:14:16 [INFO]: Redis connected successfully {"service":"gps-tracker"}
+2026-01-04 01:14:16 [INFO]: PostgreSQL tables created/verified {"service":"gps-tracker"}
+2026-01-04 01:14:16 [INFO]: PostgreSQL connected successfully {"service":"gps-tracker"}
+2026-01-04 01:14:16 [INFO]: PostgreSQL connected successfully {"service":"gps-tracker"}
+2026-01-04 01:14:16 [INFO]: GPS Tracking Server started successfully {"service":"gps-tracker","pid":27188,"ports":{"http":"3000","gt06":5023,"teltonika":5027}}
+2026-01-04 01:14:16 [INFO]: HTTP Server running on port 3000 {"service":"gps-tracker","pid":27188,"env":"development"}
+2026-01-04 01:14:16 [INFO]: Dashboard: http://localhost:3000 {"service":"gps-tracker"}
+2026-01-04 01:14:16 [INFO]: GPS Server (GT06 Protocol) listening on port 5023 {"service":"gps-tracker"}
+2026-01-04 01:14:16 [INFO]: GPS Server (Teltonika Protocol) listening on port 5027 {"service":"gps-tracker"}
+2026-01-04 01:14:21 [WARN]: Firebase service account not configured {"service":"gps-tracker"}
+2026-01-04 01:14:21 [INFO]: Redis connected successfully {"service":"gps-tracker"}
+2026-01-04 01:14:21 [INFO]: Redis connected successfully {"service":"gps-tracker"}
+2026-01-04 01:14:21 [INFO]: PostgreSQL tables created/verified {"service":"gps-tracker"}
+2026-01-04 01:14:21 [INFO]: PostgreSQL connected successfully {"service":"gps-tracker"}
+2026-01-04 01:14:21 [INFO]: PostgreSQL connected successfully {"service":"gps-tracker"}
+2026-01-04 01:14:21 [INFO]: GPS Tracking Server started successfully {"service":"gps-tracker","pid":26012,"ports":{"http":"3000","gt06":5023,"teltonika":5027}}
+2026-01-04 01:14:21 [INFO]: HTTP Server running on port 3000 {"service":"gps-tracker","pid":26012,"env":"development"}
+2026-01-04 01:14:21 [INFO]: Dashboard: http://localhost:3000 {"service":"gps-tracker"}
+2026-01-04 01:14:21 [INFO]: GPS Server (GT06 Protocol) listening on port 5023 {"service":"gps-tracker"}
+2026-01-04 01:14:21 [INFO]: GPS Server (Teltonika Protocol) listening on port 5027 {"service":"gps-tracker"}
+2026-01-04 01:14:25 [WARN]: Firebase service account not configured {"service":"gps-tracker"}
+2026-01-04 01:14:26 [INFO]: Redis connected successfully {"service":"gps-tracker"}
+2026-01-04 01:14:26 [INFO]: Redis connected successfully {"service":"gps-tracker"}
+2026-01-04 01:14:26 [INFO]: PostgreSQL tables created/verified {"service":"gps-tracker"}
+2026-01-04 01:14:26 [INFO]: PostgreSQL connected successfully {"service":"gps-tracker"}
+2026-01-04 01:14:26 [INFO]: PostgreSQL connected successfully {"service":"gps-tracker"}
+2026-01-04 01:14:26 [INFO]: GPS Tracking Server started successfully {"service":"gps-tracker","pid":18436,"ports":{"http":"3000","gt06":5023,"teltonika":5027}}
+2026-01-04 01:14:26 [INFO]: HTTP Server running on port 3000 {"service":"gps-tracker","pid":18436,"env":"development"}
+2026-01-04 01:14:26 [INFO]: Dashboard: http://localhost:3000 {"service":"gps-tracker"}
+2026-01-04 01:14:26 [INFO]: GPS Server (GT06 Protocol) listening on port 5023 {"service":"gps-tracker"}
+2026-01-04 01:14:26 [INFO]: GPS Server (Teltonika Protocol) listening on port 5027 {"service":"gps-tracker"}
+2026-01-04 01:14:30 [WARN]: Firebase service account not configured {"service":"gps-tracker"}
+2026-01-04 01:14:30 [INFO]: Redis connected successfully {"service":"gps-tracker"}
+2026-01-04 01:14:30 [INFO]: Redis connected successfully {"service":"gps-tracker"}
+2026-01-04 01:14:31 [INFO]: PostgreSQL tables created/verified {"service":"gps-tracker"}
+2026-01-04 01:14:31 [INFO]: PostgreSQL connected successfully {"service":"gps-tracker"}
+2026-01-04 01:14:31 [INFO]: PostgreSQL connected successfully {"service":"gps-tracker"}
+2026-01-04 01:14:31 [INFO]: GPS Tracking Server started successfully {"service":"gps-tracker","pid":26976,"ports":{"http":"3000","gt06":5023,"teltonika":5027}}
+2026-01-04 01:14:31 [INFO]: HTTP Server running on port 3000 {"service":"gps-tracker","pid":26976,"env":"development"}
+2026-01-04 01:14:31 [INFO]: Dashboard: http://localhost:3000 {"service":"gps-tracker"}
+2026-01-04 01:14:31 [INFO]: GPS Server (GT06 Protocol) listening on port 5023 {"service":"gps-tracker"}
+2026-01-04 01:14:31 [INFO]: GPS Server (Teltonika Protocol) listening on port 5027 {"service":"gps-tracker"}
+2026-01-04 01:14:34 [WARN]: Firebase service account not configured {"service":"gps-tracker"}
+2026-01-04 01:14:34 [INFO]: Redis connected successfully {"service":"gps-tracker"}
+2026-01-04 01:14:34 [INFO]: Redis connected successfully {"service":"gps-tracker"}
+2026-01-04 01:14:35 [INFO]: PostgreSQL tables created/verified {"service":"gps-tracker"}
+2026-01-04 01:14:35 [INFO]: PostgreSQL connected successfully {"service":"gps-tracker"}
+2026-01-04 01:14:35 [INFO]: PostgreSQL connected successfully {"service":"gps-tracker"}
+2026-01-04 01:14:35 [INFO]: GPS Tracking Server started successfully {"service":"gps-tracker","pid":19524,"ports":{"http":"3000","gt06":5023,"teltonika":5027}}
+2026-01-04 01:14:35 [INFO]: HTTP Server running on port 3000 {"service":"gps-tracker","pid":19524,"env":"development"}
+2026-01-04 01:14:35 [INFO]: Dashboard: http://localhost:3000 {"service":"gps-tracker"}
+2026-01-04 01:14:35 [INFO]: GPS Server (GT06 Protocol) listening on port 5023 {"service":"gps-tracker"}
+2026-01-04 01:14:35 [INFO]: GPS Server (Teltonika Protocol) listening on port 5027 {"service":"gps-tracker"}
+2026-01-04 01:15:00 [INFO]: Performance metric: gps_sessions = 0 {"service":"gps-tracker","metric":"gps_sessions","value":0,"unit":""}
+2026-01-04 01:15:00 [INFO]: Performance metric: messages_processed = 0 {"service":"gps-tracker","metric":"messages_processed","value":0,"unit":""}
+2026-01-04 01:15:00 [INFO]: Performance metric: memory_usage = 30.050743103027344MB {"service":"gps-tracker","metric":"memory_usage","value":30.050743103027344,"unit":"MB"}
+2026-01-04 01:15:00 [INFO]: Performance metric: uptime = 27.3954076seconds {"service":"gps-tracker","metric":"uptime","value":27.3954076,"unit":"seconds"}
+2026-01-04 01:15:13 [INFO]: PUT /api/admin/devices/add-by-imei {"service":"gps-tracker","ip":"::1","userAgent":"PostmanRuntime/7.51.0"}
+2026-01-04 01:15:54 [WARN]: Firebase service account not configured {"service":"gps-tracker"}
+2026-01-04 01:15:54 [INFO]: Redis connected successfully {"service":"gps-tracker"}
+2026-01-04 01:15:54 [INFO]: Redis connected successfully {"service":"gps-tracker"}
+2026-01-04 01:15:54 [INFO]: PostgreSQL tables created/verified {"service":"gps-tracker"}
+2026-01-04 01:15:54 [INFO]: PostgreSQL connected successfully {"service":"gps-tracker"}
+2026-01-04 01:15:54 [INFO]: PostgreSQL connected successfully {"service":"gps-tracker"}
+2026-01-04 01:15:54 [INFO]: GPS Tracking Server started successfully {"service":"gps-tracker","pid":26340,"ports":{"http":"3000","gt06":5023,"teltonika":5027}}
+2026-01-04 01:15:54 [INFO]: HTTP Server running on port 3000 {"service":"gps-tracker","pid":26340,"env":"development"}
+2026-01-04 01:15:54 [INFO]: Dashboard: http://localhost:3000 {"service":"gps-tracker"}
+2026-01-04 01:15:54 [INFO]: GPS Server (GT06 Protocol) listening on port 5023 {"service":"gps-tracker"}
+2026-01-04 01:15:54 [INFO]: GPS Server (Teltonika Protocol) listening on port 5027 {"service":"gps-tracker"}
+2026-01-04 01:16:00 [WARN]: Firebase service account not configured {"service":"gps-tracker"}
+2026-01-04 01:16:00 [INFO]: Redis connected successfully {"service":"gps-tracker"}
+2026-01-04 01:16:00 [INFO]: Redis connected successfully {"service":"gps-tracker"}
+2026-01-04 01:16:01 [INFO]: PostgreSQL tables created/verified {"service":"gps-tracker"}
+2026-01-04 01:16:10 [WARN]: Firebase service account not configured {"service":"gps-tracker"}
+2026-01-04 01:16:11 [INFO]: Redis connected successfully {"service":"gps-tracker"}
+2026-01-04 01:16:11 [INFO]: Redis connected successfully {"service":"gps-tracker"}
+2026-01-04 01:16:11 [INFO]: PostgreSQL tables created/verified {"service":"gps-tracker"}
+2026-01-04 01:16:20 [WARN]: Firebase service account not configured {"service":"gps-tracker"}
+2026-01-04 01:16:20 [INFO]: Redis connected successfully {"service":"gps-tracker"}
+2026-01-04 01:16:20 [INFO]: Redis connected successfully {"service":"gps-tracker"}
+2026-01-04 01:16:20 [INFO]: PostgreSQL tables created/verified {"service":"gps-tracker"}
+2026-01-04 01:17:12 [WARN]: Firebase service account not configured {"service":"gps-tracker"}
+2026-01-04 01:17:12 [INFO]: Redis connected successfully {"service":"gps-tracker"}
+2026-01-04 01:17:12 [INFO]: Redis connected successfully {"service":"gps-tracker"}
+2026-01-04 01:17:12 [INFO]: PostgreSQL tables created/verified {"service":"gps-tracker"}
+2026-01-04 01:17:12 [INFO]: PostgreSQL connected successfully {"service":"gps-tracker"}
+2026-01-04 01:17:12 [INFO]: PostgreSQL connected successfully {"service":"gps-tracker"}
+2026-01-04 01:17:12 [INFO]: GPS Tracking Server started successfully {"service":"gps-tracker","pid":20812,"ports":{"http":"3000","gt06":5023,"teltonika":5027}}
+2026-01-04 01:17:12 [INFO]: HTTP Server running on port 3000 {"service":"gps-tracker","pid":20812,"env":"development"}
+2026-01-04 01:17:12 [INFO]: Dashboard: http://localhost:3000 {"service":"gps-tracker"}
+2026-01-04 01:17:12 [INFO]: GPS Server (GT06 Protocol) listening on port 5023 {"service":"gps-tracker"}
+2026-01-04 01:17:12 [INFO]: GPS Server (Teltonika Protocol) listening on port 5027 {"service":"gps-tracker"}
+2026-01-04 01:17:26 [INFO]: PUT /api/admin/devices/add-by-imei {"service":"gps-tracker","ip":"::1","userAgent":"PostmanRuntime/7.51.0"}
+2026-01-04 01:17:53 [INFO]: PUT /api/admin/devices/add-by-imei {"service":"gps-tracker","ip":"::1","userAgent":"PostmanRuntime/7.51.0"}
+2026-01-04 01:17:55 [INFO]: PUT /api/admin/devices/add-by-imei {"service":"gps-tracker","ip":"::1","userAgent":"PostmanRuntime/7.51.0"}
+2026-01-04 01:19:18 [WARN]: Firebase service account not configured {"service":"gps-tracker"}
+2026-01-04 01:19:18 [INFO]: Redis connected successfully {"service":"gps-tracker"}
+2026-01-04 01:19:18 [INFO]: Redis connected successfully {"service":"gps-tracker"}
+2026-01-04 01:19:18 [INFO]: PostgreSQL tables created/verified {"service":"gps-tracker"}
+2026-01-04 01:19:18 [INFO]: PostgreSQL connected successfully {"service":"gps-tracker"}
+2026-01-04 01:19:18 [INFO]: PostgreSQL connected successfully {"service":"gps-tracker"}
+2026-01-04 01:19:18 [INFO]: GPS Tracking Server started successfully {"service":"gps-tracker","pid":20088,"ports":{"http":"3000","gt06":5023,"teltonika":5027}}
+2026-01-04 01:19:18 [INFO]: HTTP Server running on port 3000 {"service":"gps-tracker","pid":20088,"env":"development"}
+2026-01-04 01:19:18 [INFO]: Dashboard: http://localhost:3000 {"service":"gps-tracker"}
+2026-01-04 01:19:18 [INFO]: GPS Server (GT06 Protocol) listening on port 5023 {"service":"gps-tracker"}
+2026-01-04 01:19:18 [INFO]: GPS Server (Teltonika Protocol) listening on port 5027 {"service":"gps-tracker"}
+2026-01-04 01:19:24 [INFO]: POST /api/admin/devices/add-by-imei {"service":"gps-tracker","ip":"::1","userAgent":"PostmanRuntime/7.51.0"}
+2026-01-04 01:19:27 [WARN]: Firebase service account not configured {"service":"gps-tracker"}
+2026-01-04 01:19:28 [INFO]: Redis connected successfully {"service":"gps-tracker"}
+2026-01-04 01:19:28 [INFO]: Redis connected successfully {"service":"gps-tracker"}
+2026-01-04 01:19:28 [INFO]: PostgreSQL tables created/verified {"service":"gps-tracker"}
+2026-01-04 01:19:28 [INFO]: PostgreSQL connected successfully {"service":"gps-tracker"}
+2026-01-04 01:19:28 [INFO]: PostgreSQL connected successfully {"service":"gps-tracker"}
+2026-01-04 01:19:28 [INFO]: GPS Tracking Server started successfully {"service":"gps-tracker","pid":24292,"ports":{"http":"3000","gt06":5023,"teltonika":5027}}
+2026-01-04 01:19:28 [INFO]: HTTP Server running on port 3000 {"service":"gps-tracker","pid":24292,"env":"development"}
+2026-01-04 01:19:28 [INFO]: Dashboard: http://localhost:3000 {"service":"gps-tracker"}
+2026-01-04 01:19:28 [INFO]: GPS Server (GT06 Protocol) listening on port 5023 {"service":"gps-tracker"}
+2026-01-04 01:19:28 [INFO]: GPS Server (Teltonika Protocol) listening on port 5027 {"service":"gps-tracker"}
+2026-01-04 01:20:53 [INFO]: POST /api/admin/devices/add-by-imei {"service":"gps-tracker","ip":"::1","userAgent":"PostmanRuntime/7.51.0"}
+2026-01-04 01:21:36 [INFO]: POST /api/admin/devices/add-by-imei {"service":"gps-tracker","ip":"::1","userAgent":"PostmanRuntime/7.51.0"}
+2026-01-04 01:21:52 [INFO]: POST /api/admin/devices/add-by-imei {"service":"gps-tracker","ip":"::1","userAgent":"PostmanRuntime/7.51.0"}
+2026-01-04 01:22:01 [INFO]: POST /api/admin/devices/add-by-imei {"service":"gps-tracker","ip":"::1","userAgent":"PostmanRuntime/7.51.0"}
+2026-01-04 01:22:11 [INFO]: POST /api/admin/devices/add-by-imei {"service":"gps-tracker","ip":"::1","userAgent":"PostmanRuntime/7.51.0"}
+2026-01-04 01:24:11 [WARN]: Firebase service account not configured {"service":"gps-tracker"}
+2026-01-04 01:24:11 [INFO]: Redis connected successfully {"service":"gps-tracker"}
+2026-01-04 01:24:11 [INFO]: Redis connected successfully {"service":"gps-tracker"}
+2026-01-04 01:24:11 [INFO]: PostgreSQL tables created/verified {"service":"gps-tracker"}
+2026-01-04 01:24:11 [INFO]: PostgreSQL connected successfully {"service":"gps-tracker"}
+2026-01-04 01:24:11 [INFO]: PostgreSQL connected successfully {"service":"gps-tracker"}
+2026-01-04 01:24:11 [INFO]: GPS Tracking Server started successfully {"service":"gps-tracker","pid":23788,"ports":{"http":"3000","gt06":5023,"teltonika":5027}}
+2026-01-04 01:24:11 [INFO]: HTTP Server running on port 3000 {"service":"gps-tracker","pid":23788,"env":"development"}
+2026-01-04 01:24:11 [INFO]: Dashboard: http://localhost:3000 {"service":"gps-tracker"}
+2026-01-04 01:24:11 [INFO]: GPS Server (GT06 Protocol) listening on port 5023 {"service":"gps-tracker"}
+2026-01-04 01:24:11 [INFO]: GPS Server (Teltonika Protocol) listening on port 5027 {"service":"gps-tracker"}
+2026-01-04 01:24:23 [WARN]: Firebase service account not configured {"service":"gps-tracker"}
+2026-01-04 01:24:23 [INFO]: Redis connected successfully {"service":"gps-tracker"}
+2026-01-04 01:24:23 [INFO]: Redis connected successfully {"service":"gps-tracker"}
+2026-01-04 01:24:23 [INFO]: PostgreSQL tables created/verified {"service":"gps-tracker"}
+2026-01-04 01:24:23 [INFO]: PostgreSQL connected successfully {"service":"gps-tracker"}
+2026-01-04 01:24:23 [INFO]: PostgreSQL connected successfully {"service":"gps-tracker"}
+2026-01-04 01:24:23 [INFO]: GPS Tracking Server started successfully {"service":"gps-tracker","pid":4968,"ports":{"http":"3000","gt06":5023,"teltonika":5027}}
+2026-01-04 01:24:23 [INFO]: HTTP Server running on port 3000 {"service":"gps-tracker","pid":4968,"env":"development"}
+2026-01-04 01:24:23 [INFO]: Dashboard: http://localhost:3000 {"service":"gps-tracker"}
+2026-01-04 01:24:23 [INFO]: GPS Server (GT06 Protocol) listening on port 5023 {"service":"gps-tracker"}
+2026-01-04 01:24:23 [INFO]: GPS Server (Teltonika Protocol) listening on port 5027 {"service":"gps-tracker"}
+2026-01-04 01:30:00 [INFO]: Performance metric: gps_sessions = 0 {"service":"gps-tracker","metric":"gps_sessions","value":0,"unit":""}
+2026-01-04 01:30:00 [INFO]: Performance metric: messages_processed = 0 {"service":"gps-tracker","metric":"messages_processed","value":0,"unit":""}
+2026-01-04 01:30:00 [INFO]: Performance metric: memory_usage = 30.222206115722656MB {"service":"gps-tracker","metric":"memory_usage","value":30.222206115722656,"unit":"MB"}
+2026-01-04 01:30:00 [INFO]: Performance metric: uptime = 340.1239809seconds {"service":"gps-tracker","metric":"uptime","value":340.1239809,"unit":"seconds"}
