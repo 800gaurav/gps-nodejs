@@ -187,6 +187,12 @@ class GT06ProtocolDecoder {
       length, 
       variant 
     });
+    
+    console.log('=== GT06 MESSAGE RECEIVED ===');
+    console.log('Device:', deviceSession?.deviceId);
+    console.log('Type:', type.toString(16));
+    console.log('Length:', length);
+    console.log('Variant:', variant);
 
     let position = {
       deviceId: deviceSession?.deviceId,
@@ -458,6 +464,10 @@ class GT06ProtocolDecoder {
     }
 
     logger.locationUpdate(deviceSession.deviceId, position);
+    
+    console.log('=== GPS MESSAGE DECODED ===');
+    console.log('Device:', deviceSession.deviceId);
+    console.log('Position:', JSON.stringify(position, null, 2));
 
     return {
       type: 'gps',

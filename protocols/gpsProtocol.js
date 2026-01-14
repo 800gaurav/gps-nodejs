@@ -241,6 +241,10 @@ class GPSProtocol extends EventEmitter {
 
       // Handle position data
       if (result.position && connection.deviceId) {
+        console.log('=== GPS POSITION DATA RECEIVED ===');
+        console.log('Device IMEI:', connection.deviceId);
+        console.log('Position:', JSON.stringify(result.position, null, 2));
+        
         result.position.deviceId = connection.deviceId;
         
         // Save to database
@@ -248,6 +252,8 @@ class GPSProtocol extends EventEmitter {
         const Location = require('../models/Location');
         
         try {
+          console.log('Updating device with IMEI:', connection.deviceId);
+          
           // Update device with latest location (search by imei)
           const updateResult = await Device.findOneAndUpdate(
             { imei: connection.deviceId },
@@ -268,15 +274,19 @@ class GPSProtocol extends EventEmitter {
           );
           
           if (updateResult) {
+            console.log('✅ Device updated successfully:', updateResult.imei);
+            console.log('Saved coordinates:', updateResult.lastLatitude, updateResult.lastLongitude);
             logger.info('Device location updated', { 
               imei: connection.deviceId,
               lat: result.position.latitude,
               lng: result.position.longitude
             });
+          } else {
+            console.log('❌ Device NOT found in database with IMEI:', connection.deviceId);
           }
           
           // Save location history
-          await Location.create({
+          const locationDoc = await Location.create({
             deviceId: connection.deviceId,
             latitude: result.position.latitude,
             longitude: result.position.longitude,
@@ -290,8 +300,10 @@ class GPSProtocol extends EventEmitter {
             timestamp: result.position.timestamp || new Date()
           });
           
+          console.log('✅ Location saved to history:', locationDoc._id);
           logger.info('Location saved to history', { deviceId: connection.deviceId });
         } catch (dbError) {
+          console.error('❌ Database save error:', dbError);
           logger.error('Database save error:', dbError);
         }
         
