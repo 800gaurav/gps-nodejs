@@ -225,9 +225,9 @@ class GPSProtocol extends EventEmitter {
         const Location = require('../models/Location');
         
         try {
-          // Update device with latest location
-          await Device.findOneAndUpdate(
-            { deviceId: connection.deviceId },
+          // Find device by IMEI (connection.deviceId contains IMEI after login)
+          const device = await Device.findOneAndUpdate(
+            { imei: connection.deviceId },
             {
               $set: {
                 online: true,
@@ -240,23 +240,38 @@ class GPSProtocol extends EventEmitter {
                 altitude: result.position.altitude,
                 satellites: result.position.satellites
               }
-            }
+            },
+            { new: true, upsert: false }
           );
           
-          // Save location history
-          await Location.create({
-            deviceId: connection.deviceId,
-            latitude: result.position.latitude,
-            longitude: result.position.longitude,
-            speed: result.position.speed,
-            course: result.position.course,
-            altitude: result.position.altitude,
-            satellites: result.position.satellites,
-            ignition: result.position.ignition,
-            engineOn: result.position.engineOn,
-            gpsValid: result.position.valid,
-            timestamp: result.position.timestamp || new Date()
-          });
+          if (device) {
+            // Save location history
+            await Location.create({
+              deviceId: device.deviceId || connection.deviceId,
+              latitude: result.position.latitude,
+              longitude: result.position.longitude,
+              speed: result.position.speed,
+              course: result.position.course,
+              altitude: result.position.altitude,
+              satellites: result.position.satellites,
+              ignition: result.position.ignition,
+              engineOn: result.position.engineOn,
+              gpsValid: result.position.valid,
+              timestamp: result.position.timestamp || new Date()
+            });
+            
+            logger.info('Location saved', { 
+              deviceId: device.deviceId, 
+              imei: connection.deviceId,
+              lat: result.position.latitude,
+              lng: result.position.longitude
+            });
+          } else {
+            logger.warn('Device not found in database', { 
+              imei: connection.deviceId,
+              message: 'Add device with this IMEI to database'
+            });
+          }
         } catch (dbError) {
           logger.error('Database save error:', dbError);
         }
