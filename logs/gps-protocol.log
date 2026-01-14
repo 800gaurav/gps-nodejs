@@ -34,3 +34,18 @@
 2026-01-14 14:52:31 [INFO]: ✅ API Docs: http://localhost:3000/api {"service":"gps-tracker"}
 2026-01-14 14:52:31 [INFO]: ✅ GPS Server (GT06): Port 5023 {"service":"gps-tracker"}
 2026-01-14 14:52:31 [INFO]: Client connected: {"service":"gps-tracker"}
+2026-01-14 14:52:38 [INFO]: MongoDB connected successfully {"service":"gps-tracker"}
+2026-01-14 14:52:38 [INFO]: 🚀 GPS Tracking Server started successfully! {"service":"gps-tracker"}
+2026-01-14 14:52:38 [INFO]: ✅ HTTP Server: http://localhost:3000 {"service":"gps-tracker"}
+2026-01-14 14:52:38 [INFO]: ✅ API Docs: http://localhost:3000/api {"service":"gps-tracker"}
+2026-01-14 14:52:38 [INFO]: ✅ GPS Server (GT06): Port 5023 {"service":"gps-tracker"}
+2026-01-14 14:52:38 [INFO]: Client connected: {"service":"gps-tracker"}
+2026-01-14 14:53:09 [INFO]: GET /api/devices {"service":"gps-tracker"}
+2026-01-14 14:54:09 [INFO]: GET /api/devices {"service":"gps-tracker"}
+2026-01-14 14:54:37 [INFO]: GET /api/devices {"service":"gps-tracker"}
+2026-01-14 14:54:44 [INFO]: GET /api/devices {"service":"gps-tracker"}
+2026-01-14 14:54:54 [INFO]: GET /api/devices {"service":"gps-tracker"}
+2026-01-14 14:55:04 [INFO]: GET /api/devices {"service":"gps-tracker"}
+2026-01-14 14:55:14 [INFO]: GET /api/devices {"service":"gps-tracker"}
+2026-01-14 14:55:24 [INFO]: GET /api/devices {"service":"gps-tracker"}
+2026-01-14 14:55:34 [INFO]: GET /api/devices {"service":"gps-tracker"}
