@@ -15,6 +15,6 @@ const locationSchema = new mongoose.Schema({
   address: { type: String, default: '' }
 }, { timestamps: true });
 
-locationSchema.index({ deviceId: 1, timestamp: -1 });
+ locationSchema.index({ deviceId: 1, timestamp: -1 });
 
 module.exports = mongoose.model('Location', locationSchema);
