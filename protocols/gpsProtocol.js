@@ -220,19 +220,46 @@ class GPSProtocol extends EventEmitter {
       if (result.position && connection.deviceId) {
         result.position.deviceId = connection.deviceId;
         
-        // Check for ignition change and send notification
-        const lastLocation = await redisManager.getLastLocation(connection.deviceId);
-        if (lastLocation && lastLocation.ignition !== result.position.ignition) {
-          const notificationService = require('../services/notificationService');
-          await notificationService.sendIgnitionNotification(
-            connection.deviceId,
-            result.position.ignition,
-            result.position
-          );
-        }
+        // Save to database
+        const Device = require('../models/Device');
+        const Location = require('../models/Location');
         
-        // Add to batch for bulk processing
-        this.locationBatch.push(result.position);
+        try {
+          // Update device with latest location
+          await Device.findOneAndUpdate(
+            { deviceId: connection.deviceId },
+            {
+              $set: {
+                online: true,
+                lastSeen: new Date(),
+                lastLatitude: result.position.latitude,
+                lastLongitude: result.position.longitude,
+                speed: result.position.speed,
+                ignition: result.position.ignition,
+                course: result.position.course,
+                altitude: result.position.altitude,
+                satellites: result.position.satellites
+              }
+            }
+          );
+          
+          // Save location history
+          await Location.create({
+            deviceId: connection.deviceId,
+            latitude: result.position.latitude,
+            longitude: result.position.longitude,
+            speed: result.position.speed,
+            course: result.position.course,
+            altitude: result.position.altitude,
+            satellites: result.position.satellites,
+            ignition: result.position.ignition,
+            engineOn: result.position.engineOn,
+            gpsValid: result.position.valid,
+            timestamp: result.position.timestamp || new Date()
+          });
+        } catch (dbError) {
+          logger.error('Database save error:', dbError);
+        }
         
         // Cache in Redis for real-time access
         await redisManager.setLastLocation(connection.deviceId, result.position);
@@ -244,7 +271,7 @@ class GPSProtocol extends EventEmitter {
           timestamp: new Date()
         });
 
-        // Check for alarms and send notifications
+        // Check for alarms
         if (result.position.alarms && result.position.alarms.length > 0) {
           const alertData = {
             deviceId: connection.deviceId,
@@ -255,16 +282,6 @@ class GPSProtocol extends EventEmitter {
           
           io.emit('deviceAlert', alertData);
           await redisManager.publishDeviceAlert(connection.deviceId, alertData);
-          
-          // Send push notifications for each alarm
-          const notificationService = require('../services/notificationService');
-          for (const alarm of result.position.alarms) {
-            await notificationService.sendAlertNotification(
-              connection.deviceId,
-              alarm,
-              result.position
-            );
-          }
           
           logger.alert(connection.deviceId, result.position.alarms.join(','), 'Device alarm triggered');
         }
@@ -342,23 +359,8 @@ class GPSProtocol extends EventEmitter {
   }
 
   startBatchProcessor() {
-    setInterval(async () => {
-      if (this.locationBatch.length > 0) {
-        try {
-          const batch = this.locationBatch.splice(0, this.batchSize);
-          
-          // Bulk insert to database (implement in your database layer)
-          this.emit('bulkLocationInsert', batch);
-          
-          // Bulk cache in Redis
-          await redisManager.bulkSetLocations(batch);
-          
-          logger.debug('Processed location batch', { count: batch.length });
-        } catch (error) {
-          logger.error('Error processing location batch:', error);
-        }
-      }
-    }, this.batchTimeout);
+    // Batch processing disabled - using direct save
+    // Location data is saved immediately in handleDecodedMessage
   }
 
   startCleanupTimer() {
