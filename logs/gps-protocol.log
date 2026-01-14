@@ -143,3 +143,129 @@
 2026-01-14 11:53:05 [WARN]: Redis connection error (continuing without Redis): {"service":"gps-tracker"}
 2026-01-14 11:53:07 [WARN]: Redis connection error (continuing without Redis): {"service":"gps-tracker"}
 2026-01-14 11:53:09 [INFO]: Shutting down logger... {"service":"gps-tracker"}
+2026-01-14 11:57:54 [WARN]: Firebase service account not configured {"service":"gps-tracker"}
+2026-01-14 11:57:55 [WARN]: Redis connection error (continuing without Redis): {"service":"gps-tracker"}
+2026-01-14 11:57:55 [WARN]: Redis not available, continuing without Redis caching {"service":"gps-tracker"}
+2026-01-14 11:57:55 [INFO]: Redis connected successfully {"service":"gps-tracker"}
+2026-01-14 11:57:55 [ERROR]: PostgreSQL connection failed: getaddrinfo ENOTFOUND db.bfzbzmwqltepdrruirya.supabase.co {"service":"gps-tracker","errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"db.bfzbzmwqltepdrruirya.supabase.co","stack":"Error: getaddrinfo ENOTFOUND db.bfzbzmwqltepdrruirya.supabase.co\n    at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:122:26)\n    at cachedError (C:\\Users\\gaurav sharma\\OneDrive\\Desktop\\Gps\\backend\\gps-node\\node_modules\\postgres\\cjs\\src\\query.js:170:23)\n    at new Query (C:\\Users\\gaurav sharma\\OneDrive\\Desktop\\Gps\\backend\\gps-node\\node_modules\\postgres\\cjs\\src\\query.js:36:24)\n    at PostgreSQLManager.sql (C:\\Users\\gaurav sharma\\OneDrive\\Desktop\\Gps\\backend\\gps-node\\node_modules\\postgres\\cjs\\src\\index.js:112:11)\n    at PostgreSQLManager.connect (C:\\Users\\gaurav sharma\\OneDrive\\Desktop\\Gps\\backend\\gps-node\\config\\postgresql.js:422:21)"}
+2026-01-14 11:57:55 [INFO]: PostgreSQL connected successfully {"service":"gps-tracker"}
+2026-01-14 11:57:55 [INFO]: GPS Tracking Server started successfully {"service":"gps-tracker","ports":{"http":"3000","gt06":5023}}
+2026-01-14 11:57:55 [INFO]: HTTP Server running on port 3000 {"service":"gps-tracker"}
+2026-01-14 11:57:55 [INFO]: Dashboard: http://localhost:3000 {"service":"gps-tracker"}
+2026-01-14 11:57:55 [INFO]: GPS Server (GT06 Protocol) listening on port 5023 {"service":"gps-tracker"}
+2026-01-14 11:57:55 [WARN]: Redis connection error (continuing without Redis): {"service":"gps-tracker"}
+2026-01-14 11:57:55 [WARN]: Redis connection error (continuing without Redis): {"service":"gps-tracker"}
+2026-01-14 11:57:55 [WARN]: Redis connection error (continuing without Redis): {"service":"gps-tracker"}
+2026-01-14 11:57:56 [WARN]: Redis connection error (continuing without Redis): {"service":"gps-tracker"}
+2026-01-14 11:57:56 [WARN]: Redis connection error (continuing without Redis): {"service":"gps-tracker"}
+2026-01-14 11:57:56 [WARN]: Redis connection error (continuing without Redis): {"service":"gps-tracker"}
+2026-01-14 11:57:57 [WARN]: Redis connection error (continuing without Redis): {"service":"gps-tracker"}
+2026-01-14 11:57:57 [WARN]: Redis connection error (continuing without Redis): {"service":"gps-tracker"}
+2026-01-14 11:57:57 [WARN]: Redis connection error (continuing without Redis): {"service":"gps-tracker"}
+2026-01-14 11:57:58 [WARN]: Redis connection error (continuing without Redis): {"service":"gps-tracker"}
+2026-01-14 11:57:58 [WARN]: Redis connection error (continuing without Redis): {"service":"gps-tracker"}
+2026-01-14 11:57:59 [WARN]: Redis connection error (continuing without Redis): {"service":"gps-tracker"}
+2026-01-14 11:58:00 [WARN]: Redis connection error (continuing without Redis): {"service":"gps-tracker"}
+2026-01-14 11:58:00 [WARN]: Redis connection error (continuing without Redis): {"service":"gps-tracker"}
+2026-01-14 11:58:01 [WARN]: Redis connection error (continuing without Redis): {"service":"gps-tracker"}
+2026-01-14 11:58:02 [WARN]: Redis connection error (continuing without Redis): {"service":"gps-tracker"}
+2026-01-14 11:58:03 [WARN]: Redis connection error (continuing without Redis): {"service":"gps-tracker"}
+2026-01-14 11:58:04 [WARN]: Redis connection error (continuing without Redis): {"service":"gps-tracker"}
+2026-01-14 11:58:05 [WARN]: Redis connection error (continuing without Redis): {"service":"gps-tracker"}
+2026-01-14 11:58:06 [WARN]: Redis connection error (continuing without Redis): {"service":"gps-tracker"}
+2026-01-14 11:58:07 [WARN]: Redis connection error (continuing without Redis): {"service":"gps-tracker"}
+2026-01-14 11:58:08 [WARN]: Redis connection error (continuing without Redis): {"service":"gps-tracker"}
+2026-01-14 11:58:09 [WARN]: Redis connection error (continuing without Redis): {"service":"gps-tracker"}
+2026-01-14 11:58:10 [WARN]: Redis connection error (continuing without Redis): {"service":"gps-tracker"}
+2026-01-14 11:58:12 [WARN]: Redis connection error (continuing without Redis): {"service":"gps-tracker"}
+2026-01-14 11:58:13 [WARN]: Redis connection error (continuing without Redis): {"service":"gps-tracker"}
+2026-01-14 11:58:14 [WARN]: Redis connection error (continuing without Redis): {"service":"gps-tracker"}
+2026-01-14 11:58:16 [WARN]: Redis connection error (continuing without Redis): {"service":"gps-tracker"}
+2026-01-14 11:58:17 [WARN]: Redis connection error (continuing without Redis): {"service":"gps-tracker"}
+2026-01-14 11:58:19 [WARN]: Redis connection error (continuing without Redis): {"service":"gps-tracker"}
+2026-01-14 11:58:20 [WARN]: Redis connection error (continuing without Redis): {"service":"gps-tracker"}
+2026-01-14 11:58:22 [WARN]: Redis connection error (continuing without Redis): {"service":"gps-tracker"}
+2026-01-14 11:58:23 [WARN]: Redis connection error (continuing without Redis): {"service":"gps-tracker"}
+2026-01-14 11:58:25 [WARN]: Redis connection error (continuing without Redis): {"service":"gps-tracker"}
+2026-01-14 11:58:27 [WARN]: Redis connection error (continuing without Redis): {"service":"gps-tracker"}
+2026-01-14 11:58:29 [WARN]: Redis connection error (continuing without Redis): {"service":"gps-tracker"}
+2026-01-14 11:58:31 [WARN]: Redis connection error (continuing without Redis): {"service":"gps-tracker"}
+2026-01-14 11:58:33 [WARN]: Redis connection error (continuing without Redis): {"service":"gps-tracker"}
+2026-01-14 11:58:35 [WARN]: Redis connection error (continuing without Redis): {"service":"gps-tracker"}
+2026-01-14 11:58:37 [WARN]: Redis connection error (continuing without Redis): {"service":"gps-tracker"}
+2026-01-14 11:58:39 [WARN]: Redis connection error (continuing without Redis): {"service":"gps-tracker"}
+2026-01-14 11:58:41 [WARN]: Redis connection error (continuing without Redis): {"service":"gps-tracker"}
+2026-01-14 11:58:43 [WARN]: Redis connection error (continuing without Redis): {"service":"gps-tracker"}
+2026-01-14 11:58:45 [WARN]: Redis connection error (continuing without Redis): {"service":"gps-tracker"}
+2026-01-14 11:58:47 [WARN]: Redis connection error (continuing without Redis): {"service":"gps-tracker"}
+2026-01-14 11:58:49 [WARN]: Redis connection error (continuing without Redis): {"service":"gps-tracker"}
+2026-01-14 11:58:51 [WARN]: Redis connection error (continuing without Redis): {"service":"gps-tracker"}
+2026-01-14 11:58:53 [WARN]: Redis connection error (continuing without Redis): {"service":"gps-tracker"}
+2026-01-14 11:58:55 [WARN]: Redis connection error (continuing without Redis): {"service":"gps-tracker"}
+2026-01-14 11:58:57 [WARN]: Redis connection error (continuing without Redis): {"service":"gps-tracker"}
+2026-01-14 11:58:59 [WARN]: Redis connection error (continuing without Redis): {"service":"gps-tracker"}
+2026-01-14 11:59:01 [WARN]: Redis connection error (continuing without Redis): {"service":"gps-tracker"}
+2026-01-14 11:59:03 [WARN]: Redis connection error (continuing without Redis): {"service":"gps-tracker"}
+2026-01-14 11:59:05 [WARN]: Redis connection error (continuing without Redis): {"service":"gps-tracker"}
+2026-01-14 11:59:07 [WARN]: Redis connection error (continuing without Redis): {"service":"gps-tracker"}
+2026-01-14 11:59:09 [WARN]: Redis connection error (continuing without Redis): {"service":"gps-tracker"}
+2026-01-14 11:59:11 [WARN]: Redis connection error (continuing without Redis): {"service":"gps-tracker"}
+2026-01-14 11:59:13 [WARN]: Redis connection error (continuing without Redis): {"service":"gps-tracker"}
+2026-01-14 11:59:15 [WARN]: Redis connection error (continuing without Redis): {"service":"gps-tracker"}
+2026-01-14 11:59:17 [WARN]: Redis connection error (continuing without Redis): {"service":"gps-tracker"}
+2026-01-14 11:59:19 [WARN]: Redis connection error (continuing without Redis): {"service":"gps-tracker"}
+2026-01-14 11:59:21 [WARN]: Redis connection error (continuing without Redis): {"service":"gps-tracker"}
+2026-01-14 11:59:23 [WARN]: Redis connection error (continuing without Redis): {"service":"gps-tracker"}
+2026-01-14 11:59:25 [WARN]: Redis connection error (continuing without Redis): {"service":"gps-tracker"}
+2026-01-14 11:59:27 [WARN]: Redis connection error (continuing without Redis): {"service":"gps-tracker"}
+2026-01-14 11:59:29 [WARN]: Redis connection error (continuing without Redis): {"service":"gps-tracker"}
+2026-01-14 11:59:31 [WARN]: Redis connection error (continuing without Redis): {"service":"gps-tracker"}
+2026-01-14 11:59:33 [WARN]: Redis connection error (continuing without Redis): {"service":"gps-tracker"}
+2026-01-14 11:59:35 [WARN]: Redis connection error (continuing without Redis): {"service":"gps-tracker"}
+2026-01-14 11:59:37 [WARN]: Redis connection error (continuing without Redis): {"service":"gps-tracker"}
+2026-01-14 11:59:39 [WARN]: Redis connection error (continuing without Redis): {"service":"gps-tracker"}
+2026-01-14 11:59:41 [WARN]: Redis connection error (continuing without Redis): {"service":"gps-tracker"}
+2026-01-14 11:59:43 [WARN]: Redis connection error (continuing without Redis): {"service":"gps-tracker"}
+2026-01-14 11:59:45 [WARN]: Redis connection error (continuing without Redis): {"service":"gps-tracker"}
+2026-01-14 11:59:47 [WARN]: Redis connection error (continuing without Redis): {"service":"gps-tracker"}
+2026-01-14 11:59:49 [WARN]: Redis connection error (continuing without Redis): {"service":"gps-tracker"}
+2026-01-14 11:59:51 [WARN]: Redis connection error (continuing without Redis): {"service":"gps-tracker"}
+2026-01-14 11:59:53 [WARN]: Redis connection error (continuing without Redis): {"service":"gps-tracker"}
+2026-01-14 11:59:55 [WARN]: Redis connection error (continuing without Redis): {"service":"gps-tracker"}
+2026-01-14 11:59:57 [WARN]: Redis connection error (continuing without Redis): {"service":"gps-tracker"}
+2026-01-14 11:59:59 [WARN]: Redis connection error (continuing without Redis): {"service":"gps-tracker"}
+2026-01-14 12:00:00 [INFO]: Running scheduled cleanup task {"service":"gps-tracker"}
+2026-01-14 12:00:00 [INFO]: GPS Protocol cleanup completed {"service":"gps-tracker"}
+2026-01-14 12:00:00 [INFO]: Performance metric: gps_sessions = 0 {"service":"gps-tracker","metric":"gps_sessions","value":0,"unit":""}
+2026-01-14 12:00:00 [INFO]: Performance metric: messages_processed = 0 {"service":"gps-tracker","metric":"messages_processed","value":0,"unit":""}
+2026-01-14 12:00:00 [INFO]: Performance metric: memory_usage = 30.170616149902344MB {"service":"gps-tracker","metric":"memory_usage","value":30.170616149902344,"unit":"MB"}
+2026-01-14 12:00:00 [INFO]: Performance metric: uptime = 128.9834973seconds {"service":"gps-tracker","metric":"uptime","value":128.9834973,"unit":"seconds"}
+2026-01-14 12:00:00 [ERROR]: Scheduled cleanup failed: getaddrinfo ENOTFOUND db.bfzbzmwqltepdrruirya.supabase.co {"service":"gps-tracker","errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"db.bfzbzmwqltepdrruirya.supabase.co","stack":"Error: getaddrinfo ENOTFOUND db.bfzbzmwqltepdrruirya.supabase.co\n    at GetAddrInfoReqWrap.onlookupall [as oncomplete] (node:dns:122:26)"}
+2026-01-14 12:00:01 [WARN]: Redis connection error (continuing without Redis): {"service":"gps-tracker"}
+2026-01-14 12:00:03 [WARN]: Redis connection error (continuing without Redis): {"service":"gps-tracker"}
+2026-01-14 12:00:05 [WARN]: Redis connection error (continuing without Redis): {"service":"gps-tracker"}
+2026-01-14 12:00:07 [WARN]: Redis connection error (continuing without Redis): {"service":"gps-tracker"}
+2026-01-14 12:00:09 [WARN]: Redis connection error (continuing without Redis): {"service":"gps-tracker"}
+2026-01-14 12:00:11 [WARN]: Redis connection error (continuing without Redis): {"service":"gps-tracker"}
+2026-01-14 12:00:13 [WARN]: Redis connection error (continuing without Redis): {"service":"gps-tracker"}
+2026-01-14 12:00:15 [WARN]: Redis connection error (continuing without Redis): {"service":"gps-tracker"}
+2026-01-14 12:00:17 [WARN]: Redis connection error (continuing without Redis): {"service":"gps-tracker"}
+2026-01-14 12:00:19 [WARN]: Redis connection error (continuing without Redis): {"service":"gps-tracker"}
+2026-01-14 12:00:21 [WARN]: Redis connection error (continuing without Redis): {"service":"gps-tracker"}
+2026-01-14 12:00:23 [WARN]: Redis connection error (continuing without Redis): {"service":"gps-tracker"}
+2026-01-14 12:00:25 [WARN]: Redis connection error (continuing without Redis): {"service":"gps-tracker"}
+2026-01-14 12:01:23 [INFO]: MongoDB connected successfully {"service":"gps-tracker"}
+2026-01-14 12:01:23 [INFO]: 🚀 GPS Tracking Server started successfully! {"service":"gps-tracker"}
+2026-01-14 12:01:23 [INFO]: ✅ HTTP Server: http://localhost:3000 {"service":"gps-tracker"}
+2026-01-14 12:01:23 [INFO]: ✅ API Docs: http://localhost:3000/api {"service":"gps-tracker"}
+2026-01-14 12:01:23 [INFO]: ✅ GPS Server (GT06): Port 5023 {"service":"gps-tracker"}
+2026-01-14 12:01:51 [INFO]: MongoDB connected successfully {"service":"gps-tracker"}
+2026-01-14 12:01:51 [INFO]: 🚀 GPS Tracking Server started successfully! {"service":"gps-tracker"}
+2026-01-14 12:01:51 [INFO]: ✅ HTTP Server: http://localhost:3000 {"service":"gps-tracker"}
+2026-01-14 12:01:51 [INFO]: ✅ API Docs: http://localhost:3000/api {"service":"gps-tracker"}
+2026-01-14 12:01:51 [INFO]: ✅ GPS Server (GT06): Port 5023 {"service":"gps-tracker"}
+2026-01-14 12:01:54 [INFO]: MongoDB connected successfully {"service":"gps-tracker"}
+2026-01-14 12:01:54 [INFO]: 🚀 GPS Tracking Server started successfully! {"service":"gps-tracker"}
+2026-01-14 12:01:54 [INFO]: ✅ HTTP Server: http://localhost:3000 {"service":"gps-tracker"}
+2026-01-14 12:01:54 [INFO]: ✅ API Docs: http://localhost:3000/api {"service":"gps-tracker"}
+2026-01-14 12:01:54 [INFO]: ✅ GPS Server (GT06): Port 5023 {"service":"gps-tracker"}
