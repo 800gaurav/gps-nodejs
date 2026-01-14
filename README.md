@@ -1,6 +1,6 @@
 # GPS Tracking Backend - Simplified
 
-Simple GPS tracking backend for GT06 and Teltonika devices.
+Simple GPS tracking backend for GT06 devices.
 
 ## Features
 
@@ -27,8 +27,7 @@ npm install
 PORT=3000
 MONGODB_URI=mongodb://localhost:27017/gps_tracker
 JWT_SECRET=your_jwt_secret_key_here
-GPS_PORT_GT06=5027
-GPS_PORT_TELTONIKA=2023
+GPS_PORT_GT06=5023
 ```
 
 4. Create admin user:
@@ -72,12 +71,7 @@ npm start
 ### GT06 Devices
 Configure your GT06 device to send data to:
 - Server IP: Your server IP
-- Port: 5027
-
-### Teltonika Devices
-Configure your Teltonika device to send data to:
-- Server IP: Your server IP
-- Port: 2023
+- Port: 5023
 
 ## User Roles
 

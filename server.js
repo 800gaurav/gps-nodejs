@@ -1,5 +1,3 @@
-const cluster = require('cluster');
-const os = require('os');
 const express = require('express');
 const http = require('http');
 const socketIo = require('socket.io');
@@ -11,7 +9,6 @@ const rateLimit = require('express-rate-limit');
 const path = require('path');
 const cron = require('node-cron');
 const dayjs = require('dayjs');
-const { Worker } = require('worker_threads');
 
 require('dotenv').config();
 
@@ -37,55 +34,7 @@ const reportRoutes = require('./routes/reports');
 const commandRoutes = require('./routes/commands');
 const notificationRoutes = require('./routes/notifications');
 
-// Enhanced clustering for high-load GPS tracking
-if (cluster.isMaster && (process.env.CLUSTER_MODE === 'true' || process.env.NODE_ENV === 'production')) {
-  const numCPUs = Math.min(os.cpus().length, 8); // Limit to 8 workers max
-  const gpsWorkers = [];
-  
-  logger.info(`Master ${process.pid} starting with ${numCPUs} HTTP workers`);
-  
-  // Fork HTTP workers
-  for (let i = 0; i < numCPUs; i++) {
-    const worker = cluster.fork({ WORKER_TYPE: 'http', WORKER_ID: i });
-    worker.on('message', (msg) => {
-      if (msg.type === 'gps_data') {
-        // Distribute GPS processing to dedicated workers
-        const workerIndex = msg.deviceId.charCodeAt(msg.deviceId.length - 1) % gpsWorkers.length;
-        if (gpsWorkers[workerIndex]) {
-          gpsWorkers[workerIndex].postMessage(msg);
-        }
-      }
-    });
-  }
-  
-  // Create dedicated GPS processing workers
-  for (let i = 0; i < Math.min(4, numCPUs); i++) {
-    const gpsWorker = new Worker('./workers/gpsWorker.js');
-    gpsWorkers.push(gpsWorker);
-    
-    gpsWorker.on('message', (result) => {
-      // Broadcast processed GPS data to all HTTP workers
-      for (const id in cluster.workers) {
-        cluster.workers[id].send({ type: 'broadcast_gps', data: result });
-      }
-    });
-  }
-  
-  cluster.on('exit', (worker, code, signal) => {
-    logger.warn(`Worker ${worker.process.pid} died`);
-    setTimeout(() => cluster.fork({ WORKER_TYPE: 'http' }), 1000);
-  });
-  
-  process.on('SIGTERM', () => {
-    logger.info('Shutting down cluster');
-    gpsWorkers.forEach(w => w.terminate());
-    for (const id in cluster.workers) {
-      cluster.workers[id].kill();
-    }
-  });
-} else {
-  startServer();
-}
+startServer();
 
 async function startServer() {
   try {
@@ -111,7 +60,7 @@ async function startServer() {
     const app = express();
     const server = http.createServer(app);
     
-    // Socket.IO setup with Redis adapter for clustering
+    // Socket.IO setup
     const io = socketIo(server, {
       cors: {
         origin: process.env.CORS_ORIGIN || "*",
@@ -219,7 +168,7 @@ async function startServer() {
       res.json({
         title: 'GPS Tracking API',
         version: '2.0.0',
-        description: 'Comprehensive GPS tracking system with GT06 protocol support',
+        description: 'GPS tracking system with GT06 protocol support',
         endpoints: {
           auth: '/api/auth',
           users: '/api/users',
@@ -230,8 +179,7 @@ async function startServer() {
           commands: '/api/commands'
         },
         protocols: {
-          gt06: parseInt(process.env.GPS_PORT_GT06) || 5027,
-          teltonika: parseInt(process.env.GPS_PORT_TELTONIKA) || 2023
+          gt06: parseInt(process.env.GPS_PORT_GT06) || 5023
         }
       });
     });
@@ -277,13 +225,9 @@ async function startServer() {
     // Initialize GPS Protocol handler
     const gpsProtocol = new GPSProtocol();
 
-    // GPS Protocol Servers
+    // GPS Protocol Server (GT06 only)
     const gpsServerGT06 = net.createServer((socket) => {
-      gpsProtocol.handleConnection(socket, io, parseInt(process.env.GPS_PORT_GT06) || 5027);
-    });
-
-    const gpsServerTeltonika = net.createServer((socket) => {
-      gpsProtocol.handleConnection(socket, io, parseInt(process.env.GPS_PORT_TELTONIKA) || 2023);
+      gpsProtocol.handleConnection(socket, io, parseInt(process.env.GPS_PORT_GT06) || 5023);
     });
 
     // Socket.IO connection handling
@@ -362,14 +306,10 @@ async function startServer() {
 
     // Start servers
     const PORT = process.env.PORT || 3000;
-    const GPS_PORT_GT06 = parseInt(process.env.GPS_PORT_GT06) || 5027;
-    const GPS_PORT_TELTONIKA = parseInt(process.env.GPS_PORT_TELTONIKA) || 2023;
+    const GPS_PORT_GT06 = parseInt(process.env.GPS_PORT_GT06) || 5023;
 
     server.listen(PORT, () => {
-      logger.info(`HTTP Server running on port ${PORT}`, { 
-        pid: process.pid,
-        env: process.env.NODE_ENV 
-      });
+      logger.info(`HTTP Server running on port ${PORT}`);
       logger.info(`Dashboard: http://localhost:${PORT}`);
     });
 
@@ -377,19 +317,14 @@ async function startServer() {
       logger.info(`GPS Server (GT06 Protocol) listening on port ${GPS_PORT_GT06}`);
     });
 
-    gpsServerTeltonika.listen(GPS_PORT_TELTONIKA, () => {
-      logger.info(`GPS Server (Teltonika Protocol) listening on port ${GPS_PORT_TELTONIKA}`);
-    });
-
     // Scheduled tasks
     setupScheduledTasks(gpsProtocol);
 
     // Graceful shutdown
-    setupGracefulShutdown(server, gpsServerGT06, gpsServerTeltonika, gpsProtocol);
+    setupGracefulShutdown(server, gpsServerGT06, gpsProtocol);
 
     logger.info('GPS Tracking Server started successfully', {
-      pid: process.pid,
-      ports: { http: PORT, gt06: GPS_PORT_GT06, teltonika: GPS_PORT_TELTONIKA }
+      ports: { http: PORT, gt06: GPS_PORT_GT06 }
     });
 
   } catch (error) {
@@ -439,7 +374,7 @@ function setupScheduledTasks(gpsProtocol) {
   });
 }
 
-function setupGracefulShutdown(server, gpsServerGT06, gpsServerTeltonika, gpsProtocol) {
+function setupGracefulShutdown(server, gpsServerGT06, gpsProtocol) {
   const shutdown = async (signal) => {
     logger.info(`Received ${signal}, shutting down gracefully`);
     
@@ -451,10 +386,6 @@ function setupGracefulShutdown(server, gpsServerGT06, gpsServerTeltonika, gpsPro
       
       gpsServerGT06.close(() => {
         logger.info('GT06 GPS server closed');
-      });
-      
-      gpsServerTeltonika.close(() => {
-        logger.info('Teltonika GPS server closed');
       });
 
       // Cleanup GPS protocol

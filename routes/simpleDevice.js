@@ -118,4 +118,116 @@ router.get('/verify/:imei', auth, async (req, res) => {
   }
 });
 
+// Get all devices (to check if device is added)
+router.get('/list', auth, async (req, res) => {
+  try {
+    const devices = await Device.find({})
+      .populate('userId', 'username email name')
+      .sort({ createdAt: -1 });
+    
+    res.json({ 
+      success: true, 
+      count: devices.length,
+      devices: devices.map(device => ({
+        _id: device._id,
+        deviceId: device.deviceId,
+        imei: device.imei,
+        vehicleName: device.vehicleName,
+        deviceType: device.deviceType,
+        protocol: device.protocol,
+        status: device.status,
+        userId: device.userId,
+        createdAt: device.createdAt,
+        lastSeen: device.lastSeen
+      }))
+    });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+});
+
+// Check device connection status
+router.get('/status/:imei', auth, async (req, res) => {
+  try {
+    const { imei } = req.params;
+    const mongoose = require('mongoose');
+    
+    // Get Location model safely
+    let Location;
+    try {
+      Location = mongoose.model('Location');
+    } catch (error) {
+      Location = require('../models/Location');
+    }
+    
+    // Find device
+    const device = await Device.findOne({ 
+      $or: [{ imei }, { deviceId: imei }] 
+    });
+    
+    if (!device) {
+      return res.status(404).json({ 
+        success: false, 
+        message: 'Device not found in database',
+        imei: imei,
+        suggestion: 'Please add device first using POST /api/device/add'
+      });
+    }
+
+    // Check latest location
+    const latestLocation = await Location.findOne({ 
+      deviceId: imei 
+    }).sort({ timestamp: -1 });
+
+    const now = new Date();
+    let connectionStatus = 'never_connected';
+    let lastSeenMinutes = null;
+    
+    if (latestLocation) {
+      const timeDiff = now - new Date(latestLocation.timestamp);
+      lastSeenMinutes = Math.floor(timeDiff / (1000 * 60));
+      
+      if (lastSeenMinutes < 5) {
+        connectionStatus = 'online';
+      } else if (lastSeenMinutes < 30) {
+        connectionStatus = 'recently_online';
+      } else {
+        connectionStatus = 'offline';
+      }
+    }
+
+    res.json({ 
+      success: true,
+      device: {
+        deviceId: device.deviceId,
+        imei: device.imei,
+        vehicleName: device.vehicleName,
+        deviceType: device.deviceType,
+        protocol: device.protocol,
+        status: device.status,
+        addedAt: device.createdAt
+      },
+      connection: {
+        status: connectionStatus,
+        lastSeen: latestLocation ? latestLocation.timestamp : null,
+        lastSeenMinutesAgo: lastSeenMinutes,
+        hasEverConnected: !!latestLocation
+      },
+      troubleshooting: {
+        serverIP: 'Your server IP here',
+        port: device.protocol || 5027,
+        deviceConfiguration: `SERVER,1,YOUR_SERVER_IP,${device.protocol || 5027},0#`,
+        possibleIssues: [
+          latestLocation ? null : 'Device never sent data - check device configuration',
+          connectionStatus === 'offline' ? 'Device offline - check power and network' : null,
+          'Verify APN settings on device',
+          'Check if device has active SIM card with data plan'
+        ].filter(Boolean)
+      }
+    });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+});
+
 module.exports = router;

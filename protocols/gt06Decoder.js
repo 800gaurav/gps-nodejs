@@ -174,6 +174,14 @@ class GT06ProtocolDecoder {
     const type = buffer.readUInt8(3);
     const dataLength = length - 5;
 
+    // Validate CRC
+    if (!this.validateCRC(buffer)) {
+      logger.gpsProtocol(deviceSession?.deviceId, 'GT06', 'CRC validation failed', { 
+        type: type.toString(16) 
+      });
+      return null;
+    }
+
     logger.gpsProtocol(deviceSession?.deviceId, 'GT06', 'Decoding basic message', { 
       type: type.toString(16), 
       length, 
@@ -847,7 +855,14 @@ class GT06ProtocolDecoder {
    * Decode extended (0x7979) messages
    */
   async decodeExtended(buffer, deviceSession, variant) {
-    // Implementation for extended messages
+    if (buffer.length < 6) return null;
+
+    // Validate CRC
+    if (!this.validateCRC(buffer)) {
+      logger.gpsProtocol(deviceSession?.deviceId, 'GT06', 'CRC validation failed for extended message');
+      return null;
+    }
+
     logger.gpsProtocol(deviceSession?.deviceId, 'GT06', 'Extended message received');
     return null;
   }
@@ -1001,6 +1016,47 @@ class GT06ProtocolDecoder {
     response.writeUInt8(0x0A, pos++);
 
     return response.slice(0, pos);
+  }
+
+  /**
+   * Validate CRC16 checksum for incoming messages
+   */
+  validateCRC(buffer) {
+    try {
+      if (!buffer || buffer.length < 7) return false;
+
+      const header = buffer.readUInt16BE(0);
+      let dataEnd;
+
+      if (header === 0x7878) {
+        dataEnd = buffer.length - 4; // Exclude CRC (2 bytes) + footer (2 bytes)
+      } else if (header === 0x7979) {
+        dataEnd = buffer.length - 4;
+      } else {
+        return false;
+      }
+
+      // Extract received CRC
+      const receivedCRC = buffer.readUInt16BE(dataEnd);
+
+      // Calculate CRC for data portion (skip header, include length and data)
+      const dataForCRC = buffer.slice(2, dataEnd);
+      const calculatedCRC = this.calculateCRC16(dataForCRC);
+
+      const isValid = receivedCRC === calculatedCRC;
+      
+      if (!isValid) {
+        logger.warn('CRC mismatch', { 
+          received: receivedCRC.toString(16), 
+          calculated: calculatedCRC.toString(16) 
+        });
+      }
+
+      return isValid;
+    } catch (error) {
+      logger.error('Error validating CRC:', error);
+      return false;
+    }
   }
 
   /**

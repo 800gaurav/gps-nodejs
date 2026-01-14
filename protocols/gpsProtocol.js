@@ -47,7 +47,7 @@ class GPSProtocol extends EventEmitter {
       socket,
       deviceId: null,
       lastActivity: Date.now(),
-      protocol: port === 5027 ? 'GT06' : 'TELTONIKA',
+      protocol: 'GT06',
       buffer: Buffer.alloc(0),
       authenticated: false
     };
@@ -71,23 +71,40 @@ class GPSProtocol extends EventEmitter {
         connection.lastActivity = Date.now();
         connection.buffer = Buffer.concat([connection.buffer, data]);
 
-        // Process complete messages
-        while (connection.buffer.length > 0) {
+        // Prevent buffer overflow
+        if (connection.buffer.length > 8192) {
+          logger.warn('Buffer overflow, clearing', { connectionId, size: connection.buffer.length });
+          connection.buffer = Buffer.alloc(0);
+          return;
+        }
+
+        // Process complete messages with loop protection
+        let iterations = 0;
+        const maxIterations = 50;
+        
+        while (connection.buffer.length > 0 && iterations < maxIterations) {
+          iterations++;
           const result = await this.processMessage(connection, io);
-          if (!result) break;
           
-          if (result.consumed === 0) {
-            // Prevent infinite loop
-            logger.warn('No data consumed, clearing buffer', { connectionId });
-            connection.buffer = Buffer.alloc(0);
+          if (!result || result.consumed === 0) {
+            if (result && result.consumed === 0) {
+              logger.warn('No data consumed, clearing buffer', { connectionId });
+              connection.buffer = Buffer.alloc(0);
+            }
             break;
           }
           
           connection.buffer = connection.buffer.slice(result.consumed);
         }
+        
+        if (iterations >= maxIterations) {
+          logger.error('Max iterations reached, clearing buffer', { connectionId });
+          connection.buffer = Buffer.alloc(0);
+        }
       } catch (error) {
         logger.error('Error processing GPS data:', error);
         this.stats.errorsCount++;
+        connection.buffer = Buffer.alloc(0);
       }
     });
 
@@ -109,12 +126,7 @@ class GPSProtocol extends EventEmitter {
 
   async processMessage(connection, io) {
     try {
-      if (connection.protocol === 'GT06') {
-        return await this.processGT06Message(connection, io);
-      } else {
-        // Handle other protocols
-        return { consumed: connection.buffer.length };
-      }
+      return await this.processGT06Message(connection, io);
     } catch (error) {
       logger.error('Error in processMessage:', error);
       return { consumed: connection.buffer.length };
