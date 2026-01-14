@@ -46,7 +46,7 @@ router.post('/add-by-imei', auth, [
 
     // Auto-detect device type and protocol based on IMEI patterns
     let deviceType = 'GT06'; // Default
-    let protocol = 5023;
+    let protocol = 5027;
     
     // IMEI pattern detection (you can customize these patterns)
     const imeiPrefix = imei.substring(0, 8);

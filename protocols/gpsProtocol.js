@@ -69,6 +69,18 @@ class GPSProtocol extends EventEmitter {
     socket.on('data', async (data) => {
       try {
         connection.lastActivity = Date.now();
+        
+        // RAW DATA LOGGING
+        console.log('\n========== RAW GPS DATA RECEIVED ==========');
+        console.log('Connection:', connectionId);
+        console.log('Device IMEI:', connection.deviceId || 'Not logged in yet');
+        console.log('Data Length:', data.length);
+        console.log('HEX:', data.toString('hex'));
+        console.log('HEX (formatted):', data.toString('hex').match(/.{1,2}/g).join(' '));
+        console.log('ASCII:', data.toString('ascii').replace(/[^\x20-\x7E]/g, '.'));
+        console.log('Buffer:', data);
+        console.log('==========================================\n');
+        
         connection.buffer = Buffer.concat([connection.buffer, data]);
 
         // Prevent buffer overflow
@@ -136,7 +148,12 @@ class GPSProtocol extends EventEmitter {
   async processGT06Message(connection, io) {
     const buffer = connection.buffer;
     
+    console.log('\n--- Processing GT06 Message ---');
+    console.log('Buffer length:', buffer.length);
+    console.log('Buffer HEX:', buffer.toString('hex').substring(0, 100));
+    
     if (buffer.length < 5) {
+      console.log('Buffer too short, need more data');
       return null; // Need more data
     }
 
@@ -236,7 +253,7 @@ class GPSProtocol extends EventEmitter {
           logger.error('Error auto-creating device:', dbError);
         }
         
-        logger.deviceConnected(result.imei, connection.socket.remoteAddress);
+        logger.info('Device connected', { imei: result.imei, ip: connection.socket.remoteAddress });
       }
 
       // Handle position data
@@ -446,7 +463,7 @@ class GPSProtocol extends EventEmitter {
           { $set: { online: false, lastSeen: new Date() } }
         ).catch(err => logger.error('Error marking device offline:', err));
         
-        logger.deviceDisconnected(connection.deviceId);
+        logger.info('Device disconnected', { deviceId: connection.deviceId });
       }
       
       if (connection.socket && !connection.socket.destroyed) {

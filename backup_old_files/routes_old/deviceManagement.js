@@ -81,7 +81,7 @@ router.post('/add',
         deviceId,
         imei,
         deviceType,
-        protocol: deviceType === 'GT06' ? 5023 : 5027,
+        protocol: deviceType === 'GT06' ? 5027 : 5027,
         vehicleName,
         userId: null, // Initially unassigned
         status: 'active'

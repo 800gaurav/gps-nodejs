@@ -481,7 +481,17 @@ class GT06ProtocolDecoder {
    */
   decodeGPS(buffer, start, type, variant) {
     try {
-      if (buffer.length < start + 20) return null;
+      console.log('\n=== DECODING GPS DATA ===');
+      console.log('Start position:', start);
+      console.log('Buffer length:', buffer.length);
+      console.log('Message type:', type.toString(16));
+      console.log('Variant:', variant);
+      console.log('GPS data HEX:', buffer.slice(start, Math.min(start + 30, buffer.length)).toString('hex'));
+      
+      if (buffer.length < start + 20) {
+        console.log('❌ Not enough data for GPS decode');
+        return null;
+      }
 
       let pos = start;
 
@@ -543,10 +553,22 @@ class GT06ProtocolDecoder {
       if (!latNorth) latitude = -latitude;
       if (lngEast) longitude = -longitude;
 
+      console.log('\n--- GPS DECODE RESULT ---');
+      console.log('Timestamp:', timestamp);
+      console.log('Satellites:', satellites);
+      console.log('Latitude (raw):', latRaw, '-> Decoded:', latitude);
+      console.log('Longitude (raw):', lngRaw, '-> Decoded:', longitude);
+      console.log('Speed:', speed);
+      console.log('Course:', course);
+      console.log('Valid:', valid);
+      console.log('Flags:', flags.toString(16));
+      console.log('-------------------------\n');
+
       // Validate coordinates
       if (latitude === 0 && longitude === 0) {
-        logger.warn('Invalid GPS coordinates (0,0)', { deviceId: deviceSession?.deviceId });
-        return null;
+        console.log('⚠️ WARNING: GPS coordinates are (0,0) - GPS fix not acquired');
+        console.log('This is normal if device has no GPS signal');
+        // Don't return null, save it so we can see the data is coming
       }
 
       const position = {
@@ -561,7 +583,7 @@ class GT06ProtocolDecoder {
         engineOn: ignition
       };
 
-      logger.info('GPS decoded successfully', {
+      console.log('GPS decoded successfully', {
         deviceId: deviceSession?.deviceId,
         lat: latitude,
         lng: longitude,

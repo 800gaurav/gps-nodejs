@@ -40,7 +40,7 @@ router.post('/add', auth, [
 
     // Auto-detect device type based on IMEI
     let deviceType = 'GT06';
-    let protocol = 5023;
+    let protocol = 5027;
     
     const imeiPrefix = imei.substring(0, 8);
     const teltonikaPrefix = ['35238507', '35238508'];
