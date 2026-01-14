@@ -105,6 +105,14 @@ logger.deviceActivity = (deviceId, activity, data = {}) => {
   logger.info(`Device activity: ${activity}`, { deviceId, ...data });
 };
 
+logger.deviceConnected = (deviceId, ip) => {
+  logger.info(`Device connected: ${deviceId}`, { ip });
+};
+
+logger.deviceDisconnected = (deviceId) => {
+  logger.info(`Device disconnected: ${deviceId}`, { deviceId });
+};
+
 logger.locationUpdate = (deviceId, location) => {
   logger.debug('Location update received', {
     deviceId,
@@ -139,12 +147,12 @@ logger.on('error', (error) => {
 // Graceful shutdown
 process.on('SIGINT', () => {
   logger.info('Shutting down logger...');
-  logger.end();
+  setTimeout(() => logger.end(), 100);
 });
 
 process.on('SIGTERM', () => {
   logger.info('Shutting down logger...');
-  logger.end();
+  setTimeout(() => logger.end(), 100);
 });
 
 module.exports = logger;

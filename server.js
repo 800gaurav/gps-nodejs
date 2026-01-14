@@ -15,6 +15,7 @@ const GPSProtocol = require('./protocols/gpsProtocol');
 const deviceRoutes = require('./routes/devices');
 const locationRoutes = require('./routes/locations');
 const commandRoutes = require('./routes/commands');
+const deviceInfoRoutes = require('./routes/deviceInfo');
 
 startServer();
 
@@ -51,6 +52,7 @@ async function startServer() {
     app.use('/api/devices', deviceRoutes);
     app.use('/api/locations', locationRoutes);
     app.use('/api/commands', commandRoutes);
+    app.use('/api/device-info', deviceInfoRoutes);
 
     // Health check
     app.get('/health', (req, res) => {
@@ -60,8 +62,44 @@ async function startServer() {
         uptime: process.uptime(),
         gps: {
           activeSessions: stats.activeSessions,
-          messagesProcessed: stats.messagesProcessed
+          messagesProcessed: stats.messagesProcessed,
+          activeConnections: stats.activeConnections,
+          authenticatedDevices: stats.authenticatedDevices
         }
+      });
+    });
+
+    // GPS Debug endpoint
+    app.get('/api/gps/debug', async (req, res) => {
+      const Device = require('./models/Device');
+      const Location = require('./models/Location');
+      
+      const stats = gpsProtocol.getStats();
+      const devices = await Device.find({}).lean();
+      const recentLocations = await Location.find({}).sort({ timestamp: -1 }).limit(10).lean();
+      
+      res.json({
+        gpsServer: {
+          port: process.env.GPS_PORT_GT06 || 5023,
+          stats: stats
+        },
+        database: {
+          totalDevices: devices.length,
+          onlineDevices: devices.filter(d => d.online).length,
+          devicesWithLocation: devices.filter(d => d.lastLatitude && d.lastLongitude).length,
+          devices: devices.map(d => ({
+            imei: d.imei,
+            online: d.online,
+            hasLocation: !!(d.lastLatitude && d.lastLongitude),
+            lastSeen: d.lastSeen
+          }))
+        },
+        recentLocations: recentLocations.map(l => ({
+          deviceId: l.deviceId,
+          lat: l.latitude,
+          lng: l.longitude,
+          timestamp: l.timestamp
+        }))
       });
     });
 
