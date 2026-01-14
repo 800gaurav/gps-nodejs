@@ -213,6 +213,29 @@ class GPSProtocol extends EventEmitter {
         this.deviceSessions.set(result.imei, sessionData);
         await redisManager.setDeviceSession(result.imei, sessionData);
         
+        // Auto-create device if not exists and mark as online
+        const Device = require('../models/Device');
+        try {
+          await Device.findOneAndUpdate(
+            { imei: result.imei },
+            {
+              $setOnInsert: {
+                deviceId: result.imei,
+                imei: result.imei,
+                vehicleName: `Device ${result.imei.substring(result.imei.length - 4)}`
+              },
+              $set: {
+                online: true,
+                lastSeen: new Date()
+              }
+            },
+            { upsert: true, new: true }
+          );
+          logger.info('Device auto-created/updated', { imei: result.imei });
+        } catch (dbError) {
+          logger.error('Error auto-creating device:', dbError);
+        }
+        
         logger.deviceConnected(result.imei, connection.socket.remoteAddress);
       }
 
@@ -392,6 +415,14 @@ class GPSProtocol extends EventEmitter {
     if (connection) {
       if (connection.deviceId) {
         this.deviceSessions.delete(connection.deviceId);
+        
+        // Mark device as offline
+        const Device = require('../models/Device');
+        Device.findOneAndUpdate(
+          { imei: connection.deviceId },
+          { $set: { online: false, lastSeen: new Date() } }
+        ).catch(err => logger.error('Error marking device offline:', err));
+        
         logger.deviceDisconnected(connection.deviceId);
       }
       

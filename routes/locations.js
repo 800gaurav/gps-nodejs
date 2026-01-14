@@ -6,8 +6,13 @@ const Location = require('../models/Location');
 // Get live location of all devices
 router.get('/live', async (req, res) => {
   try {
-    const devices = await Device.find({ online: true });
-    res.json({ success: true, devices });
+    const devices = await Device.find({});
+    const devicesWithLocation = devices.filter(d => d.lastLatitude && d.lastLongitude);
+    res.json({ 
+      success: true, 
+      count: devicesWithLocation.length,
+      devices: devicesWithLocation 
+    });
   } catch (error) {
     res.status(500).json({ success: false, error: error.message });
   }
@@ -16,7 +21,12 @@ router.get('/live', async (req, res) => {
 // Get live location of specific device
 router.get('/live/:deviceId', async (req, res) => {
   try {
-    const device = await Device.findOne({ deviceId: req.params.deviceId });
+    const device = await Device.findOne({ 
+      $or: [
+        { deviceId: req.params.deviceId },
+        { imei: req.params.deviceId }
+      ]
+    });
     if (!device) {
       return res.status(404).json({ success: false, error: 'Device not found' });
     }
