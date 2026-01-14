@@ -248,38 +248,49 @@ class GPSProtocol extends EventEmitter {
         const Location = require('../models/Location');
         
         try {
-          // Update device with latest location
-          await Device.findOneAndUpdate(
-            { deviceId: connection.deviceId },
+          // Update device with latest location (search by imei)
+          const updateResult = await Device.findOneAndUpdate(
+            { imei: connection.deviceId },
             {
               $set: {
                 online: true,
                 lastSeen: new Date(),
                 lastLatitude: result.position.latitude,
                 lastLongitude: result.position.longitude,
-                speed: result.position.speed,
-                ignition: result.position.ignition,
-                course: result.position.course,
-                altitude: result.position.altitude,
-                satellites: result.position.satellites
+                speed: result.position.speed || 0,
+                ignition: result.position.ignition || false,
+                course: result.position.course || 0,
+                altitude: result.position.altitude || 0,
+                satellites: result.position.satellites || 0
               }
-            }
+            },
+            { new: true }
           );
+          
+          if (updateResult) {
+            logger.info('Device location updated', { 
+              imei: connection.deviceId,
+              lat: result.position.latitude,
+              lng: result.position.longitude
+            });
+          }
           
           // Save location history
           await Location.create({
             deviceId: connection.deviceId,
             latitude: result.position.latitude,
             longitude: result.position.longitude,
-            speed: result.position.speed,
-            course: result.position.course,
-            altitude: result.position.altitude,
-            satellites: result.position.satellites,
-            ignition: result.position.ignition,
-            engineOn: result.position.engineOn,
-            gpsValid: result.position.valid,
+            speed: result.position.speed || 0,
+            course: result.position.course || 0,
+            altitude: result.position.altitude || 0,
+            satellites: result.position.satellites || 0,
+            ignition: result.position.ignition || false,
+            engineOn: result.position.engineOn || false,
+            gpsValid: result.position.valid !== false,
             timestamp: result.position.timestamp || new Date()
           });
+          
+          logger.info('Location saved to history', { deviceId: connection.deviceId });
         } catch (dbError) {
           logger.error('Database save error:', dbError);
         }

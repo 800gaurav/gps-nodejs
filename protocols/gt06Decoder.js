@@ -337,9 +337,18 @@ class GT06ProtocolDecoder {
    * Handle GPS message with complete protocol support
    */
   async handleGPSMessage(buffer, start, type, index, deviceSession, position, variant) {
-    if (!deviceSession) return null;
+    if (!deviceSession) {
+      logger.warn('No device session for GPS message');
+      return null;
+    }
 
     let pos = start;
+
+    logger.info('Processing GPS message', { 
+      deviceId: deviceSession.deviceId, 
+      type: type.toString(16),
+      bufferLength: buffer.length 
+    });
 
     // Handle special cases for different variants
     if (type === this.MSG_GPS_LBS_2 && variant === this.variants.SEEWORLD) {
@@ -524,6 +533,12 @@ class GT06ProtocolDecoder {
       if (!latNorth) latitude = -latitude;
       if (lngEast) longitude = -longitude;
 
+      // Validate coordinates
+      if (latitude === 0 && longitude === 0) {
+        logger.warn('Invalid GPS coordinates (0,0)', { deviceId: deviceSession?.deviceId });
+        return null;
+      }
+
       const position = {
         timestamp,
         latitude,
@@ -535,6 +550,14 @@ class GT06ProtocolDecoder {
         ignition,
         engineOn: ignition
       };
+
+      logger.info('GPS decoded successfully', {
+        deviceId: deviceSession?.deviceId,
+        lat: latitude,
+        lng: longitude,
+        valid,
+        satellites
+      });
 
       // Add altitude for supported variants
       if (variant === this.variants.SL4X && pos + 2 <= buffer.length - 6) {
