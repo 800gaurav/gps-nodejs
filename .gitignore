@@ -9,6 +9,7 @@ yarn-debug.log*
 yarn-error.log*
 app.log
 gps-protocol.log
+error.log
 .DS_Store
 .vscode/
 *.log
