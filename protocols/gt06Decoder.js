@@ -505,51 +505,75 @@ class GT06ProtocolDecoder {
 
       const timestamp = new Date(year, month, day, hour, minute, second);
 
-      // GPS length check for some message types
-      if ([this.MSG_GPS_LBS_1, this.MSG_GPS_LBS_2].includes(type)) {
+      // GPS length check for some message types - FIXED
+      let hasLength = false;
+      if ([this.MSG_GPS_LBS_1, this.MSG_GPS_LBS_2, this.MSG_GPS_LBS_STATUS_1, this.MSG_GPS_LBS_STATUS_2].includes(type)) {
         if (pos >= buffer.length) return null;
         const gpsLength = buffer.readUInt8(pos++);
-        if (gpsLength === 0) return null;
+        hasLength = true;
+        console.log('GPS Length field:', gpsLength);
+        if (gpsLength === 0) {
+          console.log('❌ GPS length is 0 - no GPS data');
+          return null;
+        }
       }
 
-      // Satellites (4 bits) - some variants use full byte
-      let satellites;
-      if (variant === this.variants.OBD6) {
-        satellites = buffer.readUInt8(pos++);
-      } else {
-        satellites = buffer.readUInt8(pos++) & 0x0F;
+      // Satellites (4 bits) - FIXED satellite reading
+      let satellites = 0;
+      if (pos < buffer.length) {
+        const satByte = buffer.readUInt8(pos++);
+        if (variant === this.variants.OBD6) {
+          satellites = satByte;
+        } else {
+          satellites = satByte & 0x0F; // Only lower 4 bits for satellites
+        }
+        console.log('Satellites byte:', satByte.toString(16), '-> Satellites:', satellites);
       }
 
-      // Latitude (4 bytes)
+      // Latitude (4 bytes) - FIXED coordinate calculation
+      if (pos + 4 > buffer.length) {
+        console.log('❌ Not enough data for latitude');
+        return null;
+      }
       const latRaw = buffer.readUInt32BE(pos);
       pos += 4;
-      let latitude = latRaw / 60.0 / 30000.0;
+      let latitude = latRaw / 1800000.0; // Correct formula: /60.0/30000.0 = /1800000.0
 
-      // Longitude (4 bytes)
+      // Longitude (4 bytes) - FIXED coordinate calculation  
+      if (pos + 4 > buffer.length) {
+        console.log('❌ Not enough data for longitude');
+        return null;
+      }
       const lngRaw = buffer.readUInt32BE(pos);
       pos += 4;
-      let longitude = lngRaw / 60.0 / 30000.0;
+      let longitude = lngRaw / 1800000.0; // Correct formula: /60.0/30000.0 = /1800000.0
 
       // Speed (1 or 2 bytes depending on variant)
-      let speed;
-      if (variant === this.variants.JC400) {
-        speed = buffer.readUInt16BE(pos);
-        pos += 2;
-      } else {
-        speed = buffer.readUInt8(pos++);
+      let speed = 0;
+      if (pos < buffer.length) {
+        if (variant === this.variants.JC400 && pos + 2 <= buffer.length) {
+          speed = buffer.readUInt16BE(pos);
+          pos += 2;
+        } else {
+          speed = buffer.readUInt8(pos++);
+        }
       }
 
-      // Course and flags (2 bytes)
+      // Course and flags (2 bytes) - FIXED flag reading
+      if (pos + 2 > buffer.length) {
+        console.log('❌ Not enough data for flags');
+        return null;
+      }
       const flags = buffer.readUInt16BE(pos);
       pos += 2;
 
-      const course = flags & 0x03FF;
-      const valid = (flags & 0x1000) !== 0;
-      const latNorth = (flags & 0x0400) === 0;
-      const lngEast = (flags & 0x0800) !== 0;
-      const ignition = (flags & 0x8000) !== 0;
+      const course = flags & 0x03FF; // Lower 10 bits
+      const valid = (flags & 0x1000) !== 0; // Bit 12
+      const latNorth = (flags & 0x0400) === 0; // Bit 10 (inverted)
+      const lngEast = (flags & 0x0800) !== 0; // Bit 11
+      const ignition = (flags & 0x4000) !== 0; // Bit 14 - FIXED ignition bit
 
-      // Apply hemisphere corrections
+      // Apply hemisphere corrections - FIXED logic
       if (!latNorth) latitude = -latitude;
       if (lngEast) longitude = -longitude;
 
@@ -562,6 +586,7 @@ class GT06ProtocolDecoder {
       console.log('Course:', course);
       console.log('Valid:', valid);
       console.log('Flags:', flags.toString(16));
+      console.log('Lat North:', latNorth, 'Lng East:', lngEast);
       console.log('-------------------------\n');
 
       // Validate coordinates
@@ -583,8 +608,7 @@ class GT06ProtocolDecoder {
         engineOn: ignition
       };
 
-      console.log('GPS decoded successfully', {
-        deviceId: deviceSession?.deviceId,
+      console.log('✅ GPS decoded successfully', {
         lat: latitude,
         lng: longitude,
         valid,
@@ -602,6 +626,7 @@ class GT06ProtocolDecoder {
         nextPos: pos
       };
     } catch (error) {
+      console.error('❌ Error decoding GPS data:', error);
       logger.error('Error decoding GPS data:', error);
       return null;
     }

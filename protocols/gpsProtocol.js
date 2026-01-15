@@ -258,9 +258,21 @@ class GPSProtocol extends EventEmitter {
 
       // Handle position data
       if (result.position && connection.deviceId) {
-        console.log('=== GPS POSITION DATA RECEIVED ===');
-        console.log('Device IMEI:', connection.deviceId);
-        console.log('Position:', JSON.stringify(result.position, null, 2));
+        console.log('\n🌍 === GPS POSITION DATA RECEIVED ===');
+        console.log('⏰ Time:', new Date().toLocaleString());
+        console.log('📱 Device IMEI:', connection.deviceId);
+        console.log('📍 Latitude:', result.position.latitude);
+        console.log('📍 Longitude:', result.position.longitude);
+        console.log('✅ Valid:', result.position.valid);
+        console.log('🛰️  Satellites:', result.position.satellites);
+        console.log('🚗 Speed:', result.position.speed, 'km/h');
+        console.log('🧭 Course:', result.position.course, '°');
+        
+        if (result.position.latitude === 0 && result.position.longitude === 0) {
+          console.log('⚠️  WARNING: GPS coordinates are (0,0)');
+          console.log('   Reason: Device has NO GPS FIX yet');
+          console.log('   Solution: Keep device near window for 2-5 minutes');
+        }
         
         result.position.deviceId = connection.deviceId;
         
