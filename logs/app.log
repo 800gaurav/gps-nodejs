@@ -17,3 +17,23 @@
 2026-01-14 18:56:59 [INFO]: ✅ HTTP Server: http://localhost:3000 {"service":"gps-tracker"}
 2026-01-14 18:56:59 [INFO]: ✅ API Docs: http://localhost:3000/api {"service":"gps-tracker"}
 2026-01-14 18:56:59 [INFO]: ✅ GPS Server (GT06): Port 5023 {"service":"gps-tracker"}
+2026-01-14 22:34:35 [INFO]: MongoDB connected successfully {"service":"gps-tracker"}
+2026-01-14 22:34:35 [INFO]: 🚀 GPS Tracking Server started successfully! {"service":"gps-tracker"}
+2026-01-14 22:34:35 [INFO]: ✅ HTTP Server: http://localhost:3000 {"service":"gps-tracker"}
+2026-01-14 22:34:35 [INFO]: ✅ API Docs: http://localhost:3000/api {"service":"gps-tracker"}
+2026-01-14 22:34:35 [INFO]: ✅ GPS Server (GT06): Port 5027 {"service":"gps-tracker"}
+2026-01-14 22:35:18 [INFO]: MongoDB connected successfully {"service":"gps-tracker"}
+2026-01-14 22:35:18 [INFO]: 🚀 GPS Tracking Server started successfully! {"service":"gps-tracker"}
+2026-01-14 22:35:18 [INFO]: ✅ HTTP Server: http://localhost:3000 {"service":"gps-tracker"}
+2026-01-14 22:35:18 [INFO]: ✅ API Docs: http://localhost:3000/api {"service":"gps-tracker"}
+2026-01-14 22:35:18 [INFO]: ✅ GPS Server (GT06): Port 5027 {"service":"gps-tracker"}
+2026-01-14 22:58:37 [INFO]: MongoDB connected successfully {"service":"gps-tracker"}
+2026-01-14 22:58:37 [INFO]: 🚀 GPS Tracking Server started successfully! {"service":"gps-tracker"}
+2026-01-14 22:58:37 [INFO]: ✅ HTTP Server: http://localhost:3000 {"service":"gps-tracker"}
+2026-01-14 22:58:37 [INFO]: ✅ API Docs: http://localhost:3000/api {"service":"gps-tracker"}
+2026-01-14 22:58:37 [INFO]: ✅ GPS Server (GT06): Port 5027 {"service":"gps-tracker"}
+2026-01-14 22:59:17 [INFO]: MongoDB connected successfully {"service":"gps-tracker"}
+2026-01-14 22:59:17 [INFO]: 🚀 GPS Tracking Server started successfully! {"service":"gps-tracker"}
+2026-01-14 22:59:17 [INFO]: ✅ HTTP Server: http://localhost:3000 {"service":"gps-tracker"}
+2026-01-14 22:59:17 [INFO]: ✅ API Docs: http://localhost:3000/api {"service":"gps-tracker"}
+2026-01-14 22:59:17 [INFO]: ✅ GPS Server (GT06): Port 5027 {"service":"gps-tracker"}
