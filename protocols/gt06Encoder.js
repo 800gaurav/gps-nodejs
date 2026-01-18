@@ -7,6 +7,9 @@ class GT06ProtocolEncoder {
     this.MSG_COMMAND_1 = 0x81;
     this.MSG_COMMAND_2 = 0x82;
     
+    // Message index counter (incremental)
+    this.messageIndex = 1;
+    
     // Standard commands
     this.COMMANDS = {
       ENGINE_STOP: 'engineStop',
@@ -89,7 +92,8 @@ class GT06ProtocolEncoder {
     } else if (alternative) {
       commandText = stop ? `DYD,${password}#` : `HFYD,${password}#`;
     } else {
-      commandText = stop ? 'Relay,1#' : 'Relay,0#';
+      // Standard GT06 compatible commands
+      commandText = stop ? `RELAY,${password},1#` : `RELAY,${password},0#`;
     }
 
     return this.encodeTextCommand(commandText, parameters.language);
@@ -211,8 +215,8 @@ class GT06ProtocolEncoder {
       buffer.writeUInt16BE(0x7878, pos);
       pos += 2;
 
-      // Length: type(1) + commandLength(1) + reserved(4) + content + index(2) + crc(2) + language(0 or 2)
-      const messageLength = 1 + 1 + 4 + commandBuffer.length + 2 + 2 + languageSize;
+      // Length: type(1) + commandLength(1) + reserved(4) + content + language + index(2) + crc(2)
+      const messageLength = 1 + 1 + 4 + commandBuffer.length + languageSize + 2 + 2;
       buffer.writeUInt8(messageLength, pos++);
 
       // Message type (MSG_COMMAND_0)
@@ -236,10 +240,12 @@ class GT06ProtocolEncoder {
       }
 
       // Message index (sequence number)
-      buffer.writeUInt16BE(0, pos);
+      const currentIndex = this.messageIndex++;
+      if (this.messageIndex > 0xFFFF) this.messageIndex = 1; // Reset after max
+      buffer.writeUInt16BE(currentIndex, pos);
       pos += 2;
 
-      // CRC16 checksum
+      // CRC16 checksum (always basic format 0x7878 for commands)
       const crc = this.calculateCRC16(buffer.slice(2, pos));
       buffer.writeUInt16BE(crc, pos);
       pos += 2;
@@ -269,7 +275,8 @@ class GT06ProtocolEncoder {
       pos += 2;
 
       // Length
-      buffer.writeUInt8(1 + data.length + 2, pos++);
+      const messageLength = 1 + data.length + 2 + 2; // type + data + index + crc
+      buffer.writeUInt8(messageLength, pos++);
 
       // Command type
       buffer.writeUInt8(commandType, pos++);
@@ -281,7 +288,9 @@ class GT06ProtocolEncoder {
       }
 
       // Message index
-      buffer.writeUInt16BE(0, pos);
+      const currentIndex = this.messageIndex++;
+      if (this.messageIndex > 0xFFFF) this.messageIndex = 1;
+      buffer.writeUInt16BE(currentIndex, pos);
       pos += 2;
 
       // CRC16
@@ -370,11 +379,13 @@ class GT06ProtocolEncoder {
     pos += responseBuffer.length;
 
     // Index
-    buffer.writeUInt16BE(0, pos);
+    const currentIndex = this.messageIndex++;
+    if (this.messageIndex > 0xFFFF) this.messageIndex = 1;
+    buffer.writeUInt16BE(currentIndex, pos);
     pos += 2;
 
-    // CRC
-    const crc = this.calculateCRC16(buffer.slice(2, pos));
+    // CRC (extended format uses offset 4)
+    const crc = this.calculateCRC16(buffer.slice(4, pos));
     buffer.writeUInt16BE(crc, pos);
     pos += 2;
 
@@ -386,18 +397,18 @@ class GT06ProtocolEncoder {
   }
 
   /**
-   * Calculate CRC16 checksum (X.25 polynomial)
+   * Calculate CRC16 checksum using X.25 polynomial (matches Java implementation)
    */
   calculateCRC16(data) {
     let crc = 0xFFFF;
     
     for (let i = 0; i < data.length; i++) {
-      crc ^= data[i];
+      crc ^= data[i] & 0xFF;
       for (let j = 0; j < 8; j++) {
-        if (crc & 1) {
-          crc = (crc >> 1) ^ 0x8408;
+        if ((crc & 1) !== 0) {
+          crc = (crc >>> 1) ^ 0x8408;
         } else {
-          crc >>= 1;
+          crc = crc >>> 1;
         }
       }
     }

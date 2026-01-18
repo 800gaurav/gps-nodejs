@@ -215,6 +215,27 @@ class GPSProtocol extends EventEmitter {
     const result = await this.decoder.decode(messageBuffer, deviceSession);
     this.stats.messagesProcessed++;
 
+    // Always send ACK - fallback if decoder doesn't provide response
+    let ackSent = false;
+    if (result && result.response) {
+      connection.socket.write(result.response);
+      ackSent = true;
+    } else {
+      // Fallback ACK - extract type and index from raw message
+      const messageType = header === 0x7878 ? messageBuffer.readUInt8(3) : messageBuffer.readUInt8(4);
+      const messageIndex = messageBuffer.readUInt16BE(messageBuffer.length - 6);
+      
+      const fallbackACK = this.decoder.createResponse(header === 0x7979, messageType, messageIndex);
+      connection.socket.write(fallbackACK);
+      ackSent = true;
+      
+      logger.warn('Sent fallback ACK', { 
+        deviceId: connection.deviceId, 
+        type: messageType.toString(16),
+        index: messageIndex
+      });
+    }
+
     if (result) {
       await this.handleDecodedMessage(result, connection, io);
     }
@@ -371,10 +392,8 @@ class GPSProtocol extends EventEmitter {
         }
       }
 
-      // Send response if needed
-      if (result.response) {
-        connection.socket.write(result.response);
-      }
+      // Send response if needed (already sent in processGT06Message)
+      // ACK is guaranteed to be sent by fallback mechanism
 
     } catch (error) {
       logger.error('Error handling decoded message:', error);

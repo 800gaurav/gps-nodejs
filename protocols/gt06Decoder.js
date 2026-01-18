@@ -28,8 +28,11 @@ class GT06ProtocolDecoder {
     this.MSG_GPS_LBS_4 = 0x2D;
     this.MSG_LBS_MULTIPLE_2 = 0x2E;
     this.MSG_GPS_LBS_5 = 0x31;          // AZ735 & SL4X
-    this.MSG_GPS_LBS_STATUS_4 = 0x32;   // AZ735 & SL4X
-    this.MSG_WIFI_5 = 0x33;             // AZ735 & SL4X
+    this.MSG_AZ735_GPS = 0x32;          // AZ735 (extended)
+    this.MSG_AZ735_ALARM = 0x33;        // AZ735 (only extended)
+    this.MSG_GPS_MODULAR = 0x70;
+    this.MSG_MULTIMEDIA = 0x41;         // WD-209
+    this.MSG_PERIPHERAL = 0xF2;         // VL842
     this.MSG_LBS_3 = 0x34;              // SL4X
     this.MSG_X1_GPS = 0x34;
     this.MSG_X1_PHOTO_INFO = 0x35;
@@ -250,10 +253,20 @@ class GT06ProtocolDecoder {
     try {
       switch (type) {
         case this.MSG_LOGIN:
-          return await this.handleLogin(buffer, 4, index);
+          const loginResult = await this.handleLogin(buffer, 4, index);
+          // Always send ACK for login
+          if (loginResult) {
+            loginResult.response = this.createResponse(false, this.MSG_LOGIN, index);
+          }
+          return loginResult;
 
         case this.MSG_HEARTBEAT:
-          return await this.handleHeartbeat(buffer, 4, index, deviceSession, position);
+          const heartbeatResult = await this.handleHeartbeat(buffer, 4, index, deviceSession, position);
+          // Always send ACK for heartbeat
+          if (heartbeatResult) {
+            heartbeatResult.response = this.createResponse(false, this.MSG_HEARTBEAT, index);
+          }
+          return heartbeatResult;
 
         case this.MSG_GPS:
         case this.MSG_GPS_LBS_1:
@@ -318,7 +331,14 @@ class GT06ProtocolDecoder {
 
         default:
           logger.gpsProtocol(deviceSession?.deviceId, 'GT06', 'Unsupported message type', { type: type.toString(16) });
-          return this.createResponse(false, type, index);
+          // Send ACK for unsupported messages too (except commands)
+          if (type !== this.MSG_COMMAND_0 && type !== this.MSG_COMMAND_1 && type !== this.MSG_COMMAND_2) {
+            return {
+              type: 'unsupported',
+              response: this.createResponse(false, type, index)
+            };
+          }
+          return null;
       }
     } catch (error) {
       logger.error('Error decoding GT06 basic message:', error);
@@ -330,17 +350,33 @@ class GT06ProtocolDecoder {
    * Handle login message
    */
   async handleLogin(buffer, start, index) {
-    if (buffer.length < start + 8) return null;
+    if (buffer.length < start + 8) {
+      // Send ACK even for invalid login
+      return {
+        type: 'login_invalid',
+        response: this.createResponse(false, this.MSG_LOGIN, index)
+      };
+    }
 
-    const imeiHex = buffer.slice(start, start + 8).toString('hex');
-    const imei = imeiHex.substring(1); // Remove first digit
+    let imei;
+    const imeiData = buffer.slice(start, start + 8);
+    
+    // Check if IMEI is in ASCII format (printable characters)
+    if (imeiData.every(byte => byte >= 0x30 && byte <= 0x39)) {
+      // ASCII format: direct string conversion
+      imei = imeiData.toString('ascii');
+    } else {
+      // BCD format: convert hex and remove first digit
+      const imeiHex = imeiData.toString('hex');
+      imei = imeiHex.substring(1);
+    }
 
     logger.gpsProtocol(imei, 'GT06', 'Login request received');
 
     return {
       type: 'login',
       imei,
-      response: this.createResponse(false, this.MSG_LOGIN, index)
+      // Response will be added in main switch case
     };
   }
 
@@ -348,7 +384,13 @@ class GT06ProtocolDecoder {
    * Handle heartbeat message
    */
   async handleHeartbeat(buffer, start, index, deviceSession, position) {
-    if (!deviceSession) return null;
+    if (!deviceSession) {
+      // Send ACK even without session
+      return {
+        type: 'heartbeat_no_session',
+        response: this.createResponse(false, this.MSG_HEARTBEAT, index)
+      };
+    }
 
     let pos = start;
     
@@ -386,7 +428,7 @@ class GT06ProtocolDecoder {
     return {
       type: 'heartbeat',
       position,
-      response: this.createResponse(false, this.MSG_HEARTBEAT, index)
+      // Response will be added in main switch case
     };
   }
 
@@ -396,7 +438,11 @@ class GT06ProtocolDecoder {
   async handleGPSMessage(buffer, start, type, index, deviceSession, position, variant) {
     if (!deviceSession) {
       logger.warn('No device session for GPS message');
-      return null;
+      // Still send ACK even without session
+      return {
+        type: 'gps_no_session',
+        response: this.createResponse(false, type, index)
+      };
     }
 
     let pos = start;
@@ -1102,12 +1148,12 @@ class GT06ProtocolDecoder {
   handleTimeRequest(index) {
     const now = new Date();
     const content = Buffer.alloc(6);
-    content.writeUInt8(now.getFullYear() - 2000, 0);
-    content.writeUInt8(now.getMonth() + 1, 1);
-    content.writeUInt8(now.getDate(), 2);
-    content.writeUInt8(now.getHours(), 3);
-    content.writeUInt8(now.getMinutes(), 4);
-    content.writeUInt8(now.getSeconds(), 5);
+    content.writeUInt8(now.getUTCFullYear() - 2000, 0);
+    content.writeUInt8(now.getUTCMonth() + 1, 1);
+    content.writeUInt8(now.getUTCDate(), 2);
+    content.writeUInt8(now.getUTCHours(), 3);
+    content.writeUInt8(now.getUTCMinutes(), 4);
+    content.writeUInt8(now.getUTCSeconds(), 5);
 
     return {
       type: 'timeRequest',
@@ -1127,13 +1173,204 @@ class GT06ProtocolDecoder {
       return null;
     }
 
-    logger.gpsProtocol(deviceSession?.deviceId, 'GT06', 'Extended message received');
-    return null;
+    const length = buffer.readUInt16BE(2);
+    const type = buffer.readUInt8(4);
+    const index = buffer.readUInt16BE(buffer.length - 6);
+
+    logger.gpsProtocol(deviceSession?.deviceId, 'GT06', 'Extended message received', { 
+      type: type.toString(16), 
+      length 
+    });
+
+    let position = {
+      deviceId: deviceSession?.deviceId,
+      protocol: 'GT06',
+      timestamp: new Date(),
+      valid: false,
+      latitude: 0,
+      longitude: 0,
+      attributes: {}
+    };
+
+    switch (type) {
+      case this.MSG_STRING_INFO:
+        return await this.handleExtendedStringInfo(buffer, 5, index, deviceSession, position);
+      
+      case this.MSG_INFO:
+        return await this.handleExtendedInfo(buffer, 5, index, deviceSession, position);
+      
+      case this.MSG_AZ735_GPS:
+      case this.MSG_AZ735_ALARM:
+        return await this.handleAZ735Message(buffer, 5, type, index, deviceSession, position, variant);
+      
+      case this.MSG_GPS_MODULAR:
+        return await this.handleModularGPS(buffer, 5, index, deviceSession, position);
+      
+      case this.MSG_MULTIMEDIA:
+        return await this.handleMultimedia(buffer, 5, index, deviceSession, position);
+      
+      case this.MSG_SERIAL:
+        return await this.handleSerialMessage(buffer, 5, index, deviceSession, position);
+      
+      case this.MSG_PERIPHERAL:
+        return await this.handlePeripheralMessage(buffer, 5, index, deviceSession, position);
+      
+      default:
+        logger.gpsProtocol(deviceSession?.deviceId, 'GT06', 'Unsupported extended message', { type: type.toString(16) });
+        return {
+          type: 'extended_unsupported',
+          response: this.createResponse(true, type, index)
+        };
+    }
   }
 
   /**
-   * Check if message type has GPS data
+   * Handle extended string info message
    */
+  async handleExtendedStringInfo(buffer, start, index, deviceSession, position) {
+    const data = buffer.slice(start + 5, buffer.length - 6).toString('ascii');
+    position.attributes.result = data;
+    
+    return {
+      type: 'extended_string_info',
+      position,
+      response: this.createResponse(true, this.MSG_STRING_INFO, index)
+    };
+  }
+
+  /**
+   * Handle extended info message
+   */
+  async handleExtendedInfo(buffer, start, index, deviceSession, position) {
+    const subType = buffer.readUInt8(start);
+    
+    switch (subType) {
+      case 0x00:
+        position.attributes.adc1 = buffer.readUInt16BE(start + 1) * 0.01;
+        break;
+      case 0x0a:
+        position.attributes.iccid = buffer.slice(start + 17, start + 27).toString('hex');
+        break;
+      case 0x0b:
+        position.attributes.networkTechnology = buffer.readUInt8(start + 1) > 0 ? '4G' : '2G';
+        break;
+    }
+    
+    return {
+      type: 'extended_info',
+      position,
+      response: this.createResponse(true, this.MSG_INFO, index)
+    };
+  }
+
+  /**
+   * Handle AZ735 GPS/Alarm messages
+   */
+  async handleAZ735Message(buffer, start, type, index, deviceSession, position, variant) {
+    let pos = start;
+    
+    // Decode GPS if present
+    const gpsResult = this.decodeGPS(buffer, pos, type, variant);
+    if (gpsResult) {
+      Object.assign(position, gpsResult.position);
+      pos = gpsResult.nextPos;
+    }
+    
+    // Decode LBS if present
+    if (pos < buffer.length - 6) {
+      const lbsResult = this.decodeLBS(buffer, pos, type, variant);
+      if (lbsResult) {
+        position.cellTowers = lbsResult.cellTowers;
+        pos = lbsResult.nextPos;
+      }
+    }
+    
+    return {
+      type: type === this.MSG_AZ735_GPS ? 'az735_gps' : 'az735_alarm',
+      position,
+      response: this.createResponse(true, type, index)
+    };
+  }
+
+  /**
+   * Handle modular GPS message
+   */
+  async handleModularGPS(buffer, start, index, deviceSession, position) {
+    let pos = start;
+    
+    while (pos < buffer.length - 6) {
+      const moduleType = buffer.readUInt16BE(pos);
+      const moduleLength = buffer.readUInt16BE(pos + 2);
+      pos += 4;
+      
+      switch (moduleType) {
+        case 0x03:
+          position.attributes.iccid = buffer.slice(pos, pos + 10).toString('hex');
+          break;
+        case 0x09:
+          position.satellites = buffer.readUInt8(pos);
+          break;
+        case 0x18:
+          position.battery = buffer.readUInt16BE(pos) * 0.01;
+          break;
+        case 0x33:
+          // GPS data in modular format
+          const gpsResult = this.decodeGPS(buffer, pos, 0x33, 'modular');
+          if (gpsResult) {
+            Object.assign(position, gpsResult.position);
+          }
+          break;
+      }
+      
+      pos += moduleLength;
+    }
+    
+    return {
+      type: 'modular_gps',
+      position,
+      response: this.createResponse(true, this.MSG_GPS_MODULAR, index)
+    };
+  }
+
+  /**
+   * Handle multimedia message
+   */
+  async handleMultimedia(buffer, start, index, deviceSession, position) {
+    position.attributes.multimedia = 'received';
+    
+    return {
+      type: 'multimedia',
+      position,
+      response: this.createResponse(true, this.MSG_MULTIMEDIA, index)
+    };
+  }
+
+  /**
+   * Handle serial message
+   */
+  async handleSerialMessage(buffer, start, index, deviceSession, position) {
+    const data = buffer.slice(start + 1, buffer.length - 6);
+    position.attributes.serial = data.toString('ascii').trim();
+    
+    return {
+      type: 'serial',
+      position,
+      response: this.createResponse(true, this.MSG_SERIAL, index)
+    };
+  }
+
+  /**
+   * Handle peripheral message
+   */
+  async handlePeripheralMessage(buffer, start, index, deviceSession, position) {
+    position.attributes.peripheral = 'data_received';
+    
+    return {
+      type: 'peripheral',
+      position,
+      response: this.createResponse(true, this.MSG_PERIPHERAL, index)
+    };
+  }
   hasGPS(type) {
     switch (type) {
       case this.MSG_GPS:
@@ -1263,44 +1500,52 @@ class GT06ProtocolDecoder {
   }
 
   /**
-   * Create response message
+   * Create response message (ACK) - matches Java implementation exactly
    */
   createResponse(extended, type, index, content = null) {
-    const headerSize = extended ? 4 : 3;
-    const contentSize = content ? content.length : 0;
-    const totalSize = headerSize + 1 + contentSize + 2 + 2 + 2; // header + type + content + index + crc + footer
-
-    const response = Buffer.alloc(totalSize);
+    console.log('\n=== CREATING ACK RESPONSE ===');
+    console.log('Extended:', extended);
+    console.log('Type:', type.toString(16));
+    console.log('Index:', index);
+    console.log('Content length:', content ? content.length : 0);
+    
+    const response = Buffer.alloc(1024); // Allocate enough space
     let pos = 0;
+
+    // Calculate content size
+    const contentSize = content ? content.length : 0;
+    const length = 5 + contentSize; // type(1) + content + index(2) + crc(2)
 
     // Header
     if (extended) {
       response.writeUInt16BE(0x7979, pos);
       pos += 2;
-      response.writeUInt16BE(5 + contentSize, pos);
+      response.writeUInt16BE(length, pos);
       pos += 2;
     } else {
       response.writeUInt16BE(0x7878, pos);
       pos += 2;
-      response.writeUInt8(5 + contentSize, pos);
+      response.writeUInt8(length, pos);
       pos += 1;
     }
 
-    // Message type
+    // Message type (same as received message for ACK)
     response.writeUInt8(type, pos++);
 
-    // Content
-    if (content) {
+    // Content (if any)
+    if (content && content.length > 0) {
       content.copy(response, pos);
       pos += content.length;
     }
 
-    // Index
+    // Index (same as received message)
     response.writeUInt16BE(index, pos);
     pos += 2;
 
-    // CRC16
-    const crc = this.calculateCRC16(response.slice(2, pos));
+    // Calculate CRC16 for data portion (excluding header, including length to index)
+    const crcStart = extended ? 4 : 2;
+    const dataForCRC = response.slice(crcStart, pos);
+    const crc = this.calculateCRC16X25(dataForCRC);
     response.writeUInt16BE(crc, pos);
     pos += 2;
 
@@ -1308,7 +1553,14 @@ class GT06ProtocolDecoder {
     response.writeUInt8(0x0D, pos++);
     response.writeUInt8(0x0A, pos++);
 
-    return response.slice(0, pos);
+    const finalResponse = response.slice(0, pos);
+    
+    console.log('Response HEX:', finalResponse.toString('hex'));
+    console.log('Response length:', finalResponse.length);
+    console.log('CRC calculated:', crc.toString(16));
+    console.log('=============================\n');
+
+    return finalResponse;
   }
 
   /**
@@ -1333,8 +1585,9 @@ class GT06ProtocolDecoder {
       const receivedCRC = buffer.readUInt16BE(dataEnd);
 
       // Calculate CRC for data portion (skip header, include length and data)
-      const dataForCRC = buffer.slice(2, dataEnd);
-      const calculatedCRC = this.calculateCRC16(dataForCRC);
+      const crcStart = header === 0x7979 ? 4 : 2;
+      const dataForCRC = buffer.slice(crcStart, dataEnd);
+      const calculatedCRC = this.calculateCRC16X25(dataForCRC);
 
       const isValid = receivedCRC === calculatedCRC;
       
@@ -1353,9 +1606,9 @@ class GT06ProtocolDecoder {
   }
 
   /**
-   * Calculate CRC16 checksum
+   * Calculate CRC16 checksum using X.25 polynomial (matches Java Checksum.crc16)
    */
-  calculateCRC16(data) {
+  calculateCRC16X25(data) {
     try {
       if (!data || data.length === 0) {
         return 0;
@@ -1364,21 +1617,28 @@ class GT06ProtocolDecoder {
       let crc = 0xFFFF;
       
       for (let i = 0; i < data.length; i++) {
-        crc ^= data[i];
+        crc ^= data[i] & 0xFF;
         for (let j = 0; j < 8; j++) {
-          if (crc & 1) {
-            crc = (crc >> 1) ^ 0x8408;
+          if ((crc & 1) !== 0) {
+            crc = (crc >>> 1) ^ 0x8408;
           } else {
-            crc >>= 1;
+            crc = crc >>> 1;
           }
         }
       }
       
       return (~crc) & 0xFFFF;
     } catch (error) {
-      logger.error('Error calculating CRC16:', error);
+      logger.error('Error calculating CRC16 X.25:', error);
       return 0;
     }
+  }
+
+  /**
+   * Legacy CRC16 method for backward compatibility
+   */
+  calculateCRC16(data) {
+    return this.calculateCRC16X25(data);
   }
 }
 
