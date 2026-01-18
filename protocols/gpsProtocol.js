@@ -176,15 +176,24 @@ class GPSProtocol extends EventEmitter {
     }
 
     // Determine message length
+    // GT06 format: Header(2) + Length(1) + Type(1) + Data(n) + Index(2) + CRC(2) + Footer(2)
+    // Length field includes: Type + Data + Index + CRC = everything except Header and Footer
+    // So total message length = Header(2) + Length + Footer(2) = Length + 4
     let messageLength;
     const header = buffer.readUInt16BE(0);
     
     if (header === 0x7878) {
       if (buffer.length < 3) return null;
-      messageLength = buffer.readUInt8(2) + 5; // length + header + length + crc + footer
+      const lengthField = buffer.readUInt8(2);
+      // Length field includes: type(1) + data + index(2) + crc(2) = length
+      // Total = header(2) + length + footer(2) = length + 4
+      messageLength = lengthField + 4;
     } else if (header === 0x7979) {
       if (buffer.length < 4) return null;
-      messageLength = buffer.readUInt16BE(2) + 6; // length + header + length + crc + footer
+      const lengthField = buffer.readUInt16BE(2);
+      // Extended: header(2) + length(2) + data + index(2) + crc(2) + footer(2)
+      // Total = header(2) + length(2) + lengthField + footer(2) = lengthField + 6
+      messageLength = lengthField + 6;
     } else {
       return { consumed: 2 }; // Invalid header
     }

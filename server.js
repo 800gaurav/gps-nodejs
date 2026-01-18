@@ -54,6 +54,10 @@ async function startServer() {
     app.use('/api/commands', commandRoutes);
     app.use('/api/device-info', deviceInfoRoutes);
 
+    // Initialize GPS Protocol FIRST (before routes that use it)
+    const gpsProtocol = new GPSProtocol();
+    global.gpsProtocol = gpsProtocol; // Make it globally accessible
+
     // Health check
     app.get('/health', (req, res) => {
       const stats = gpsProtocol.getStats();
@@ -142,10 +146,6 @@ async function startServer() {
       logger.error('Error:', error);
       res.status(500).json({ error: error.message });
     });
-
-    // Initialize GPS Protocol
-    const gpsProtocol = new GPSProtocol();
-    global.gpsProtocol = gpsProtocol; // Make it globally accessible
 
     // GPS Server (GT06 Protocol)
     const gpsServer = net.createServer((socket) => {

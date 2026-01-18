@@ -242,7 +242,10 @@ class GT06ProtocolDecoder {
       attributes: {}
     };
 
-    const index = buffer.readUInt16BE(buffer.length - 4);
+    // Index is located 6 bytes before the end (before CRC and footer)
+    // Structure: ... data ... index(2) ... crc(2) ... footer(2)
+    // Java uses: buf.getShort(buf.writerIndex() - 6)
+    const index = buffer.readUInt16BE(buffer.length - 6);
 
     try {
       switch (type) {
@@ -302,7 +305,13 @@ class GT06ProtocolDecoder {
           return await this.handleAlarmMessage(buffer, 4, type, index, deviceSession, position, variant);
 
         case this.MSG_ADDRESS_REQUEST:
-          return this.createResponse(false, this.MSG_ADDRESS_RESPONSE, 0, Buffer.from('NA&&NA&&0##'));
+          // Address response uses extended format (0x7979)
+          const addressResponse = Buffer.from('NA&&NA&&0##');
+          const addressContent = Buffer.alloc(1 + 4 + addressResponse.length);
+          addressContent.writeUInt8(addressResponse.length, 0);
+          addressContent.writeUInt32BE(0, 1); // Reserved
+          addressResponse.copy(addressContent, 5);
+          return this.createResponse(true, this.MSG_ADDRESS_RESPONSE, 0, addressContent);
 
         case this.MSG_TIME_REQUEST:
           return this.handleTimeRequest(index);
