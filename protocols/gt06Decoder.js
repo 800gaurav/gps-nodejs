@@ -6,34 +6,54 @@ class GT06ProtocolDecoder {
     // Message type constants
     this.MSG_LOGIN = 0x01;
     this.MSG_GPS = 0x10;
-    this.MSG_GPS_LBS_1 = 0x12;
-    this.MSG_GPS_LBS_2 = 0x22;
-    this.MSG_GPS_LBS_3 = 0x37;
-    this.MSG_GPS_LBS_4 = 0x2D;
     this.MSG_GPS_LBS_6 = 0x11;
+    this.MSG_GPS_LBS_1 = 0x12;
     this.MSG_STATUS = 0x13;
-    this.MSG_HEARTBEAT = 0x23;
+    this.MSG_SATELLITE = 0x14;
+    this.MSG_STRING = 0x15;
     this.MSG_GPS_LBS_STATUS_1 = 0x16;
-    this.MSG_GPS_LBS_STATUS_2 = 0x26;
-    this.MSG_GPS_LBS_STATUS_3 = 0x27;
-    this.MSG_GPS_LBS_STATUS_4 = 0x32;
-    this.MSG_GPS_LBS_STATUS_5 = 0xA2;
     this.MSG_WIFI = 0x17;
-    this.MSG_WIFI_2 = 0x69;
-    this.MSG_WIFI_3 = 0xA2;
-    this.MSG_WIFI_4 = 0xF3;
-    this.MSG_LBS_MULTIPLE_1 = 0x28;
-    this.MSG_LBS_MULTIPLE_2 = 0x2E;
-    this.MSG_LBS_MULTIPLE_3 = 0x24;
-    this.MSG_LBS_WIFI = 0x2C;
+    this.MSG_GPS_LBS_RFID = 0x17;
     this.MSG_LBS_EXTEND = 0x18;
     this.MSG_LBS_STATUS = 0x19;
-    this.MSG_ADDRESS_REQUEST = 0x2A;
-    this.MSG_ADDRESS_RESPONSE = 0x97;
-    this.MSG_TIME_REQUEST = 0x8A;
+    this.MSG_GPS_PHONE = 0x1A;
+    this.MSG_GPS_LBS_EXTEND = 0x1E;     // JI09
+    this.MSG_GPS_LBS_2 = 0x22;
+    this.MSG_HEARTBEAT = 0x23;          // GK310
+    this.MSG_LBS_MULTIPLE_3 = 0x24;
+    this.MSG_GPS_LBS_STATUS_2 = 0x26;
+    this.MSG_GPS_LBS_STATUS_3 = 0x27;
+    this.MSG_LBS_MULTIPLE_1 = 0x28;
+    this.MSG_ADDRESS_REQUEST = 0x2A;    // GK310
+    this.MSG_GPS_LBS_4 = 0x2D;
+    this.MSG_LBS_MULTIPLE_2 = 0x2E;
+    this.MSG_GPS_LBS_5 = 0x31;          // AZ735 & SL4X
+    this.MSG_GPS_LBS_STATUS_4 = 0x32;   // AZ735 & SL4X
+    this.MSG_WIFI_5 = 0x33;             // AZ735 & SL4X
+    this.MSG_LBS_3 = 0x34;              // SL4X
+    this.MSG_X1_GPS = 0x34;
+    this.MSG_X1_PHOTO_INFO = 0x35;
+    this.MSG_X1_PHOTO_DATA = 0x36;
+    this.MSG_STATUS_2 = 0x36;           // Jimi IoT 4G
+    this.MSG_GPS_LBS_3 = 0x37;
+    this.MSG_GPS_LBS_8 = 0x38;
+    this.MSG_WIFI_2 = 0x69;
+    this.MSG_TIME_REQUEST = 0x8A;       // GK310
     this.MSG_INFO = 0x94;
-    this.MSG_STRING = 0x15;
-    this.MSG_ALARM = 0x95;
+    this.MSG_ALARM = 0x95;              // JC100
+    this.MSG_ADDRESS_RESPONSE = 0x97;   // GK310
+    this.MSG_SERIAL = 0x9B;
+    this.MSG_STRING_INFO = 0x21;
+    this.MSG_GPS_LBS_7 = 0xA0;          // GK310 & JM-VL03
+    this.MSG_LBS_2 = 0xA1;              // GK310
+    this.MSG_WIFI_3 = 0xA2;             // GK310
+    this.MSG_GPS_LBS_STATUS_5 = 0xA2;   // LWxG
+    this.MSG_FENCE_SINGLE = 0xA3;       // GK310
+    this.MSG_STATUS_3 = 0xA3;           // GL21L
+    this.MSG_FENCE_MULTI = 0xA4;        // GK310 & JM-LL301
+    this.MSG_LBS_ALARM = 0xA5;          // GK310 & JM-LL301
+    this.MSG_LBS_ADDRESS = 0xA7;        // GK310
+    this.MSG_WIFI_4 = 0xF3;
     this.MSG_COMMAND_0 = 0x80;
     this.MSG_COMMAND_1 = 0x81;
     this.MSG_COMMAND_2 = 0x82;
@@ -126,7 +146,7 @@ class GT06ProtocolDecoder {
       return this.variants.STANDARD;
     }
 
-    // Variant detection logic based on message type and length
+    // Variant detection logic based on message type and length (matching Java implementation)
     if (header === 0x7878 && type === this.MSG_GPS_LBS_1 && length === 0x24) {
       return this.variants.VXT01;
     } else if (header === 0x7878 && type === this.MSG_GPS_LBS_STATUS_1 && length === 0x24) {
@@ -149,13 +169,21 @@ class GT06ProtocolDecoder {
       return this.variants.WETRUST;
     } else if (header === 0x7878 && type === this.MSG_ALARM && buffer.length >= 6 && buffer.readUInt16BE(4) === 0xffff) {
       return this.variants.JC400;
-    } else if (header === 0x7878 && type === 0x34 && length === 0x37) {
+    } else if (header === 0x7878 && type === this.MSG_LBS_3 && length === 0x37) {
+      return this.variants.SL4X;
+    } else if (header === 0x7878 && type === this.MSG_GPS_LBS_5 && length === 0x2a) {
+      return this.variants.SL4X;
+    } else if (header === 0x7878 && type === this.MSG_GPS_LBS_STATUS_4 && length === 0x27) {
+      return this.variants.SL4X;
+    } else if (header === 0x7878 && type === this.MSG_GPS_LBS_STATUS_4 && length === 0x29) {
       return this.variants.SL4X;
     } else if (header === 0x7878 && type === this.MSG_GPS_LBS_2 && length === 0x2f) {
       return this.variants.SEEWORLD;
     } else if (header === 0x7878 && type === this.MSG_GPS_LBS_STATUS_1 && length === 0x26) {
       return this.variants.SEEWORLD;
-    } else if (header === 0x7878 && type === this.MSG_WIFI && length === 0x28) {
+    } else if (header === 0x7878 && type === this.MSG_STATUS_3 && length === 0x0c) {
+      return this.variants.SEEWORLD;
+    } else if (header === 0x7878 && type === this.MSG_GPS_LBS_RFID && length === 0x28) {
       return this.variants.RFID;
     } else if (header === 0x7878 && type === this.MSG_GPS_LBS_STATUS_5 && length === 0x40) {
       return this.variants.LW4G;
@@ -229,21 +257,31 @@ class GT06ProtocolDecoder {
         case this.MSG_GPS_LBS_2:
         case this.MSG_GPS_LBS_3:
         case this.MSG_GPS_LBS_4:
+        case this.MSG_GPS_LBS_5:
         case this.MSG_GPS_LBS_6:
+        case this.MSG_GPS_LBS_7:
+        case this.MSG_GPS_LBS_8:
+        case this.MSG_GPS_LBS_EXTEND:
+        case this.MSG_GPS_PHONE:
         case this.MSG_GPS_LBS_STATUS_1:
         case this.MSG_GPS_LBS_STATUS_2:
         case this.MSG_GPS_LBS_STATUS_3:
         case this.MSG_GPS_LBS_STATUS_4:
         case this.MSG_GPS_LBS_STATUS_5:
+        case this.MSG_GPS_LBS_RFID:
+        case this.MSG_FENCE_MULTI:
           return await this.handleGPSMessage(buffer, 4, type, index, deviceSession, position, variant);
 
         case this.MSG_STATUS:
+        case this.MSG_STATUS_2:
+        case this.MSG_STATUS_3:
           return await this.handleStatusMessage(buffer, 4, index, deviceSession, position, variant);
 
         case this.MSG_WIFI:
         case this.MSG_WIFI_2:
         case this.MSG_WIFI_3:
         case this.MSG_WIFI_4:
+        case this.MSG_WIFI_5:
           return await this.handleWifiMessage(buffer, 4, type, index, deviceSession, position);
 
         case this.MSG_LBS_MULTIPLE_1:
@@ -251,6 +289,10 @@ class GT06ProtocolDecoder {
         case this.MSG_LBS_MULTIPLE_3:
         case this.MSG_LBS_EXTEND:
         case this.MSG_LBS_WIFI:
+        case this.MSG_LBS_2:
+        case this.MSG_LBS_3:
+        case this.MSG_LBS_ALARM:
+        case this.MSG_LBS_ADDRESS:
           return await this.handleLBSMessage(buffer, 4, type, index, deviceSession, position, variant);
 
         case this.MSG_STRING:
@@ -405,7 +447,7 @@ class GT06ProtocolDecoder {
     }
 
     // Decode status if present
-    if (this.hasStatus(type) && pos < buffer.length - 6) {
+    if (this.hasStatus(type, variant) && pos < buffer.length - 6) {
       const statusResult = this.decodeStatus(buffer, pos, variant);
       if (statusResult) {
         Object.assign(position, statusResult.status);
@@ -413,54 +455,158 @@ class GT06ProtocolDecoder {
       }
     }
 
-    // Handle additional data based on message type
-    if (type === this.MSG_GPS_LBS_1 && variant === this.variants.S5 && pos < buffer.length - 6) {
-      const statusResult = this.decodeStatus(buffer, pos, variant);
-      if (statusResult) {
-        Object.assign(position, statusResult.status);
-        pos = statusResult.nextPos;
-      }
-      
-      if (pos + 8 <= buffer.length - 6) {
+    // Handle GPS_LBS_1 variant-specific data
+    if (type === this.MSG_GPS_LBS_1 && pos < buffer.length - 6) {
+      if (variant === this.variants.GT06E_CARD) {
+        position.attributes.odometer = buffer.readUInt32BE(pos);
+        pos += 4;
+        const dataLength = buffer.readUInt8(pos++);
+        if (pos + dataLength <= buffer.length - 6) {
+          position.attributes.card = buffer.slice(pos, pos + dataLength).toString('ascii').trim();
+          pos += dataLength;
+        }
+        pos++; // alarm
+        pos++; // swiped
+      } else if (variant === this.variants.BENWAY) {
+        const mask = buffer.readUInt16BE(pos);
+        pos += 2;
+        position.ignition = (mask & (1 << (8 + 7))) !== 0;
+        position.attributes.input2 = (mask & (1 << (8 + 6))) !== 0;
+        if ((mask & (1 << (8 + 4))) !== 0) {
+          let value = mask & ((1 << (8 + 1)) - 1);
+          if ((mask & (1 << (8 + 1))) !== 0) {
+            value = -value;
+          }
+          position.attributes.temperature = value;
+        } else {
+          let value = (mask >> (8 + 2)) & ((1 << 4) - 1);
+          if ((mask & (1 << (8 + 5))) !== 0) {
+            position.attributes.adc1 = value;
+          } else {
+            position.attributes.adc1 = value * 0.1;
+          }
+        }
+      } else if (variant === this.variants.VXT01) {
+        const statusResult = this.decodeStatus(buffer, pos, variant);
+        if (statusResult) {
+          Object.assign(position, statusResult.status);
+          pos = statusResult.nextPos;
+        }
         position.power = buffer.readUInt16BE(pos) * 0.01;
         pos += 2;
         position.rssi = buffer.readUInt8(pos++);
+        pos++; // alarm extension
+      } else if (variant === this.variants.S5) {
+        const statusResult = this.decodeStatus(buffer, pos, variant);
+        if (statusResult) {
+          Object.assign(position, statusResult.status);
+          pos = statusResult.nextPos;
+        }
         
+        if (pos + 8 <= buffer.length - 6) {
+          position.power = buffer.readUInt16BE(pos) * 0.01;
+          pos += 2;
+          position.rssi = buffer.readUInt8(pos++);
+          
+          const alarm = buffer.readUInt8(pos++);
+          if (alarm > 0) {
+            const alarmType = this.decodeAlarmCode(alarm);
+            if (alarmType) position.alarms.push(alarmType);
+          }
+          
+          position.attributes.oil = buffer.readUInt16BE(pos);
+          pos += 2;
+          
+          let temperature = buffer.readUInt8(pos++);
+          if (temperature & 0x80) {
+            temperature = -(temperature & 0x7F);
+          }
+          position.attributes.temperature = temperature;
+          
+          position.attributes.odometer = buffer.readUInt32BE(pos) * 10;
+          pos += 4;
+        }
+      } else if (variant === this.variants.WETRUST) {
+        position.attributes.odometer = buffer.readUInt32BE(pos);
+        pos += 4;
+        const cardLength = buffer.readUInt8(pos++);
+        if (pos + cardLength <= buffer.length - 6) {
+          position.attributes.card = buffer.slice(pos, pos + cardLength).toString('ascii');
+          pos += cardLength;
+        }
         const alarm = buffer.readUInt8(pos++);
         if (alarm > 0) {
-          const alarmType = this.decodeAlarmCode(alarm);
-          if (alarmType) position.alarms.push(alarmType);
+          position.alarms.push(this.ALARM_GEOFENCE_ENTER);
         }
-        
-        position.attributes.oil = buffer.readUInt16BE(pos);
+        position.attributes.cardStatus = buffer.readUInt8(pos++);
+        position.attributes.drivingTime = buffer.readUInt16BE(pos);
         pos += 2;
-        
-        let temperature = buffer.readUInt8(pos++);
-        if (temperature & 0x80) {
-          temperature = -(temperature & 0x7F);
-        }
-        position.attributes.temperature = temperature;
-        
-        position.attributes.odometer = buffer.readUInt32BE(pos) * 10;
-        pos += 4;
       }
     }
 
-    // Handle ignition, event, and archive flags for GPS_LBS_2/3/4/5
+    // Handle GPS_LBS_STATUS_4 altitude for SL4X
+    if (type === this.MSG_GPS_LBS_STATUS_4 && variant === this.variants.SL4X && pos + 2 <= buffer.length - 6) {
+      position.altitude = buffer.readInt16BE(pos);
+      pos += 2;
+    }
+
+    // Handle GPS_LBS_3 module data
+    if (type === this.MSG_GPS_LBS_3 && pos + 3 <= buffer.length - 6) {
+      const module = buffer.readUInt16BE(pos);
+      pos += 2;
+      const subLength = buffer.readUInt8(pos++);
+      if (pos + subLength <= buffer.length - 6) {
+        switch (module) {
+          case 0x0027:
+            position.power = buffer.readUInt16BE(pos) * 0.01;
+            pos += 2;
+            break;
+          case 0x002E:
+            position.attributes.odometer = buffer.readUInt32BE(pos);
+            pos += 4;
+            break;
+          case 0x003B:
+            position.attributes.accuracy = buffer.readUInt16BE(pos) * 0.01;
+            pos += 2;
+            break;
+          default:
+            pos += subLength;
+            break;
+        }
+      }
+    }
+
+    // Handle ignition, event, and archive flags for GPS_LBS_2/3/4/5 (not NT20 model)
     if ([this.MSG_GPS_LBS_2, this.MSG_GPS_LBS_3, this.MSG_GPS_LBS_4, this.MSG_GPS_LBS_5].includes(type) && 
         pos + 3 <= buffer.length - 6 && variant !== this.variants.SEEWORLD) {
       position.ignition = buffer.readUInt8(pos++) > 0;
       position.attributes.event = buffer.readUInt8(pos++);
       position.attributes.archive = buffer.readUInt8(pos++) > 0;
       
+      // SL4X variant has odometer and altitude
       if (variant === this.variants.SL4X && pos + 2 <= buffer.length - 6) {
         if (pos + 4 <= buffer.length - 6) {
           position.attributes.odometer = buffer.readUInt32BE(pos);
           pos += 4;
         }
-        position.altitude = buffer.readInt16BE(pos);
-        pos += 2;
+        if (pos + 2 <= buffer.length - 6) {
+          position.altitude = buffer.readInt16BE(pos);
+          pos += 2;
+        }
       }
+    }
+
+    // Handle GPS_LBS_RFID driver ID
+    if (type === this.MSG_GPS_LBS_RFID && pos + 8 <= buffer.length - 6) {
+      const driverIdHex = buffer.slice(pos, pos + 8).toString('hex');
+      position.attributes.driverUniqueId = driverIdHex;
+      pos += 8;
+      pos++; // validity
+    }
+
+    // Handle FENCE_MULTI geofence
+    if ((type === this.MSG_GPS_LBS_STATUS_3 || type === this.MSG_FENCE_MULTI) && pos + 1 <= buffer.length - 6) {
+      position.attributes.geofence = buffer.readUInt8(pos++);
     }
 
     logger.locationUpdate(deviceSession.deviceId, position);
@@ -530,26 +676,41 @@ class GT06ProtocolDecoder {
       pos += 4;
       let longitude = lngRaw / 60.0 / 30000.0;
 
-      // Speed (1 or 2 bytes depending on variant)
+      // Speed and flags order depends on variant and message type
+      // Normal order: speed then flags
+      // JC400 alarm order: flags then speed
       let speed;
-      if (variant === this.variants.JC400) {
+      let flags = 0;
+      const isJC400Alarm = variant === this.variants.JC400 && type === this.MSG_ALARM;
+      
+      if (isJC400Alarm) {
+        // JC400 alarm: flags before speed
+        flags = buffer.readUInt16BE(pos);
+        pos += 2;
         speed = buffer.readUInt16BE(pos);
         pos += 2;
       } else {
-        speed = buffer.readUInt8(pos++);
+        // Normal order: speed then flags
+        if (variant === this.variants.JC400) {
+          speed = buffer.readUInt16BE(pos);
+          pos += 2;
+        } else {
+          speed = buffer.readUInt8(pos++);
+        }
+        flags = buffer.readUInt16BE(pos);
+        pos += 2;
       }
 
-      // Course and flags (2 bytes)
-      const flags = buffer.readUInt16BE(pos);
-      pos += 2;
+      const course = flags & 0x03FF; // Lower 10 bits
+      const valid = (flags & 0x1000) !== 0; // Bit 12
+      const latNorth = (flags & 0x0400) === 0; // Bit 10 (inverted)
+      const lngEast = (flags & 0x0800) !== 0; // Bit 11
+      const hasIgnitionFlag = (flags & 0x4000) !== 0; // Bit 14
+      const ignition = hasIgnitionFlag && ((flags & 0x8000) !== 0); // Bit 15 if bit 14 is set
 
-      const course = flags & 0x03FF;
-      const valid = (flags & 0x1000) !== 0;
-      const latNorth = (flags & 0x0400) === 0;
-      const lngEast = (flags & 0x0800) !== 0;
-      const ignition = (flags & 0x8000) !== 0;
-
-      // Apply hemisphere corrections
+      // Apply hemisphere corrections (opposite logic from Java implementation)
+      // Java: if (!BitUtil.check(flags, 10)) latitude = -latitude;
+      //       if (BitUtil.check(flags, 11)) longitude = -longitude;
       if (!latNorth) latitude = -latitude;
       if (lngEast) longitude = -longitude;
 
@@ -584,7 +745,6 @@ class GT06ProtocolDecoder {
       };
 
       console.log('GPS decoded successfully', {
-        deviceId: deviceSession?.deviceId,
         lat: latitude,
         lng: longitude,
         valid,
@@ -608,7 +768,7 @@ class GT06ProtocolDecoder {
   }
 
   /**
-   * Decode LBS (cell tower) data
+   * Decode LBS (cell tower) data with full variant support
    */
   decodeLBS(buffer, start, type, variant) {
     try {
@@ -616,18 +776,39 @@ class GT06ProtocolDecoder {
 
       let pos = start;
       let length = 0;
+      let cellType = 0;
 
       // Some message types have length prefix
       if (this.hasLBSLength(type)) {
         length = buffer.readUInt8(pos++);
-        if (length === 0) return null;
+        if (length === 0) {
+          // Check for zeroed data - skip if all zeros
+          let zeroedData = true;
+          for (let i = pos + 9; i < Math.min(pos + 45, buffer.length); i++) {
+            if (buffer.readUInt8(i) !== 0) {
+              zeroedData = false;
+              break;
+            }
+          }
+          if (zeroedData) {
+            pos += Math.min(buffer.length - pos, 45);
+            return null;
+          }
+        }
       }
 
-      const mcc = buffer.readUInt16BE(pos) & 0x7FFF; // Remove the flag bit
+      // MSG_GPS_LBS_8 has cell type prefix
+      if (type === this.MSG_GPS_LBS_8) {
+        cellType = buffer.readUInt8(pos++);
+      }
+
+      let mccRaw = buffer.readUInt16BE(pos);
+      const mcc = mccRaw & 0x7FFF; // Remove the flag bit (bit 15)
       pos += 2;
 
       let mnc;
-      if (type === this.MSG_GPS_LBS_6 || variant === this.variants.SL4X) {
+      // Check if bit 15 is set or type/variant requires 16-bit MNC
+      if ((mccRaw & 0x8000) !== 0 || type === this.MSG_GPS_LBS_6 || variant === this.variants.SL4X) {
         mnc = buffer.readUInt16BE(pos);
         pos += 2;
       } else {
@@ -635,7 +816,8 @@ class GT06ProtocolDecoder {
       }
 
       let lac;
-      if (type === this.MSG_GPS_LBS_STATUS_5) {
+      // LAC can be 16-bit or 32-bit depending on cell type and message type
+      if (cellType >= 3 || type === this.MSG_LBS_ALARM || type === this.MSG_GPS_LBS_7 || type === this.MSG_GPS_LBS_STATUS_5) {
         lac = buffer.readUInt32BE(pos);
         pos += 4;
       } else {
@@ -644,15 +826,33 @@ class GT06ProtocolDecoder {
       }
 
       let cid;
-      if (type === this.MSG_GPS_LBS_STATUS_5 || variant === this.variants.SL4X) {
-        cid = buffer.readUInt32BE(pos);
-        pos += 4;
-      } else if (type === this.MSG_GPS_LBS_6) {
+      // CID can be 3-byte, 4-byte, or 8-byte depending on cell type and message type
+      if (cellType >= 3 || type === this.MSG_LBS_ALARM || type === this.MSG_GPS_LBS_7 || variant === this.variants.SL4X || type === this.MSG_GPS_LBS_STATUS_5) {
+        // 8-byte CID for 5G/LTE-A
+        cid = buffer.readUInt32BE(pos) * 0x100000000 + buffer.readUInt32BE(pos + 4);
+        pos += 8;
+      } else if (type === this.MSG_GPS_LBS_6 || variant === this.variants.SEEWORLD) {
+        // 4-byte CID
         cid = buffer.readUInt32BE(pos);
         pos += 4;
       } else {
-        cid = buffer.readUIntBE(pos, 3); // 3 bytes
+        // 3-byte CID (standard)
+        cid = buffer.readUIntBE(pos, 3);
         pos += 3;
+      }
+
+      // RSSI if present
+      let rssi = null;
+      if (cellType >= 3) {
+        rssi = buffer.readUInt16BE(pos);
+        pos += 2;
+      } else if (type === this.MSG_GPS_LBS_8) {
+        rssi = buffer.readUInt8(pos++);
+      }
+
+      // Skip remaining bytes if length was specified
+      if (length > 9) {
+        pos += (length - 9);
       }
 
       const cellTowers = [{
@@ -660,7 +860,7 @@ class GT06ProtocolDecoder {
         mnc,
         lac,
         cid,
-        rssi: null
+        rssi
       }];
 
       return {
@@ -926,56 +1126,85 @@ class GT06ProtocolDecoder {
    * Check if message type has GPS data
    */
   hasGPS(type) {
-    return [
-      this.MSG_GPS,
-      this.MSG_GPS_LBS_1,
-      this.MSG_GPS_LBS_2,
-      this.MSG_GPS_LBS_3,
-      this.MSG_GPS_LBS_4,
-      this.MSG_GPS_LBS_6,
-      this.MSG_GPS_LBS_STATUS_1,
-      this.MSG_GPS_LBS_STATUS_2,
-      this.MSG_GPS_LBS_STATUS_3,
-      this.MSG_GPS_LBS_STATUS_4,
-      this.MSG_GPS_LBS_STATUS_5
-    ].includes(type);
+    switch (type) {
+      case this.MSG_GPS:
+      case this.MSG_GPS_LBS_1:
+      case this.MSG_GPS_LBS_2:
+      case this.MSG_GPS_LBS_3:
+      case this.MSG_GPS_LBS_4:
+      case this.MSG_GPS_LBS_5:
+      case this.MSG_GPS_LBS_6:
+      case this.MSG_GPS_LBS_7:
+      case this.MSG_GPS_LBS_8:
+      case this.MSG_GPS_LBS_EXTEND:
+      case this.MSG_GPS_PHONE:
+      case this.MSG_GPS_LBS_STATUS_1:
+      case this.MSG_GPS_LBS_STATUS_2:
+      case this.MSG_GPS_LBS_STATUS_3:
+      case this.MSG_GPS_LBS_STATUS_4:
+      case this.MSG_GPS_LBS_STATUS_5:
+      case this.MSG_GPS_LBS_RFID:
+      case this.MSG_FENCE_MULTI:
+      case this.MSG_LBS_ALARM:
+      case this.MSG_LBS_ADDRESS:
+        return true;
+      default:
+        return false;
+    }
   }
 
   /**
    * Check if message type has LBS data
    */
   hasLBS(type) {
-    return [
-      this.MSG_GPS_LBS_1,
-      this.MSG_GPS_LBS_2,
-      this.MSG_GPS_LBS_3,
-      this.MSG_GPS_LBS_4,
-      this.MSG_GPS_LBS_6,
-      this.MSG_GPS_LBS_STATUS_1,
-      this.MSG_GPS_LBS_STATUS_2,
-      this.MSG_GPS_LBS_STATUS_3,
-      this.MSG_GPS_LBS_STATUS_4,
-      this.MSG_GPS_LBS_STATUS_5,
-      this.MSG_LBS_STATUS,
-      this.MSG_LBS_MULTIPLE_1,
-      this.MSG_LBS_MULTIPLE_2,
-      this.MSG_LBS_MULTIPLE_3
-    ].includes(type);
+    switch (type) {
+      case this.MSG_GPS_LBS_1:
+      case this.MSG_GPS_LBS_2:
+      case this.MSG_GPS_LBS_3:
+      case this.MSG_GPS_LBS_4:
+      case this.MSG_GPS_LBS_5:
+      case this.MSG_GPS_LBS_6:
+      case this.MSG_GPS_LBS_7:
+      case this.MSG_GPS_LBS_8:
+      case this.MSG_GPS_LBS_STATUS_1:
+      case this.MSG_GPS_LBS_STATUS_2:
+      case this.MSG_GPS_LBS_STATUS_3:
+      case this.MSG_GPS_LBS_STATUS_4:
+      case this.MSG_GPS_LBS_STATUS_5:
+      case this.MSG_LBS_STATUS:
+      case this.MSG_LBS_MULTIPLE_1:
+      case this.MSG_LBS_MULTIPLE_2:
+      case this.MSG_LBS_MULTIPLE_3:
+      case this.MSG_LBS_ALARM:
+        return true;
+      default:
+        return false;
+    }
   }
 
   /**
    * Check if message type has status data
    */
-  hasStatus(type) {
-    return [
-      this.MSG_STATUS,
-      this.MSG_GPS_LBS_STATUS_1,
-      this.MSG_GPS_LBS_STATUS_2,
-      this.MSG_GPS_LBS_STATUS_3,
-      this.MSG_GPS_LBS_STATUS_4,
-      this.MSG_GPS_LBS_STATUS_5,
-      this.MSG_LBS_STATUS
-    ].includes(type);
+  hasStatus(type, variant) {
+    switch (type) {
+      case this.MSG_STATUS:
+      case this.MSG_STATUS_2:
+      case this.MSG_STATUS_3:
+      case this.MSG_LBS_STATUS:
+      case this.MSG_GPS_LBS_STATUS_1:
+      case this.MSG_GPS_LBS_STATUS_2:
+      case this.MSG_GPS_LBS_STATUS_3:
+      case this.MSG_GPS_LBS_STATUS_4:
+      case this.MSG_GPS_LBS_STATUS_5:
+      case this.MSG_FENCE_MULTI:
+      case this.MSG_LBS_ALARM:
+        return true;
+      case this.MSG_GPS_LBS_2:
+        // NT20 model has status in GPS_LBS_2
+        return false; // Will be checked separately in handler
+      default:
+        return false;
+    }
   }
 
   /**
