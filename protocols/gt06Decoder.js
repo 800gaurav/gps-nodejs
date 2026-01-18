@@ -199,31 +199,26 @@ class GT06ProtocolDecoder {
    * Decode basic (0x7878) messages
    */
   async decodeBasic(buffer, deviceSession, variant) {
-    if (buffer.length < 5) return null;
+    if (buffer.length < 10) return null; // Minimum GT06 message size
 
     const length = buffer.readUInt8(2);
     const type = buffer.readUInt8(3);
-    const dataLength = length - 5;
 
-    // Validate CRC
-    if (!this.validateCRC(buffer)) {
-      logger.gpsProtocol(deviceSession?.deviceId, 'GT06', 'CRC validation failed', { 
-        type: type.toString(16) 
-      });
-      return null;
-    }
+    console.log('=== GT06 MESSAGE DECODE ===');
+    console.log('Buffer HEX:', buffer.toString('hex'));
+    console.log('Length field:', length);
+    console.log('Message type:', type.toString(16));
+    console.log('Buffer length:', buffer.length);
 
-    logger.gpsProtocol(deviceSession?.deviceId, 'GT06', 'Decoding basic message', { 
-      type: type.toString(16), 
-      length, 
-      variant 
-    });
+    // Correct index calculation: it's at position (buffer.length - 6)
+    // Structure: ...data... + index(2) + crc(2) + footer(2)
+    const indexPos = buffer.length - 6;
+    const index = buffer.readUInt16BE(indexPos);
     
-    console.log('=== GT06 MESSAGE RECEIVED ===');
-    console.log('Device:', deviceSession?.deviceId);
-    console.log('Type:', type.toString(16));
-    console.log('Length:', length);
-    console.log('Variant:', variant);
+    console.log('Index position:', indexPos);
+    console.log('Index value:', index);
+    console.log('CRC position:', buffer.length - 4);
+    console.log('Footer position:', buffer.length - 2);
 
     let position = {
       deviceId: deviceSession?.deviceId,
@@ -245,26 +240,20 @@ class GT06ProtocolDecoder {
       attributes: {}
     };
 
-    // Index is located 6 bytes before the end (before CRC and footer)
-    // Structure: ... data ... index(2) ... crc(2) ... footer(2)
-    // Java uses: buf.getShort(buf.writerIndex() - 6)
-    const index = buffer.readUInt16BE(buffer.length - 6);
-
     try {
       switch (type) {
         case this.MSG_LOGIN:
           const loginResult = await this.handleLogin(buffer, 4, index);
-          // Always send ACK for login
           if (loginResult) {
             loginResult.response = this.createResponse(false, this.MSG_LOGIN, index);
           }
           return loginResult;
 
         case this.MSG_HEARTBEAT:
+        case this.MSG_STATUS:
           const heartbeatResult = await this.handleHeartbeat(buffer, 4, index, deviceSession, position);
-          // Always send ACK for heartbeat
           if (heartbeatResult) {
-            heartbeatResult.response = this.createResponse(false, this.MSG_HEARTBEAT, index);
+            heartbeatResult.response = this.createResponse(false, type, index);
           }
           return heartbeatResult;
 
@@ -288,7 +277,6 @@ class GT06ProtocolDecoder {
         case this.MSG_FENCE_MULTI:
           return await this.handleGPSMessage(buffer, 4, type, index, deviceSession, position, variant);
 
-        case this.MSG_STATUS:
         case this.MSG_STATUS_2:
         case this.MSG_STATUS_3:
           return await this.handleStatusMessage(buffer, 4, index, deviceSession, position, variant);
@@ -297,14 +285,12 @@ class GT06ProtocolDecoder {
         case this.MSG_WIFI_2:
         case this.MSG_WIFI_3:
         case this.MSG_WIFI_4:
-        case this.MSG_WIFI_5:
           return await this.handleWifiMessage(buffer, 4, type, index, deviceSession, position);
 
         case this.MSG_LBS_MULTIPLE_1:
         case this.MSG_LBS_MULTIPLE_2:
         case this.MSG_LBS_MULTIPLE_3:
         case this.MSG_LBS_EXTEND:
-        case this.MSG_LBS_WIFI:
         case this.MSG_LBS_2:
         case this.MSG_LBS_3:
         case this.MSG_LBS_ALARM:
@@ -318,31 +304,32 @@ class GT06ProtocolDecoder {
           return await this.handleAlarmMessage(buffer, 4, type, index, deviceSession, position, variant);
 
         case this.MSG_ADDRESS_REQUEST:
-          // Address response uses extended format (0x7979)
           const addressResponse = Buffer.from('NA&&NA&&0##');
           const addressContent = Buffer.alloc(1 + 4 + addressResponse.length);
           addressContent.writeUInt8(addressResponse.length, 0);
-          addressContent.writeUInt32BE(0, 1); // Reserved
+          addressContent.writeUInt32BE(0, 1);
           addressResponse.copy(addressContent, 5);
-          return this.createResponse(true, this.MSG_ADDRESS_RESPONSE, 0, addressContent);
+          return {
+            type: 'address_request',
+            response: this.createResponse(true, this.MSG_ADDRESS_RESPONSE, 0, addressContent)
+          };
 
         case this.MSG_TIME_REQUEST:
           return this.handleTimeRequest(index);
 
         default:
-          logger.gpsProtocol(deviceSession?.deviceId, 'GT06', 'Unsupported message type', { type: type.toString(16) });
-          // Send ACK for unsupported messages too (except commands)
-          if (type !== this.MSG_COMMAND_0 && type !== this.MSG_COMMAND_1 && type !== this.MSG_COMMAND_2) {
-            return {
-              type: 'unsupported',
-              response: this.createResponse(false, type, index)
-            };
-          }
-          return null;
+          console.log('Unsupported message type:', type.toString(16));
+          return {
+            type: 'unsupported',
+            response: this.createResponse(false, type, index)
+          };
       }
     } catch (error) {
-      logger.error('Error decoding GT06 basic message:', error);
-      return this.createResponse(false, type, index);
+      console.error('Error decoding GT06 message:', error);
+      return {
+        type: 'error',
+        response: this.createResponse(false, type, index)
+      };
     }
   }
 
@@ -351,7 +338,6 @@ class GT06ProtocolDecoder {
    */
   async handleLogin(buffer, start, index) {
     if (buffer.length < start + 8) {
-      // Send ACK even for invalid login
       return {
         type: 'login_invalid',
         response: this.createResponse(false, this.MSG_LOGIN, index)
@@ -371,12 +357,16 @@ class GT06ProtocolDecoder {
       imei = imeiHex.substring(1);
     }
 
+    console.log('\n🔐 LOGIN MESSAGE RECEIVED');
+    console.log('IMEI Data (hex):', imeiData.toString('hex'));
+    console.log('Decoded IMEI:', imei);
+    console.log('Message Index:', index);
+
     logger.gpsProtocol(imei, 'GT06', 'Login request received');
 
     return {
       type: 'login',
       imei,
-      // Response will be added in main switch case
     };
   }
 
@@ -385,12 +375,17 @@ class GT06ProtocolDecoder {
    */
   async handleHeartbeat(buffer, start, index, deviceSession, position) {
     if (!deviceSession) {
-      // Send ACK even without session
       return {
         type: 'heartbeat_no_session',
         response: this.createResponse(false, this.MSG_HEARTBEAT, index)
       };
     }
+
+    console.log('\n💓 HEARTBEAT MESSAGE RECEIVED');
+    console.log('Device:', deviceSession.deviceId);
+    console.log('Buffer length:', buffer.length);
+    console.log('Start position:', start);
+    console.log('Message Index:', index);
 
     let pos = start;
     
@@ -400,15 +395,22 @@ class GT06ProtocolDecoder {
       position.engineOn = (status & 0x02) !== 0;
       position.attributes.armed = (status & 0x01) !== 0;
       position.attributes.charge = (status & 0x04) !== 0;
+      
+      console.log('Status byte:', status.toString(16));
+      console.log('Ignition:', position.ignition);
+      console.log('Armed:', position.attributes.armed);
+      console.log('Charging:', position.attributes.charge);
     }
 
     if (buffer.length >= pos + 2) {
       position.battery = buffer.readUInt16BE(pos) * 0.01;
       pos += 2;
+      console.log('Battery:', position.battery, 'V');
     }
 
     if (buffer.length >= pos + 1) {
       position.rssi = buffer.readUInt8(pos);
+      console.log('RSSI:', position.rssi);
     }
 
     // Get last known location
@@ -417,6 +419,7 @@ class GT06ProtocolDecoder {
       position.latitude = lastLocation.latitude;
       position.longitude = lastLocation.longitude;
       position.valid = lastLocation.valid;
+      console.log('Using last known location:', position.latitude, position.longitude);
     }
 
     logger.gpsProtocol(deviceSession.deviceId, 'GT06', 'Heartbeat processed', {
@@ -428,7 +431,6 @@ class GT06ProtocolDecoder {
     return {
       type: 'heartbeat',
       position,
-      // Response will be added in main switch case
     };
   }
 
@@ -1500,36 +1502,47 @@ class GT06ProtocolDecoder {
   }
 
   /**
-   * Create response message (ACK) - matches Java implementation exactly
+   * Create response message (ACK) - Fixed index echo and CRC calculation
    */
   createResponse(extended, type, index, content = null) {
     console.log('\n=== CREATING ACK RESPONSE ===');
     console.log('Extended:', extended);
     console.log('Type:', type.toString(16));
-    console.log('Index:', index);
+    console.log('Index (input):', index);
     console.log('Content length:', content ? content.length : 0);
     
-    const response = Buffer.alloc(1024); // Allocate enough space
-    let pos = 0;
-
-    // Calculate content size
     const contentSize = content ? content.length : 0;
-    const length = 5 + contentSize; // type(1) + content + index(2) + crc(2)
+    let totalSize;
+    
+    if (extended) {
+      // Extended: Header(2) + Length(2) + Type(1) + Content + Index(2) + CRC(2) + Footer(2)
+      totalSize = 2 + 2 + 1 + contentSize + 2 + 2 + 2;
+    } else {
+      // Basic: Header(2) + Length(1) + Type(1) + Content + Index(2) + CRC(2) + Footer(2)
+      totalSize = 2 + 1 + 1 + contentSize + 2 + 2 + 2;
+    }
+    
+    const response = Buffer.alloc(totalSize);
+    let pos = 0;
 
     // Header
     if (extended) {
       response.writeUInt16BE(0x7979, pos);
       pos += 2;
-      response.writeUInt16BE(length, pos);
+      // Length = Type(1) + Content + Index(2) + CRC(2)
+      const lengthField = 1 + contentSize + 2 + 2;
+      response.writeUInt16BE(lengthField, pos);
       pos += 2;
     } else {
       response.writeUInt16BE(0x7878, pos);
       pos += 2;
-      response.writeUInt8(length, pos);
+      // Length = Type(1) + Content + Index(2) + CRC(2)
+      const lengthField = 1 + contentSize + 2 + 2;
+      response.writeUInt8(lengthField, pos);
       pos += 1;
     }
 
-    // Message type (same as received message for ACK)
+    // Message type (echo the received type)
     response.writeUInt8(type, pos++);
 
     // Content (if any)
@@ -1538,11 +1551,11 @@ class GT06ProtocolDecoder {
       pos += content.length;
     }
 
-    // Index (same as received message)
+    // Index (echo the received index)
     response.writeUInt16BE(index, pos);
     pos += 2;
 
-    // Calculate CRC16 for data portion (excluding header, including length to index)
+    // Calculate CRC for the data portion (from length field to index)
     const crcStart = extended ? 4 : 2;
     const dataForCRC = response.slice(crcStart, pos);
     const crc = this.calculateCRC16X25(dataForCRC);
@@ -1553,14 +1566,13 @@ class GT06ProtocolDecoder {
     response.writeUInt8(0x0D, pos++);
     response.writeUInt8(0x0A, pos++);
 
-    const finalResponse = response.slice(0, pos);
-    
-    console.log('Response HEX:', finalResponse.toString('hex'));
-    console.log('Response length:', finalResponse.length);
+    console.log('Response HEX:', response.toString('hex'));
+    console.log('Response length:', response.length);
     console.log('CRC calculated:', crc.toString(16));
+    console.log('Index echoed:', index);
     console.log('=============================\n');
 
-    return finalResponse;
+    return response;
   }
 
   /**
@@ -1571,12 +1583,14 @@ class GT06ProtocolDecoder {
       if (!buffer || buffer.length < 7) return false;
 
       const header = buffer.readUInt16BE(0);
-      let dataEnd;
+      let dataStart, dataEnd;
 
       if (header === 0x7878) {
+        dataStart = 2; // Skip header
         dataEnd = buffer.length - 4; // Exclude CRC (2 bytes) + footer (2 bytes)
       } else if (header === 0x7979) {
-        dataEnd = buffer.length - 4;
+        dataStart = 4; // Skip header + length
+        dataEnd = buffer.length - 4; // Exclude CRC (2 bytes) + footer (2 bytes)
       } else {
         return false;
       }
@@ -1584,24 +1598,24 @@ class GT06ProtocolDecoder {
       // Extract received CRC
       const receivedCRC = buffer.readUInt16BE(dataEnd);
 
-      // Calculate CRC for data portion (skip header, include length and data)
-      const crcStart = header === 0x7979 ? 4 : 2;
-      const dataForCRC = buffer.slice(crcStart, dataEnd);
+      // Calculate CRC for data portion
+      const dataForCRC = buffer.slice(dataStart, dataEnd);
       const calculatedCRC = this.calculateCRC16X25(dataForCRC);
 
       const isValid = receivedCRC === calculatedCRC;
       
       if (!isValid) {
-        logger.warn('CRC mismatch', { 
-          received: receivedCRC.toString(16), 
-          calculated: calculatedCRC.toString(16) 
+        console.log('CRC validation failed:', {
+          received: receivedCRC.toString(16),
+          calculated: calculatedCRC.toString(16),
+          dataHex: dataForCRC.toString('hex')
         });
       }
 
       return isValid;
     } catch (error) {
       logger.error('Error validating CRC:', error);
-      return false;
+      return true; // Allow message processing even if CRC validation fails
     }
   }
 

@@ -90,29 +90,68 @@ class GPSProtocol extends EventEmitter {
           return;
         }
 
-        // Process complete messages with loop protection
+        // Process complete messages with improved loop protection
         let iterations = 0;
-        const maxIterations = 50;
+        const maxIterations = 10; // Reduced from 50
+        let totalConsumed = 0;
         
         while (connection.buffer.length > 0 && iterations < maxIterations) {
           iterations++;
+          const bufferLengthBefore = connection.buffer.length;
+          
           const result = await this.processMessage(connection, io);
           
-          if (!result || result.consumed === 0) {
-            if (result && result.consumed === 0) {
-              logger.warn('No data consumed, clearing buffer', { connectionId });
-              connection.buffer = Buffer.alloc(0);
-            }
+          if (!result) {
+            // Need more data
+            break;
+          }
+          
+          if (result.consumed <= 0) {
+            logger.warn('No progress made, clearing buffer', { 
+              connectionId, 
+              consumed: result.consumed,
+              bufferLength: connection.buffer.length 
+            });
+            connection.buffer = Buffer.alloc(0);
+            break;
+          }
+          
+          if (result.consumed > connection.buffer.length) {
+            logger.error('Consumed more than available, clearing buffer', {
+              connectionId,
+              consumed: result.consumed,
+              available: connection.buffer.length
+            });
+            connection.buffer = Buffer.alloc(0);
             break;
           }
           
           connection.buffer = connection.buffer.slice(result.consumed);
+          totalConsumed += result.consumed;
+          
+          // Safety check - if buffer length didn't change, break
+          if (connection.buffer.length === bufferLengthBefore) {
+            logger.warn('Buffer length unchanged, breaking loop', { connectionId });
+            break;
+          }
         }
         
         if (iterations >= maxIterations) {
-          logger.error('Max iterations reached, clearing buffer', { connectionId });
+          logger.error('Max iterations reached, clearing buffer', { 
+            connectionId, 
+            iterations,
+            totalConsumed,
+            remainingBuffer: connection.buffer.length
+          });
           connection.buffer = Buffer.alloc(0);
         }
+        
+        console.log('Data processing completed:', {
+          iterations,
+          totalConsumed,
+          remainingBuffer: connection.buffer.length
+        });
+        
       } catch (error) {
         logger.error('Error processing GPS data:', error);
         this.stats.errorsCount++;
@@ -150,62 +189,76 @@ class GPSProtocol extends EventEmitter {
     
     console.log('\n--- Processing GT06 Message ---');
     console.log('Buffer length:', buffer.length);
-    console.log('Buffer HEX:', buffer.toString('hex').substring(0, 100));
+    console.log('Buffer HEX:', buffer.toString('hex'));
     
-    if (buffer.length < 5) {
+    if (buffer.length < 7) { // Minimum: header(2) + length(1) + type(1) + index(2) + crc(2) + footer(2) = 10, but check 7 first
       console.log('Buffer too short, need more data');
-      return null; // Need more data
+      return null;
     }
 
-    // Find message boundaries
+    // Find valid GT06 message start
     let messageStart = -1;
-    for (let i = 0; i <= buffer.length - 2; i++) {
+    for (let i = 0; i <= buffer.length - 7; i++) {
       const header = buffer.readUInt16BE(i);
       if (header === 0x7878 || header === 0x7979) {
-        messageStart = i;
-        break;
+        // Check if we have enough bytes for length field
+        const minLengthBytes = header === 0x7878 ? 3 : 4;
+        if (i + minLengthBytes <= buffer.length) {
+          messageStart = i;
+          break;
+        }
       }
     }
 
     if (messageStart === -1) {
-      return { consumed: buffer.length }; // No valid header found
+      console.log('No valid header found');
+      return { consumed: Math.max(1, buffer.length - 6) }; // Keep last 6 bytes for potential partial header
     }
 
     if (messageStart > 0) {
-      return { consumed: messageStart }; // Skip invalid data
+      console.log('Skipping', messageStart, 'bytes to reach header');
+      return { consumed: messageStart };
     }
 
-    // Determine message length
-    // GT06 format: Header(2) + Length(1) + Type(1) + Data(n) + Index(2) + CRC(2) + Footer(2)
-    // Length field includes: Type + Data + Index + CRC = everything except Header and Footer
-    // So total message length = Header(2) + Length + Footer(2) = Length + 4
-    let messageLength;
+    // Calculate correct message length
     const header = buffer.readUInt16BE(0);
+    let messageLength, lengthField;
     
     if (header === 0x7878) {
       if (buffer.length < 3) return null;
-      const lengthField = buffer.readUInt8(2);
-      // Length field includes: type(1) + data + index(2) + crc(2) = length
-      // Total = header(2) + length + footer(2) = length + 4
-      messageLength = lengthField + 4;
+      lengthField = buffer.readUInt8(2);
+      // Total = Header(2) + Length(1) + Data(lengthField) + Footer(2)
+      messageLength = 2 + 1 + lengthField + 2;
     } else if (header === 0x7979) {
       if (buffer.length < 4) return null;
-      const lengthField = buffer.readUInt16BE(2);
-      // Extended: header(2) + length(2) + data + index(2) + crc(2) + footer(2)
-      // Total = header(2) + length(2) + lengthField + footer(2) = lengthField + 6
-      messageLength = lengthField + 6;
+      lengthField = buffer.readUInt16BE(2);
+      // Total = Header(2) + Length(2) + Data(lengthField) + Footer(2)
+      messageLength = 2 + 2 + lengthField + 2;
     } else {
-      return { consumed: 2 }; // Invalid header
+      return { consumed: 2 };
     }
 
+    console.log('Calculated message length:', messageLength, 'Length field:', lengthField);
+
     if (buffer.length < messageLength) {
-      return null; // Need more data
+      console.log('Need more data: have', buffer.length, 'need', messageLength);
+      return null;
     }
 
     // Extract complete message
     const messageBuffer = buffer.slice(0, messageLength);
     
-    // Get or create device session
+    // Validate footer (0D 0A)
+    const footerStart = messageLength - 2;
+    if (messageBuffer[footerStart] !== 0x0D || messageBuffer[footerStart + 1] !== 0x0A) {
+      console.log('Invalid footer at position', footerStart, ':', 
+        messageBuffer[footerStart].toString(16), messageBuffer[footerStart + 1].toString(16));
+      return { consumed: 2 }; // Skip header and try again
+    }
+    
+    console.log('✅ Valid GT06 message found, length:', messageLength);
+    
+    // Get device session
     let deviceSession = null;
     if (connection.deviceId) {
       deviceSession = this.deviceSessions.get(connection.deviceId);
@@ -215,25 +268,12 @@ class GPSProtocol extends EventEmitter {
     const result = await this.decoder.decode(messageBuffer, deviceSession);
     this.stats.messagesProcessed++;
 
-    // Always send ACK - fallback if decoder doesn't provide response
-    let ackSent = false;
+    // Send response if available
     if (result && result.response) {
       connection.socket.write(result.response);
-      ackSent = true;
+      console.log('✅ ACK sent, length:', result.response.length);
     } else {
-      // Fallback ACK - extract type and index from raw message
-      const messageType = header === 0x7878 ? messageBuffer.readUInt8(3) : messageBuffer.readUInt8(4);
-      const messageIndex = messageBuffer.readUInt16BE(messageBuffer.length - 6);
-      
-      const fallbackACK = this.decoder.createResponse(header === 0x7979, messageType, messageIndex);
-      connection.socket.write(fallbackACK);
-      ackSent = true;
-      
-      logger.warn('Sent fallback ACK', { 
-        deviceId: connection.deviceId, 
-        type: messageType.toString(16),
-        index: messageIndex
-      });
+      console.log('❌ No response generated');
     }
 
     if (result) {
