@@ -46,7 +46,7 @@ router.post('/add-by-imei', auth, [
 
     // Auto-detect device type and protocol based on IMEI patterns
     let deviceType = 'GT06'; // Default
-    let protocol = 5027;
+    let protocol = 5023;
     
     // IMEI pattern detection (you can customize these patterns)
     const imeiPrefix = imei.substring(0, 8);
@@ -58,7 +58,7 @@ router.post('/add-by-imei', auth, [
     
     if (teltonikaPrefix.some(prefix => imeiPrefix.startsWith(prefix))) {
       deviceType = 'TELTONIKA';
-      protocol = 5027;
+      protocol = 5023;
     }
 
     const device = new Device({

@@ -2,7 +2,7 @@ const net = require('net');
 
 // Test GT06 Device Simulator
 class GT06TestClient {
-  constructor(imei, host = 'localhost', port = 5027) {
+  constructor(imei, host = 'localhost', port = 5023) {
     this.imei = imei;
     this.host = host;
     this.port = port;

@@ -84,7 +84,7 @@ async function startServer() {
       
       res.json({
         gpsServer: {
-          port: process.env.GPS_PORT_GT06 || 5027,
+          port: process.env.GPS_PORT_GT06 || 5023,
           stats: stats
         },
         database: {
@@ -149,7 +149,7 @@ async function startServer() {
 
     // GPS Server (GT06 Protocol)
     const gpsServer = net.createServer((socket) => {
-      gpsProtocol.handleConnection(socket, io, parseInt(process.env.GPS_PORT_GT06) || 5027);
+      gpsProtocol.handleConnection(socket, io, parseInt(process.env.GPS_PORT_GT06) || 5023);
     });
 
     // Socket.IO connection
@@ -168,7 +168,7 @@ async function startServer() {
 
     // Start servers
     const PORT = process.env.PORT || 3000;
-    const GPS_PORT = parseInt(process.env.GPS_PORT_GT06) || 5027;
+    const GPS_PORT = parseInt(process.env.GPS_PORT_GT06) || 5023;
 
     server.listen(PORT, () => {
       logger.info(`✅ HTTP Server: http://localhost:${PORT}`);

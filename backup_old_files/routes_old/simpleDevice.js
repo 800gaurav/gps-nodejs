@@ -40,14 +40,14 @@ router.post('/add', auth, [
 
     // Auto-detect device type based on IMEI
     let deviceType = 'GT06';
-    let protocol = 5027;
+    let protocol = 5023;
     
     const imeiPrefix = imei.substring(0, 8);
     const teltonikaPrefix = ['35238507', '35238508'];
     
     if (teltonikaPrefix.some(prefix => imeiPrefix.startsWith(prefix))) {
       deviceType = 'TELTONIKA';
-      protocol = 5027;
+      protocol = 5023;
     }
 
     // Create device
@@ -215,8 +215,8 @@ router.get('/status/:imei', auth, async (req, res) => {
       },
       troubleshooting: {
         serverIP: 'Your server IP here',
-        port: device.protocol || 5027,
-        deviceConfiguration: `SERVER,1,YOUR_SERVER_IP,${device.protocol || 5027},0#`,
+        port: device.protocol || 5023,
+        deviceConfiguration: `SERVER,1,YOUR_SERVER_IP,${device.protocol || 5023},0#`,
         possibleIssues: [
           latestLocation ? null : 'Device never sent data - check device configuration',
           connectionStatus === 'offline' ? 'Device offline - check power and network' : null,

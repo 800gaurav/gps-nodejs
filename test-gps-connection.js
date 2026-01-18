@@ -1,7 +1,7 @@
 // Test GPS Connection
 const net = require('net');
 
-const TEST_PORT = 5027;
+const TEST_PORT = 5023;
 const TEST_HOST = 'localhost'; // Change to your server IP for remote test
 
 console.log(`Testing GPS connection on ${TEST_HOST}:${TEST_PORT}...`);
