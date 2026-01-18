@@ -207,18 +207,18 @@ class GT06ProtocolEncoder {
       const buffer = Buffer.alloc(totalLength);
       let pos = 0;
 
-      // Header
+      // Header (0x7878)
       buffer.writeUInt16BE(0x7878, pos);
       pos += 2;
 
-      // Length
-      const messageLength = 1 + 4 + commandBuffer.length + languageSize + 2;
+      // Length: type(1) + commandLength(1) + reserved(4) + content + index(2) + crc(2) + language(0 or 2)
+      const messageLength = 1 + 1 + 4 + commandBuffer.length + 2 + 2 + languageSize;
       buffer.writeUInt8(messageLength, pos++);
 
-      // Message type
+      // Message type (MSG_COMMAND_0)
       buffer.writeUInt8(this.MSG_COMMAND_0, pos++);
 
-      // Command length
+      // Command length: reserved(4) + content.length
       buffer.writeUInt8(4 + commandBuffer.length, pos++);
 
       // Server flag (reserved)
