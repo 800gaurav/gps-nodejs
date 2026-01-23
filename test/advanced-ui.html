@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GPS Device Tester - Advanced UI</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; }
+        .container { max-width: 1400px; margin: 0 auto; padding: 20px; }
+        .header { text-align: center; margin-bottom: 30px; color: white; }
+        .header h1 { font-size: 2.5em; margin-bottom: 10px; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
+        .card { background: rgba(255,255,255,0.95); border-radius: 12px; padding: 25px; margin-bottom: 20px; box-shadow: 0 8px 32px rgba(0,0,0,0.1); backdrop-filter: blur(10px); }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 20px; }
+        .btn { padding: 12px 24px; border: none; border-radius: 8px; cursor: pointer; font-size: 14px; margin: 5px; transition: all 0.3s ease; font-weight: 600; }
+        .btn-primary { background: linear-gradient(45deg, #007bff, #0056b3); color: white; }
+        .btn-success { background: linear-gradient(45deg, #28a745, #1e7e34); color: white; }
+        .btn-danger { background: linear-gradient(45deg, #dc3545, #c82333); color: white; }
+        .btn-warning { background: linear-gradient(45deg, #ffc107, #e0a800); color: black; }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
+        .btn:active { transform: translateY(0); }
+        .status { padding: 15px; border-radius: 8px; margin: 15px 0; font-weight: bold; }
+        .status.connected { background: linear-gradient(45deg, #d4edda, #c3e6cb); color: #155724; border-left: 4px solid #28a745; }
+        .status.disconnected { background: linear-gradient(45deg, #f8d7da, #f5c6cb); color: #721c24; border-left: 4px solid #dc3545; }
+        .input-group { margin: 15px 0; }
+        .input-group label { display: block; margin-bottom: 8px; font-weight: 600; color: #333; }
+        .input-group input, .input-group select { width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 8px; font-size: 14px; transition: border-color 0.3s; }
+        .input-group input:focus { border-color: #007bff; outline: none; box-shadow: 0 0 0 3px rgba(0,123,255,0.1); }
+        .log { background: #1a1a1a; color: #00ff00; padding: 20px; border-radius: 8px; height: 350px; overflow-y: auto; font-family: 'Courier New', monospace; font-size: 13px; line-height: 1.4; }
+        .device-info { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 15px; margin: 20px 0; }
+        .info-item { text-align: center; padding: 15px; background: linear-gradient(45deg, #f8f9fa, #e9ecef); border-radius: 8px; border: 1px solid #dee2e6; }
+        .info-label { font-size: 12px; color: #6c757d; margin-bottom: 5px; }
+        .info-value { font-size: 20px; font-weight: bold; color: #007bff; }
+        .controls { display: flex; flex-wrap: wrap; gap: 10px; margin: 15px 0; }
+        .map-container { height: 250px; background: linear-gradient(45deg, #e9ecef, #f8f9fa); border-radius: 8px; display: flex; align-items: center; justify-content: center; border: 2px dashed #dee2e6; }
+        .speed-control { display: flex; align-items: center; gap: 15px; margin: 15px 0; }
+        .speed-slider { flex: 1; }
+        .speed-display { background: #007bff; color: white; padding: 8px 16px; border-radius: 20px; font-weight: bold; min-width: 80px; text-align: center; }
+        .api-section { border-top: 2px solid #e9ecef; padding-top: 20px; margin-top: 20px; }
+        .log-controls { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        .device-list { display: flex; flex-wrap: wrap; gap: 10px; margin: 15px 0; }
+        .device-chip { background: #007bff; color: white; padding: 5px 12px; border-radius: 15px; font-size: 12px; }
+        .pulse { animation: pulse 2s infinite; }
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚗 GPS Device Tester Pro</h1>
+            <p>Advanced Mock GT06 Device Simulator & Real-time API Tester</p>
+        </div>
+
+        <div class="grid">
+            <!-- Device Control Panel -->
+            <div class="card">
+                <h3>📱 Device Control Panel</h3>
+                
+                <div class="input-group">
+                    <label>Device IMEI:</label>
+                    <input type="text" id="imei" value="123456789012345" placeholder="Enter 15-digit IMEI">
+                </div>
+                
+                <div class="input-group">
+                    <label>GPS Server:</label>
+                    <input type="text" id="server" value="localhost" placeholder="Server IP">
+                </div>
+                
+                <div class="input-group">
+                    <label>GPS Port:</label>
+                    <input type="number" id="port" value="5023" placeholder="5023">
+                </div>
+                
+                <div class="controls">
+                    <button class="btn btn-primary" onclick="connectDevice()">🔌 Connect Device</button>
+                    <button class="btn btn-danger" onclick="disconnectDevice()">❌ Disconnect</button>
+                </div>
+                
+                <div id="connectionStatus" class="status disconnected">
+                    ❌ Device Disconnected
+                </div>
+                
+                <h4>🚗 Vehicle Controls:</h4>
+                <div class="controls">
+                    <button class="btn btn-success" onclick="startEngine()">🔥 Start Engine</button>
+                    <button class="btn btn-danger" onclick="stopEngine()">🛑 Stop Engine</button>
+                    <button class="btn btn-warning" onclick="sendLocation()">📍 Send Location Now</button>
+                    <button class="btn btn-primary" onclick="sendHeartbeat()">💓 Send Heartbeat</button>
+                </div>
+                
+                <div class="speed-control">
+                    <label>Speed:</label>
+                    <input type="range" id="speedSlider" class="speed-slider" min="0" max="200" value="0" oninput="setSpeed(this.value)">
+                    <div class="speed-display" id="speedValue">0 km/h</div>
+                </div>
+                
+                <div class="controls">
+                    <button class="btn btn-primary" onclick="startMoving()">🚗 Start Moving</button>
+                    <button class="btn btn-warning" onclick="stopMoving()">⏹️ Stop Moving</button>
+                    <button class="btn btn-success" onclick="startAutoReporting()">📡 Auto Report (30s)</button>
+                </div>
+
+                <div class="input-group">
+                    <label>Auto Report Interval (seconds):</label>
+                    <input type="number" id="reportInterval" value="30" min="5" max="300">
+                </div>
+            </div>
+
+            <!-- Device Status Dashboard -->
+            <div class="card">
+                <h3>📊 Live Device Status</h3>
+                <div class="device-info">
+                    <div class="info-item">
+                        <div class="info-label">Latitude</div>
+                        <div class="info-value" id="lat">28.613900</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Longitude</div>
+                        <div class="info-value" id="lng">77.209000</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Speed</div>
+                        <div class="info-value" id="speed">0 km/h</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Ignition</div>
+                        <div class="info-value" id="ignition">OFF</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">ACC</div>
+                        <div class="info-value" id="acc">OFF</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Moving</div>
+                        <div class="info-value" id="moving">NO</div>
+                    </div>
+                </div>
+                
+                <div class="map-container">
+                    <div>
+                        📍 GPS Position<br>
+                        <strong>Lat:</strong> <span id="mapLat">28.613900</span><br>
+                        <strong>Lng:</strong> <span id="mapLng">77.209000</span><br>
+                        <small>Delhi, India</small>
+                    </div>
+                </div>
+
+                <h4>🔗 Active Devices:</h4>
+                <div class="device-list" id="deviceList">
+                    <div class="device-chip">No devices connected</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- API Testing Section -->
+        <div class="card">
+            <h3>🔧 GPS Server API Testing</h3>
+            <div class="api-section">
+                <h4>Device Management:</h4>
+                <div class="controls">
+                    <button class="btn btn-primary" onclick="addDeviceToServer()">➕ Add Device to Server</button>
+                    <button class="btn btn-success" onclick="getAllDevices()">📱 Get All Devices</button>
+                    <button class="btn btn-warning" onclick="deleteDevice()">🗑️ Delete Device</button>
+                </div>
+                
+                <h4>Location & Tracking:</h4>
+                <div class="controls">
+                    <button class="btn btn-success" onclick="getLiveLocation()">📍 Get Live Location</button>
+                    <button class="btn btn-primary" onclick="getLocationHistory()">📈 Get Location History</button>
+                    <button class="btn btn-warning" onclick="getDeviceStatus()">📊 Get Device Status</button>
+                </div>
+                
+                <h4>Remote Commands:</h4>
+                <div class="controls">
+                    <button class="btn btn-danger" onclick="sendEngineStop()">🛑 Send Engine Stop Command</button>
+                    <button class="btn btn-success" onclick="sendEngineStart()">🔥 Send Engine Start Command</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Console Log -->
+        <div class="card">
+            <div class="log-controls">
+                <h3>📝 Real-time Console Log</h3>
+                <div>
+                    <button class="btn btn-warning" onclick="clearLog()">🧹 Clear Log</button>
+                    <button class="btn btn-primary" onclick="toggleAutoScroll()">📜 Auto Scroll: <span id="autoScrollStatus">ON</span></button>
+                </div>
+            </div>
+            <div id="console" class="log">
+                [SYSTEM] GPS Device Tester Pro initialized...<br>
+                [INFO] Ready for testing. Start by connecting a mock device.<br>
+                [TIP] Make sure your GPS server is running on port 3000<br>
+            </div>
+        </div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        let socket = null;
+        let deviceConnected = false;
+        let autoScroll = true;
+        let currentDevice = {
+            imei: '123456789012345',
+            lat: 28.613900,
+            lng: 77.209000,
+            speed: 0,
+            ignition: false,
+            acc: false,
+            moving: false
+        };
+
+        // Initialize WebSocket connection
+        function initWebSocket() {
+            socket = io();
+            
+            socket.on('connect', () => {
+                log('🔌 WebSocket connected to UI server', 'success');
+            });
+            
+            socket.on('deviceConnected', (data) => {
+                log(`📱 Device ${data.imei} connected to GPS server`, 'success');
+                updateDeviceList();
+            });
+            
+            socket.on('deviceDisconnected', (data) => {
+                log(`📱 Device ${data.imei} disconnected from GPS server`, 'warning');
+                updateDeviceList();
+            });
+            
+            socket.on('deviceStatusUpdate', (data) => {
+                if (data.imei === currentDevice.imei) {
+                    currentDevice = { ...currentDevice, ...data };
+                    updateStatus();
+                }
+            });
+            
+            socket.on('deviceLog', (data) => {
+                log(`[${data.imei}] ${data.message}`, 'info');
+            });
+        }
+
+        function log(message, type = 'info') {
+            const console = document.getElementById('console');
+            const timestamp = new Date().toLocaleTimeString();
+            const colors = {
+                info: '#00ff00',
+                success: '#00ff88',
+                warning: '#ffaa00',
+                error: '#ff4444'
+            };
+            
+            console.innerHTML += `<span style="color: ${colors[type]}">[${timestamp}] ${message}</span><br>`;
+            
+            if (autoScroll) {
+                console.scrollTop = console.scrollHeight;
+            }
+        }
+
+        function updateStatus() {
+            document.getElementById('lat').textContent = currentDevice.lat.toFixed(6);
+            document.getElementById('lng').textContent = currentDevice.lng.toFixed(6);
+            document.getElementById('mapLat').textContent = currentDevice.lat.toFixed(6);
+            document.getElementById('mapLng').textContent = currentDevice.lng.toFixed(6);
+            document.getElementById('speed').textContent = currentDevice.speed + ' km/h';
+            document.getElementById('ignition').textContent = currentDevice.ignition ? 'ON' : 'OFF';
+            document.getElementById('ignition').style.color = currentDevice.ignition ? '#28a745' : '#dc3545';
+            document.getElementById('acc').textContent = currentDevice.acc ? 'ON' : 'OFF';
+            document.getElementById('acc').style.color = currentDevice.acc ? '#28a745' : '#dc3545';
+            document.getElementById('moving').textContent = currentDevice.moving ? 'YES' : 'NO';
+            document.getElementById('moving').style.color = currentDevice.moving ? '#28a745' : '#6c757d';
+        }
+
+        async function connectDevice() {
+            const imei = document.getElementById('imei').value;
+            const server = document.getElementById('server').value;
+            const port = document.getElementById('port').value;
+            
+            if (!imei || imei.length !== 15) {
+                alert('Please enter a valid 15-digit IMEI');
+                return;
+            }
+            
+            try {
+                const response = await fetch('/api/mock-device/connect', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ imei, serverHost: server, serverPort: parseInt(port) })
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    currentDevice.imei = imei;
+                    deviceConnected = true;
+                    
+                    document.getElementById('connectionStatus').className = 'status connected pulse';
+                    document.getElementById('connectionStatus').innerHTML = `✅ Device ${imei} connected to ${server}:${port}`;
+                    
+                    log(`📱 Mock device ${imei} connecting to ${server}:${port}`, 'success');
+                    
+                    setTimeout(() => {
+                        document.getElementById('connectionStatus').classList.remove('pulse');
+                    }, 3000);
+                } else {
+                    log(`❌ Connection failed: ${result.message}`, 'error');
+                }
+            } catch (error) {
+                log(`❌ Connection error: ${error.message}`, 'error');
+            }
+        }
+
+        async function disconnectDevice() {
+            if (!deviceConnected) return;
+            
+            try {
+                const response = await fetch('/api/mock-device/disconnect', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ imei: currentDevice.imei })
+                });
+                
+                const result = await response.json();
+                
+                deviceConnected = false;
+                document.getElementById('connectionStatus').className = 'status disconnected';
+                document.getElementById('connectionStatus').innerHTML = '❌ Device Disconnected';
+                
+                log(`📱 Device ${currentDevice.imei} disconnected`, 'warning');
+            } catch (error) {
+                log(`❌ Disconnect error: ${error.message}`, 'error');
+            }
+        }
+
+        async function deviceControl(action, value = null) {
+            if (!deviceConnected) {
+                alert('Please connect a device first!');
+                return;
+            }
+            
+            try {
+                const response = await fetch('/api/mock-device/control', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ imei: currentDevice.imei, action, value })
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    log(`✅ ${action} executed successfully`, 'success');
+                } else {
+                    log(`❌ ${action} failed: ${result.message}`, 'error');
+                }
+            } catch (error) {
+                log(`❌ Control error: ${error.message}`, 'error');
+            }
+        }
+
+        // Device control functions
+        function startEngine() { deviceControl('startEngine'); }
+        function stopEngine() { deviceControl('stopEngine'); }
+        function sendLocation() { deviceControl('sendLocation'); }
+        function startMoving() { deviceControl('startMoving'); }
+        function stopMoving() { deviceControl('stopMoving'); }
+        function sendHeartbeat() { deviceControl('sendHeartbeat'); }
+
+        function setSpeed(speed) {
+            document.getElementById('speedValue').textContent = speed + ' km/h';
+            deviceControl('setSpeed', speed);
+        }
+
+        function startAutoReporting() {
+            const interval = document.getElementById('reportInterval').value * 1000;
+            deviceControl('startAutoReporting', interval);
+        }
+
+        // API Testing Functions
+        async function addDeviceToServer() {
+            try {
+                const response = await fetch('http://localhost:3000/api/devices', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        deviceId: 'GT06_001',
+                        imei: currentDevice.imei,
+                        vehicleName: 'Test Vehicle'
+                    })
+                });
+                const result = await response.json();
+                log(`✅ Device added to server: ${JSON.stringify(result)}`, 'success');
+            } catch (e) {
+                log(`❌ API Error: ${e.message}`, 'error');
+            }
+        }
+
+        async function getAllDevices() {
+            try {
+                const response = await fetch('http://localhost:3000/api/devices');
+                const result = await response.json();
+                log(`📱 All devices: ${JSON.stringify(result, null, 2)}`, 'info');
+            } catch (e) {
+                log(`❌ API Error: ${e.message}`, 'error');
+            }
+        }
+
+        async function getLiveLocation() {
+            try {
+                const response = await fetch('http://localhost:3000/api/locations/live');
+                const result = await response.json();
+                log(`📍 Live locations: ${JSON.stringify(result, null, 2)}`, 'info');
+            } catch (e) {
+                log(`❌ API Error: ${e.message}`, 'error');
+            }
+        }
+
+        async function sendEngineStop() {
+            try {
+                const response = await fetch('http://localhost:3000/api/commands/GT06_001', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ command: 'engineStop' })
+                });
+                const result = await response.json();
+                log(`🛑 Engine stop command sent: ${JSON.stringify(result)}`, 'warning');
+            } catch (e) {
+                log(`❌ API Error: ${e.message}`, 'error');
+            }
+        }
+
+        async function sendEngineStart() {
+            try {
+                const response = await fetch('http://localhost:3000/api/commands/GT06_001', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ command: 'engineResume' })
+                });
+                const result = await response.json();
+                log(`🔥 Engine start command sent: ${JSON.stringify(result)}`, 'success');
+            } catch (e) {
+                log(`❌ API Error: ${e.message}`, 'error');
+            }
+        }
+
+        function clearLog() {
+            document.getElementById('console').innerHTML = '<span style="color: #00ff88">[SYSTEM] Log cleared...</span><br>';
+        }
+
+        function toggleAutoScroll() {
+            autoScroll = !autoScroll;
+            document.getElementById('autoScrollStatus').textContent = autoScroll ? 'ON' : 'OFF';
+            log(`📜 Auto scroll ${autoScroll ? 'enabled' : 'disabled'}`, 'info');
+        }
+
+        function updateDeviceList() {
+            // This would be updated via WebSocket in real implementation
+            const deviceList = document.getElementById('deviceList');
+            if (deviceConnected) {
+                deviceList.innerHTML = `<div class="device-chip">${currentDevice.imei}</div>`;
+            } else {
+                deviceList.innerHTML = '<div class="device-chip">No devices connected</div>';
+            }
+        }
+
+        // Initialize everything
+        document.addEventListener('DOMContentLoaded', () => {
+            initWebSocket();
+            updateStatus();
+            log('🚀 GPS Device Tester Pro UI loaded', 'success');
+            log('📋 Quick Start Guide:', 'info');
+            log('1. Make sure GPS server is running (npm start)', 'info');
+            log('2. Enter IMEI and click "Connect Device"', 'info');
+            log('3. Use "Add Device to Server" to register via API', 'info');
+            log('4. Test engine controls and location updates', 'info');
+        });
+    </script>
+</body>
+</html>

@@ -191,7 +191,7 @@ class GPSProtocol extends EventEmitter {
     console.log('Buffer length:', buffer.length);
     console.log('Buffer HEX:', buffer.toString('hex'));
     
-    if (buffer.length < 7) { // Minimum: header(2) + length(1) + type(1) + index(2) + crc(2) + footer(2) = 10, but check 7 first
+    if (buffer.length < 10) { // Minimum: header(2) + length(1) + type(1) + index(2) + crc(2) + footer(2) = 10, but check 7 first
       console.log('Buffer too short, need more data');
       return null;
     }

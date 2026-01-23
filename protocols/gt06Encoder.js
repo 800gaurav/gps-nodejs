@@ -93,7 +93,7 @@ class GT06ProtocolEncoder {
       commandText = stop ? `DYD,${password}#` : `HFYD,${password}#`;
     } else {
       // Standard GT06 compatible commands
-      commandText = stop ? `RELAY,${password},1#` : `RELAY,${password},0#`;
+      commandText = stop ? `Relay,1#` : `Relay,0#`;
     }
 
     return this.encodeTextCommand(commandText, parameters.language);

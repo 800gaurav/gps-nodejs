@@ -346,16 +346,8 @@ class GT06ProtocolDecoder {
 
     let imei;
     const imeiData = buffer.slice(start, start + 8);
-    
-    // Check if IMEI is in ASCII format (printable characters)
-    if (imeiData.every(byte => byte >= 0x30 && byte <= 0x39)) {
-      // ASCII format: direct string conversion
-      imei = imeiData.toString('ascii');
-    } else {
-      // BCD format: convert hex and remove first digit
-      const imeiHex = imeiData.toString('hex');
-      imei = imeiHex.substring(1);
-    }
+    const imeiHex = imeiData.toString('hex');
+    imei = imeiHex.replace(/^0/, '');
 
     console.log('\n🔐 LOGIN MESSAGE RECEIVED');
     console.log('IMEI Data (hex):', imeiData.toString('hex'));
@@ -706,7 +698,7 @@ class GT06ProtocolDecoder {
       const minute = buffer.readUInt8(pos++);
       const second = buffer.readUInt8(pos++);
 
-      const timestamp = new Date(year, month, day, hour, minute, second);
+      const timestamp = new Date(Date.UTC(year, month, day, hour, minute, second));
 
       // GPS length check for some message types
       if ([this.MSG_GPS_LBS_1, this.MSG_GPS_LBS_2].includes(type)) {
@@ -748,7 +740,7 @@ class GT06ProtocolDecoder {
         pos += 2;
       } else {
         // Normal order: speed then flags
-        if (variant === this.variants.JC400) {
+        if (variant === this.variants.JC400 || variant === this.variants.OBD6) {
           speed = buffer.readUInt16BE(pos);
           pos += 2;
         } else {
@@ -760,16 +752,20 @@ class GT06ProtocolDecoder {
 
       const course = flags & 0x03FF; // Lower 10 bits
       const valid = (flags & 0x1000) !== 0; // Bit 12
-      const latNorth = (flags & 0x0400) === 0; // Bit 10 (inverted)
-      const lngEast = (flags & 0x0800) !== 0; // Bit 11
-      const hasIgnitionFlag = (flags & 0x4000) !== 0; // Bit 14
-      const ignition = hasIgnitionFlag && ((flags & 0x8000) !== 0); // Bit 15 if bit 14 is set
+      
+      // Ignition decoding
+      let ignition = null;
+      if ((flags & 0x4000) !== 0) { // bit 14
+        ignition = (flags & 0x8000) !== 0; // bit 15
+      }
 
-      // Apply hemisphere corrections (opposite logic from Java implementation)
-      // Java: if (!BitUtil.check(flags, 10)) latitude = -latitude;
-      //       if (BitUtil.check(flags, 11)) longitude = -longitude;
-      if (!latNorth) latitude = -latitude;
-      if (lngEast) longitude = -longitude;
+      // Apply hemisphere corrections
+      if ((flags & 0x0400) === 0) { // bit 10 NOT set
+        latitude = -latitude;
+      }
+      if ((flags & 0x0800) !== 0) { // bit 11 set
+        longitude = -longitude;
+      }
 
       console.log('\n--- GPS DECODE RESULT ---');
       console.log('Timestamp:', timestamp);
@@ -1583,24 +1579,15 @@ class GT06ProtocolDecoder {
       if (!buffer || buffer.length < 7) return false;
 
       const header = buffer.readUInt16BE(0);
-      let dataStart, dataEnd;
-
-      if (header === 0x7878) {
-        dataStart = 2; // Skip header
-        dataEnd = buffer.length - 4; // Exclude CRC (2 bytes) + footer (2 bytes)
-      } else if (header === 0x7979) {
-        dataStart = 4; // Skip header + length
-        dataEnd = buffer.length - 4; // Exclude CRC (2 bytes) + footer (2 bytes)
-      } else {
-        return false;
-      }
+      let start = header === 0x7878 ? 2 : 4;
+      let end = buffer.length - 4;
+      const crcData = buffer.slice(start, end);
 
       // Extract received CRC
-      const receivedCRC = buffer.readUInt16BE(dataEnd);
+      const receivedCRC = buffer.readUInt16BE(end);
 
       // Calculate CRC for data portion
-      const dataForCRC = buffer.slice(dataStart, dataEnd);
-      const calculatedCRC = this.calculateCRC16X25(dataForCRC);
+      const calculatedCRC = this.calculateCRC16X25(crcData);
 
       const isValid = receivedCRC === calculatedCRC;
       
@@ -1608,14 +1595,14 @@ class GT06ProtocolDecoder {
         console.log('CRC validation failed:', {
           received: receivedCRC.toString(16),
           calculated: calculatedCRC.toString(16),
-          dataHex: dataForCRC.toString('hex')
+          dataHex: crcData.toString('hex')
         });
       }
 
       return isValid;
     } catch (error) {
       logger.error('Error validating CRC:', error);
-      return true; // Allow message processing even if CRC validation fails
+      return false;
     }
   }
 
