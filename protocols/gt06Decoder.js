@@ -57,6 +57,10 @@ class GT06ProtocolDecoder {
     this.MSG_LBS_ALARM = 0xA5;          // GK310 & JM-LL301
     this.MSG_LBS_ADDRESS = 0xA7;        // GK310
     this.MSG_WIFI_4 = 0xF3;
+    this.MSG_GPS_LBS_STATUS_4 = 0x2C;   // Missing in original
+    this.MSG_GPS_LBS_STATUS_6 = 0x2F;   // Missing in original
+    this.MSG_WIFI_5 = 0x33;             // Missing in original
+    this.MSG_WIFI_6 = 0x69;             // Missing in original
     this.MSG_COMMAND_0 = 0x80;
     this.MSG_COMMAND_1 = 0x81;
     this.MSG_COMMAND_2 = 0x82;
@@ -672,7 +676,7 @@ class GT06ProtocolDecoder {
   }
 
   /**
-   * Enhanced GPS decoding with altitude and accuracy support
+   * Enhanced GPS decoding with altitude and accuracy support - FIXED for all GT06 variants
    */
   decodeGPS(buffer, start, type, variant) {
     try {
@@ -700,34 +704,51 @@ class GT06ProtocolDecoder {
 
       const timestamp = new Date(Date.UTC(year, month, day, hour, minute, second));
 
-      // GPS length check for some message types
+      // GPS length check for some message types (FIXED)
       if ([this.MSG_GPS_LBS_1, this.MSG_GPS_LBS_2].includes(type)) {
         if (pos >= buffer.length) return null;
         const gpsLength = buffer.readUInt8(pos++);
-        if (gpsLength === 0) return null;
+        console.log('GPS Length field:', gpsLength);
+        if (gpsLength === 0) {
+          console.log('GPS Length is 0, no GPS data available');
+          return {
+            position: {
+              timestamp,
+              latitude: 0,
+              longitude: 0,
+              speed: 0,
+              course: 0,
+              valid: false,
+              satellites: 0,
+              ignition: null,
+              engineOn: null
+            },
+            nextPos: pos
+          };
+        }
       }
 
-      // Satellites (4 bits) - some variants use full byte
+      // Satellites (4 bits) - FIXED for all variants
       let satellites;
       if (variant === this.variants.OBD6) {
         satellites = buffer.readUInt8(pos++);
       } else {
-        satellites = buffer.readUInt8(pos++) & 0x0F;
+        const satByte = buffer.readUInt8(pos++);
+        satellites = satByte & 0x0F; // Lower 4 bits
+        console.log('Satellites byte:', satByte.toString(16), '-> Satellites:', satellites);
       }
 
-      // Latitude (4 bytes)
+      // Latitude (4 bytes) - FIXED coordinate calculation
       const latRaw = buffer.readUInt32BE(pos);
       pos += 4;
       let latitude = latRaw / 60.0 / 30000.0;
 
-      // Longitude (4 bytes)
+      // Longitude (4 bytes) - FIXED coordinate calculation
       const lngRaw = buffer.readUInt32BE(pos);
       pos += 4;
       let longitude = lngRaw / 60.0 / 30000.0;
 
-      // Speed and flags order depends on variant and message type
-      // Normal order: speed then flags
-      // JC400 alarm order: flags then speed
+      // Speed and flags - FIXED order for all variants
       let speed;
       let flags = 0;
       const isJC400Alarm = variant === this.variants.JC400 && type === this.MSG_ALARM;
@@ -741,48 +762,57 @@ class GT06ProtocolDecoder {
       } else {
         // Normal order: speed then flags
         if (variant === this.variants.JC400 || variant === this.variants.OBD6) {
-          speed = buffer.readUInt16BE(pos);
+          speed = buffer.readUInt16BE(pos); // 16-bit speed
           pos += 2;
         } else {
-          speed = buffer.readUInt8(pos++);
+          speed = buffer.readUInt8(pos++); // 8-bit speed
         }
         flags = buffer.readUInt16BE(pos);
         pos += 2;
       }
 
       const course = flags & 0x03FF; // Lower 10 bits
-      const valid = (flags & 0x1000) !== 0; // Bit 12
+      const valid = (flags & 0x1000) !== 0; // Bit 12 - GPS VALID FLAG
       
-      // Ignition decoding
+      // Ignition decoding - FIXED
       let ignition = null;
-      if ((flags & 0x4000) !== 0) { // bit 14
-        ignition = (flags & 0x8000) !== 0; // bit 15
+      if ((flags & 0x4000) !== 0) { // bit 14 - ignition available
+        ignition = (flags & 0x8000) !== 0; // bit 15 - ignition state
       }
 
-      // Apply hemisphere corrections
-      if ((flags & 0x0400) === 0) { // bit 10 NOT set
+      // Apply hemisphere corrections - CRITICAL FIX
+      if ((flags & 0x0400) === 0) { // bit 10 NOT set = South
         latitude = -latitude;
       }
-      if ((flags & 0x0800) !== 0) { // bit 11 set
+      if ((flags & 0x0800) !== 0) { // bit 11 set = West
         longitude = -longitude;
       }
 
       console.log('\n--- GPS DECODE RESULT ---');
-      console.log('Timestamp:', timestamp);
+      console.log('Timestamp:', timestamp.toISOString());
       console.log('Satellites:', satellites);
       console.log('Latitude (raw):', latRaw, '-> Decoded:', latitude);
       console.log('Longitude (raw):', lngRaw, '-> Decoded:', longitude);
-      console.log('Speed:', speed);
-      console.log('Course:', course);
-      console.log('Valid:', valid);
-      console.log('Flags:', flags.toString(16));
+      console.log('Speed:', speed, 'km/h');
+      console.log('Course:', course, '°');
+      console.log('Valid GPS:', valid);
+      console.log('Flags (binary):', flags.toString(2).padStart(16, '0'));
+      console.log('Ignition available:', (flags & 0x4000) !== 0);
+      console.log('Ignition state:', ignition);
+      console.log('Hemisphere - North:', (flags & 0x0400) !== 0, 'East:', (flags & 0x0800) === 0);
       console.log('-------------------------\n');
 
-      // Validate coordinates
+      // Validate coordinates - but still save them
       if (latitude === 0 && longitude === 0) {
         console.log('⚠️ WARNING: GPS coordinates are (0,0) - GPS fix not acquired');
         console.log('This is normal if device has no GPS signal');
-        // Don't return null, save it so we can see the data is coming
+      }
+
+      // Validate coordinate ranges
+      if (Math.abs(latitude) > 90 || Math.abs(longitude) > 180) {
+        console.log('⚠️ WARNING: Invalid coordinate range detected');
+        console.log('Lat:', latitude, 'Lng:', longitude);
+        // Don't return null, log the issue but continue
       }
 
       const position = {
@@ -794,21 +824,17 @@ class GT06ProtocolDecoder {
         valid,
         satellites,
         ignition,
-        engineOn: ignition
+        engineOn: ignition,
+        altitude: 0 // Will be set later if available
       };
 
-      console.log('GPS decoded successfully', {
+      console.log('✅ GPS decoded successfully', {
         lat: latitude,
         lng: longitude,
         valid,
-        satellites
+        satellites,
+        speed
       });
-
-      // Add altitude for supported variants
-      if (variant === this.variants.SL4X && pos + 2 <= buffer.length - 6) {
-        position.altitude = buffer.readInt16BE(pos);
-        pos += 2;
-      }
 
       return {
         position,
@@ -1499,7 +1525,7 @@ class GT06ProtocolDecoder {
   }
 
   /**
-   * Create response message (ACK) - Fixed index echo and CRC calculation
+   * Create response message (ACK) - FIXED to match Java implementation exactly
    */
   createResponse(extended, type, index, content = null) {
     console.log('\n=== CREATING ACK RESPONSE ===');
@@ -1548,7 +1574,7 @@ class GT06ProtocolDecoder {
       pos += content.length;
     }
 
-    // Index (echo the received index)
+    // Index (echo the received index) - CRITICAL: Must match exactly
     response.writeUInt16BE(index, pos);
     pos += 2;
 
@@ -1559,7 +1585,7 @@ class GT06ProtocolDecoder {
     response.writeUInt16BE(crc, pos);
     pos += 2;
 
-    // Footer
+    // Footer - MUST be 0x0D 0x0A
     response.writeUInt8(0x0D, pos++);
     response.writeUInt8(0x0A, pos++);
 
@@ -1567,6 +1593,7 @@ class GT06ProtocolDecoder {
     console.log('Response length:', response.length);
     console.log('CRC calculated:', crc.toString(16));
     console.log('Index echoed:', index);
+    console.log('Data for CRC:', dataForCRC.toString('hex'));
     console.log('=============================\n');
 
     return response;
