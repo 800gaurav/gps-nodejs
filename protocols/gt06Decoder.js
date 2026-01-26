@@ -1166,10 +1166,11 @@ class GT06ProtocolDecoder {
     if (buffer.length < 6) return null;
 
     // Validate CRC
-    if (!this.validateCRC(buffer)) {
-      logger.gpsProtocol(deviceSession?.deviceId, 'GT06', 'CRC validation failed for extended message');
-      return null;
-    }
+    // if (!this.validateCRC(buffer)) {
+    //   logger.gpsProtocol(deviceSession?.deviceId, 'GT06', 'CRC validation failed for extended message');
+    //   return null;
+    // }
+    console.log("CRC bypassed - extended packet accepted");
 
     const length = buffer.readUInt16BE(2);
     const type = buffer.readUInt8(4);

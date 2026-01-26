@@ -1,3 +1,9 @@
 2026-01-23 00:03:28 [ERROR]: GPS socket error: read ECONNRESET {"service":"gps-tracker","errno":-4077,"code":"ECONNRESET","syscall":"read"}
 Error: read ECONNRESET
     at TCP.onStreamRead (node:internal/stream_base_commons:216:20)
+2026-01-26 19:06:33 [ERROR]: GPS socket error: read ECONNRESET {"service":"gps-tracker","errno":-4077,"code":"ECONNRESET","syscall":"read"}
+Error: read ECONNRESET
+    at TCP.onStreamRead (node:internal/stream_base_commons:216:20)
+2026-01-26 19:09:59 [ERROR]: GPS socket error: read ECONNRESET {"service":"gps-tracker","errno":-4077,"code":"ECONNRESET","syscall":"read"}
+Error: read ECONNRESET
+    at TCP.onStreamRead (node:internal/stream_base_commons:216:20)
