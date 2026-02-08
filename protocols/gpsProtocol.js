@@ -186,85 +186,32 @@ class GPSProtocol extends EventEmitter {
 
   async processGT06Message(connection, io) {
     const buffer = connection.buffer;
-    
+
     console.log('\n--- Processing GT06 Message ---');
     console.log('Buffer length:', buffer.length);
     console.log('Buffer HEX:', buffer.toString('hex'));
-    
-    if (buffer.length < 10) { // Minimum: header(2) + length(1) + type(1) + index(2) + crc(2) + footer(2) = 10, but check 7 first
-      console.log('Buffer too short, need more data');
+
+    const frameResult = this.extractGt06Frame(buffer);
+    if (!frameResult) {
+      console.log('Buffer too short or incomplete, need more data');
       return null;
     }
 
-    // Find valid GT06 message start
-    let messageStart = -1;
-    for (let i = 0; i <= buffer.length - 7; i++) {
-      const header = buffer.readUInt16BE(i);
-      if (header === 0x7878 || header === 0x7979) {
-        // Check if we have enough bytes for length field
-        const minLengthBytes = header === 0x7878 ? 3 : 4;
-        if (i + minLengthBytes <= buffer.length) {
-          messageStart = i;
-          break;
-        }
-      }
+    if (!frameResult.frame) {
+      console.log('Resync: skipping', frameResult.consumed, 'bytes');
+      return { consumed: frameResult.consumed };
     }
 
-    if (messageStart === -1) {
-      console.log('No valid header found');
-      return { consumed: Math.max(1, buffer.length - 6) }; // Keep last 6 bytes for potential partial header
-    }
+    const messageBuffer = frameResult.frame;
+    console.log('✅ Valid GT06 message found, length:', messageBuffer.length);
 
-    if (messageStart > 0) {
-      console.log('Skipping', messageStart, 'bytes to reach header');
-      return { consumed: messageStart };
-    }
-
-    // Calculate correct message length
-    const header = buffer.readUInt16BE(0);
-    let messageLength, lengthField;
-    
-    if (header === 0x7878) {
-      if (buffer.length < 3) return null;
-      lengthField = buffer.readUInt8(2);
-      // Total = Header(2) + Length(1) + Data(lengthField) + Footer(2)
-      messageLength = 2 + 1 + lengthField + 2;
-    } else if (header === 0x7979) {
-      if (buffer.length < 4) return null;
-      lengthField = buffer.readUInt16BE(2);
-      // Total = Header(2) + Length(2) + Data(lengthField) + Footer(2)
-      messageLength = 2 + 2 + lengthField + 2;
-    } else {
-      return { consumed: 2 };
-    }
-
-    console.log('Calculated message length:', messageLength, 'Length field:', lengthField);
-
-    if (buffer.length < messageLength) {
-      console.log('Need more data: have', buffer.length, 'need', messageLength);
-      return null;
-    }
-
-    // Extract complete message
-    const messageBuffer = buffer.slice(0, messageLength);
-    
-    // Validate footer (0D 0A)
-    const footerStart = messageLength - 2;
-    if (messageBuffer[footerStart] !== 0x0D || messageBuffer[footerStart + 1] !== 0x0A) {
-      console.log('Invalid footer at position', footerStart, ':', 
-        messageBuffer[footerStart].toString(16), messageBuffer[footerStart + 1].toString(16));
-      return { consumed: 2 }; // Skip header and try again
-    }
-    
-    console.log('✅ Valid GT06 message found, length:', messageLength);
-    
     // Get device session
     let deviceSession = null;
     if (connection.deviceId) {
       deviceSession = this.deviceSessions.get(connection.deviceId);
     }
 
-    // Decode message
+    // Decode message using FIXED decoder
     const result = await this.decoder.decode(messageBuffer, deviceSession);
     this.stats.messagesProcessed++;
 
@@ -280,7 +227,67 @@ class GPSProtocol extends EventEmitter {
       await this.handleDecodedMessage(result, connection, io);
     }
 
-    return { consumed: messageLength };
+    return { consumed: frameResult.consumed };
+  }
+
+  extractGt06Frame(buffer) {
+    if (!buffer || buffer.length < 5) {
+      return null;
+    }
+
+    // Find a valid header
+    let headerIndex = -1;
+    for (let i = 0; i <= buffer.length - 2; i++) {
+      const header = buffer.readUInt16BE(i);
+      if (header === 0x7878 || header === 0x7979) {
+        headerIndex = i;
+        break;
+      }
+    }
+
+    if (headerIndex === -1) {
+      return { consumed: Math.max(1, buffer.length - 1) };
+    }
+
+    if (headerIndex > 0) {
+      return { consumed: headerIndex };
+    }
+
+    const header = buffer.readUInt16BE(0);
+    let messageLength;
+
+    if (header === 0x7878) {
+      if (buffer.length < 3) return null;
+      const lengthField = buffer.readUInt8(2);
+      messageLength = 2 + 1 + lengthField + 2;
+    } else if (header === 0x7979) {
+      if (buffer.length < 4) return null;
+      const lengthField = buffer.readUInt16BE(2);
+      messageLength = 2 + 2 + lengthField + 2;
+    } else {
+      return { consumed: 2 };
+    }
+
+    if (buffer.length >= messageLength) {
+      const footerStart = messageLength - 2;
+      if (buffer[footerStart] === 0x0D && buffer[footerStart + 1] === 0x0A) {
+        return { frame: buffer.slice(0, messageLength), consumed: messageLength };
+      }
+    }
+
+    // Fallback: search for 0x0D 0x0A and cut at delimiter (Java-style)
+    let searchIndex = -1;
+    while (true) {
+      const idx = buffer.indexOf(0x0D, searchIndex + 1);
+      if (idx === -1) break;
+      if (idx + 1 < buffer.length && buffer[idx + 1] === 0x0A) {
+        const end = idx + 2;
+        return { frame: buffer.slice(0, end), consumed: end };
+      }
+      searchIndex = idx;
+    }
+
+    return null;
   }
 
   async handleDecodedMessage(result, connection, io) {
@@ -410,11 +417,22 @@ class GPSProtocol extends EventEmitter {
         await redisManager.setLastLocation(connection.deviceId, result.position);
         
         // Emit real-time update
+        console.log('🔄 Emitting WebSocket locationUpdate event...');
         io.emit('locationUpdate', {
           deviceId: connection.deviceId,
           position: result.position,
           timestamp: new Date()
         });
+        console.log('✅ WebSocket event emitted successfully');
+
+        // Also emit device status update
+        io.emit('deviceStatusUpdate', {
+          deviceId: connection.deviceId,
+          online: true,
+          lastSeen: new Date(),
+          position: result.position
+        });
+        console.log('✅ Device status update emitted');
 
         // Check for alarms
         if (result.position.alarms && result.position.alarms.length > 0) {

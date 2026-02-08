@@ -270,12 +270,22 @@
                 const response = await fetch(`${API_URL}/api/devices`);
                 const data = await response.json();
                 
-                if (data.success) {
+                console.log('API Response:', data); // Debug log
+                
+                if (data.success && data.devices) {
                     displayDevices(data.devices);
                     updateStats(data.devices);
+                } else if (Array.isArray(data)) {
+                    // Fallback for direct array response
+                    displayDevices(data);
+                    updateStats(data);
+                } else {
+                    console.error('Invalid response format:', data);
+                    document.getElementById('deviceList').innerHTML = '<p style="text-align: center; color: #666;">Error loading devices</p>';
                 }
             } catch (error) {
                 console.error('Error loading devices:', error);
+                document.getElementById('deviceList').innerHTML = '<p style="text-align: center; color: #666;">Error loading devices</p>';
             }
         }
 

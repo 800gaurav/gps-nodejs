@@ -7,3 +7,273 @@ Error: read ECONNRESET
 2026-01-26 19:09:59 [ERROR]: GPS socket error: read ECONNRESET {"service":"gps-tracker","errno":-4077,"code":"ECONNRESET","syscall":"read"}
 Error: read ECONNRESET
     at TCP.onStreamRead (node:internal/stream_base_commons:216:20)
+2026-01-26 21:17:20 [ERROR]: Consumed more than available, clearing buffer {"service":"gps-tracker","connectionId":"::1:60667","consumed":37,"available":6}
+2026-01-26 21:18:20 [ERROR]: Consumed more than available, clearing buffer {"service":"gps-tracker","connectionId":"::1:60667","consumed":37,"available":6}
+2026-01-26 21:19:29 [ERROR]: Database save error: connection 3 to [64:ff9b::9f29:ac09]:27017 closed {"service":"gps-tracker"}
+MongoNetworkError: connection 3 to [64:ff9b::9f29:ac09]:27017 closed
+    at Connection.onClose (C:\Users\gaurav sharma\OneDrive\Desktop\Gps\backend\gps-node\node_modules\mongodb\lib\cmap\connection.js:121:28)
+    at TLSSocket.<anonymous> (C:\Users\gaurav sharma\OneDrive\Desktop\Gps\backend\gps-node\node_modules\mongodb\lib\cmap\connection.js:63:46)
+    at TLSSocket.emit (node:events:519:28)
+    at node:net:346:12
+    at TCP.done (node:_tls_wrap:650:7)
+2026-01-26 21:19:30 [ERROR]: Database save error: connection 2 to [64:ff9b::9f29:ac09]:27017 closed {"service":"gps-tracker"}
+MongoNetworkError: connection 2 to [64:ff9b::9f29:ac09]:27017 closed
+    at Connection.onClose (C:\Users\gaurav sharma\OneDrive\Desktop\Gps\backend\gps-node\node_modules\mongodb\lib\cmap\connection.js:121:28)
+    at TLSSocket.<anonymous> (C:\Users\gaurav sharma\OneDrive\Desktop\Gps\backend\gps-node\node_modules\mongodb\lib\cmap\connection.js:63:46)
+    at TLSSocket.emit (node:events:519:28)
+    at node:net:346:12
+    at TCP.done (node:_tls_wrap:650:7)
+2026-01-26 21:19:31 [ERROR]: Database save error: getaddrinfo ENOTFOUND ac-xyj8blf-shard-00-01.yxvl5rv.mongodb.net {"service":"gps-tracker","cause":{"errno":-3008,"code":"ENOTFOUND","syscall":"getaddrinfo","hostname":"ac-xyj8blf-shard-00-01.yxvl5rv.mongodb.net"},"connectionGeneration":0}
+MongoNetworkError: getaddrinfo ENOTFOUND ac-xyj8blf-shard-00-01.yxvl5rv.mongodb.net
+    at connectionFailureError (C:\Users\gaurav sharma\OneDrive\Desktop\Gps\backend\gps-node\node_modules\mongodb\lib\cmap\connect.js:367:20)
+    at TLSSocket.<anonymous> (C:\Users\gaurav sharma\OneDrive\Desktop\Gps\backend\gps-node\node_modules\mongodb\lib\cmap\connect.js:290:22)
+    at Object.onceWrapper (node:events:634:26)
+    at TLSSocket.emit (node:events:519:28)
+    at emitErrorNT (node:internal/streams/destroy:170:8)
+    at emitErrorCloseNT (node:internal/streams/destroy:129:3)
+    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)
+2026-01-26 21:19:51 [ERROR]: Database save error: getaddrinfo ENOTFOUND ac-xyj8blf-shard-00-00.yxvl5rv.mongodb.net {"service":"gps-tracker","reason":{"type":"ReplicaSetNoPrimary","servers":{},"stale":false,"compatible":true,"heartbeatFrequencyMS":10000,"localThresholdMS":15,"setName":"atlas-8081lf-shard-0","maxElectionId":"7fffffff0000000000000472","maxSetVersion":100,"commonWireVersion":0,"logicalSessionTimeoutMinutes":null}}
+MongoServerSelectionError: getaddrinfo ENOTFOUND ac-xyj8blf-shard-00-00.yxvl5rv.mongodb.net
+    at Timeout._onTimeout (C:\Users\gaurav sharma\OneDrive\Desktop\Gps\backend\gps-node\node_modules\mongodb\lib\sdam\topology.js:278:38)
+    at listOnTimeout (node:internal/timers:588:17)
+    at process.processTimers (node:internal/timers:523:7)
+2026-01-26 21:19:59 [ERROR]: Database save error: getaddrinfo ENOTFOUND ac-xyj8blf-shard-00-00.yxvl5rv.mongodb.net {"service":"gps-tracker","reason":{"type":"ReplicaSetNoPrimary","servers":{},"stale":false,"compatible":true,"heartbeatFrequencyMS":10000,"localThresholdMS":15,"setName":"atlas-8081lf-shard-0","maxElectionId":"7fffffff0000000000000472","maxSetVersion":100,"commonWireVersion":0,"logicalSessionTimeoutMinutes":null}}
+MongoServerSelectionError: getaddrinfo ENOTFOUND ac-xyj8blf-shard-00-00.yxvl5rv.mongodb.net
+    at Timeout._onTimeout (C:\Users\gaurav sharma\OneDrive\Desktop\Gps\backend\gps-node\node_modules\mongodb\lib\sdam\topology.js:278:38)
+    at listOnTimeout (node:internal/timers:588:17)
+    at process.processTimers (node:internal/timers:523:7)
+2026-01-26 21:20:00 [ERROR]: Database save error: getaddrinfo ENOTFOUND ac-xyj8blf-shard-00-00.yxvl5rv.mongodb.net {"service":"gps-tracker","reason":{"type":"ReplicaSetNoPrimary","servers":{},"stale":false,"compatible":true,"heartbeatFrequencyMS":10000,"localThresholdMS":15,"setName":"atlas-8081lf-shard-0","maxElectionId":"7fffffff0000000000000472","maxSetVersion":100,"commonWireVersion":0,"logicalSessionTimeoutMinutes":null}}
+MongoServerSelectionError: getaddrinfo ENOTFOUND ac-xyj8blf-shard-00-00.yxvl5rv.mongodb.net
+    at Timeout._onTimeout (C:\Users\gaurav sharma\OneDrive\Desktop\Gps\backend\gps-node\node_modules\mongodb\lib\sdam\topology.js:278:38)
+    at listOnTimeout (node:internal/timers:588:17)
+    at process.processTimers (node:internal/timers:523:7)
+2026-01-26 21:20:01 [ERROR]: Database save error: getaddrinfo ENOTFOUND ac-xyj8blf-shard-00-00.yxvl5rv.mongodb.net {"service":"gps-tracker","reason":{"type":"ReplicaSetNoPrimary","servers":{},"stale":false,"compatible":true,"heartbeatFrequencyMS":10000,"localThresholdMS":15,"setName":"atlas-8081lf-shard-0","maxElectionId":"7fffffff0000000000000472","maxSetVersion":100,"commonWireVersion":0,"logicalSessionTimeoutMinutes":null}}
+MongoServerSelectionError: getaddrinfo ENOTFOUND ac-xyj8blf-shard-00-00.yxvl5rv.mongodb.net
+    at Timeout._onTimeout (C:\Users\gaurav sharma\OneDrive\Desktop\Gps\backend\gps-node\node_modules\mongodb\lib\sdam\topology.js:278:38)
+    at listOnTimeout (node:internal/timers:588:17)
+    at process.processTimers (node:internal/timers:523:7)
+2026-01-26 21:20:10 [ERROR]: Database save error: getaddrinfo ENOTFOUND ac-xyj8blf-shard-00-00.yxvl5rv.mongodb.net {"service":"gps-tracker","reason":{"type":"ReplicaSetNoPrimary","servers":{},"stale":false,"compatible":true,"heartbeatFrequencyMS":10000,"localThresholdMS":15,"setName":"atlas-8081lf-shard-0","maxElectionId":"7fffffff0000000000000472","maxSetVersion":100,"commonWireVersion":0,"logicalSessionTimeoutMinutes":null}}
+MongoServerSelectionError: getaddrinfo ENOTFOUND ac-xyj8blf-shard-00-00.yxvl5rv.mongodb.net
+    at Timeout._onTimeout (C:\Users\gaurav sharma\OneDrive\Desktop\Gps\backend\gps-node\node_modules\mongodb\lib\sdam\topology.js:278:38)
+    at listOnTimeout (node:internal/timers:588:17)
+    at process.processTimers (node:internal/timers:523:7)
+2026-01-26 21:20:20 [ERROR]: Database save error: getaddrinfo ENOTFOUND ac-xyj8blf-shard-00-00.yxvl5rv.mongodb.net {"service":"gps-tracker","reason":{"type":"ReplicaSetNoPrimary","servers":{},"stale":false,"compatible":true,"heartbeatFrequencyMS":10000,"localThresholdMS":15,"setName":"atlas-8081lf-shard-0","maxElectionId":"7fffffff0000000000000472","maxSetVersion":100,"commonWireVersion":0,"logicalSessionTimeoutMinutes":null}}
+MongoServerSelectionError: getaddrinfo ENOTFOUND ac-xyj8blf-shard-00-00.yxvl5rv.mongodb.net
+    at Timeout._onTimeout (C:\Users\gaurav sharma\OneDrive\Desktop\Gps\backend\gps-node\node_modules\mongodb\lib\sdam\topology.js:278:38)
+    at listOnTimeout (node:internal/timers:588:17)
+    at process.processTimers (node:internal/timers:523:7)
+2026-01-26 21:20:21 [ERROR]: Database save error: getaddrinfo ENOTFOUND ac-xyj8blf-shard-00-00.yxvl5rv.mongodb.net {"service":"gps-tracker","reason":{"type":"ReplicaSetNoPrimary","servers":{},"stale":false,"compatible":true,"heartbeatFrequencyMS":10000,"localThresholdMS":15,"setName":"atlas-8081lf-shard-0","maxElectionId":"7fffffff0000000000000472","maxSetVersion":100,"commonWireVersion":0,"logicalSessionTimeoutMinutes":null}}
+MongoServerSelectionError: getaddrinfo ENOTFOUND ac-xyj8blf-shard-00-00.yxvl5rv.mongodb.net
+    at Timeout._onTimeout (C:\Users\gaurav sharma\OneDrive\Desktop\Gps\backend\gps-node\node_modules\mongodb\lib\sdam\topology.js:278:38)
+    at listOnTimeout (node:internal/timers:588:17)
+    at process.processTimers (node:internal/timers:523:7)
+2026-01-26 21:20:21 [ERROR]: Consumed more than available, clearing buffer {"service":"gps-tracker","connectionId":"::1:60667","consumed":37,"available":6}
+2026-01-26 21:20:29 [ERROR]: Database save error: getaddrinfo ENOTFOUND ac-xyj8blf-shard-00-00.yxvl5rv.mongodb.net {"service":"gps-tracker","reason":{"type":"ReplicaSetNoPrimary","servers":{},"stale":false,"compatible":true,"heartbeatFrequencyMS":10000,"localThresholdMS":15,"setName":"atlas-8081lf-shard-0","maxElectionId":"7fffffff0000000000000472","maxSetVersion":100,"commonWireVersion":0,"logicalSessionTimeoutMinutes":null}}
+MongoServerSelectionError: getaddrinfo ENOTFOUND ac-xyj8blf-shard-00-00.yxvl5rv.mongodb.net
+    at Timeout._onTimeout (C:\Users\gaurav sharma\OneDrive\Desktop\Gps\backend\gps-node\node_modules\mongodb\lib\sdam\topology.js:278:38)
+    at listOnTimeout (node:internal/timers:588:17)
+    at process.processTimers (node:internal/timers:523:7)
+2026-01-26 21:20:29 [ERROR]: Consumed more than available, clearing buffer {"service":"gps-tracker","connectionId":"::1:60667","consumed":37,"available":0}
+2026-01-26 21:20:30 [ERROR]: Database save error: getaddrinfo ENOTFOUND ac-xyj8blf-shard-00-00.yxvl5rv.mongodb.net {"service":"gps-tracker","reason":{"type":"ReplicaSetNoPrimary","servers":{},"stale":false,"compatible":true,"heartbeatFrequencyMS":10000,"localThresholdMS":15,"setName":"atlas-8081lf-shard-0","maxElectionId":"7fffffff0000000000000472","maxSetVersion":100,"commonWireVersion":0,"logicalSessionTimeoutMinutes":null}}
+MongoServerSelectionError: getaddrinfo ENOTFOUND ac-xyj8blf-shard-00-00.yxvl5rv.mongodb.net
+    at Timeout._onTimeout (C:\Users\gaurav sharma\OneDrive\Desktop\Gps\backend\gps-node\node_modules\mongodb\lib\sdam\topology.js:278:38)
+    at listOnTimeout (node:internal/timers:588:17)
+    at process.processTimers (node:internal/timers:523:7)
+2026-01-26 21:20:30 [ERROR]: Database save error: getaddrinfo ENOTFOUND ac-xyj8blf-shard-00-00.yxvl5rv.mongodb.net {"service":"gps-tracker","reason":{"type":"ReplicaSetNoPrimary","servers":{},"stale":false,"compatible":true,"heartbeatFrequencyMS":10000,"localThresholdMS":15,"setName":"atlas-8081lf-shard-0","maxElectionId":"7fffffff0000000000000472","maxSetVersion":100,"commonWireVersion":0,"logicalSessionTimeoutMinutes":null}}
+MongoServerSelectionError: getaddrinfo ENOTFOUND ac-xyj8blf-shard-00-00.yxvl5rv.mongodb.net
+    at Timeout._onTimeout (C:\Users\gaurav sharma\OneDrive\Desktop\Gps\backend\gps-node\node_modules\mongodb\lib\sdam\topology.js:278:38)
+    at listOnTimeout (node:internal/timers:588:17)
+    at process.processTimers (node:internal/timers:523:7)
+2026-01-26 21:20:30 [ERROR]: Consumed more than available, clearing buffer {"service":"gps-tracker","connectionId":"::1:60667","consumed":37,"available":0}
+2026-01-26 21:20:40 [ERROR]: Database save error: getaddrinfo ENOTFOUND ac-xyj8blf-shard-00-00.yxvl5rv.mongodb.net {"service":"gps-tracker","reason":{"type":"ReplicaSetNoPrimary","servers":{},"stale":false,"compatible":true,"heartbeatFrequencyMS":10000,"localThresholdMS":15,"setName":"atlas-8081lf-shard-0","maxElectionId":"7fffffff0000000000000472","maxSetVersion":100,"commonWireVersion":0,"logicalSessionTimeoutMinutes":null}}
+MongoServerSelectionError: getaddrinfo ENOTFOUND ac-xyj8blf-shard-00-00.yxvl5rv.mongodb.net
+    at Timeout._onTimeout (C:\Users\gaurav sharma\OneDrive\Desktop\Gps\backend\gps-node\node_modules\mongodb\lib\sdam\topology.js:278:38)
+    at listOnTimeout (node:internal/timers:588:17)
+    at process.processTimers (node:internal/timers:523:7)
+2026-01-26 21:20:40 [ERROR]: Consumed more than available, clearing buffer {"service":"gps-tracker","connectionId":"::1:60667","consumed":37,"available":0}
+2026-01-26 21:20:49 [ERROR]: Database save error: getaddrinfo ENOTFOUND ac-xyj8blf-shard-00-00.yxvl5rv.mongodb.net {"service":"gps-tracker","reason":{"type":"ReplicaSetNoPrimary","servers":{},"stale":false,"compatible":true,"heartbeatFrequencyMS":10000,"localThresholdMS":15,"setName":"atlas-8081lf-shard-0","maxElectionId":"7fffffff0000000000000472","maxSetVersion":100,"commonWireVersion":0,"logicalSessionTimeoutMinutes":null}}
+MongoServerSelectionError: getaddrinfo ENOTFOUND ac-xyj8blf-shard-00-00.yxvl5rv.mongodb.net
+    at Timeout._onTimeout (C:\Users\gaurav sharma\OneDrive\Desktop\Gps\backend\gps-node\node_modules\mongodb\lib\sdam\topology.js:278:38)
+    at listOnTimeout (node:internal/timers:588:17)
+    at process.processTimers (node:internal/timers:523:7)
+2026-01-26 21:20:50 [ERROR]: Database save error: getaddrinfo ENOTFOUND ac-xyj8blf-shard-00-00.yxvl5rv.mongodb.net {"service":"gps-tracker","reason":{"type":"ReplicaSetNoPrimary","servers":{},"stale":false,"compatible":true,"heartbeatFrequencyMS":10000,"localThresholdMS":15,"setName":"atlas-8081lf-shard-0","maxElectionId":"7fffffff0000000000000472","maxSetVersion":100,"commonWireVersion":0,"logicalSessionTimeoutMinutes":null}}
+MongoServerSelectionError: getaddrinfo ENOTFOUND ac-xyj8blf-shard-00-00.yxvl5rv.mongodb.net
+    at Timeout._onTimeout (C:\Users\gaurav sharma\OneDrive\Desktop\Gps\backend\gps-node\node_modules\mongodb\lib\sdam\topology.js:278:38)
+    at listOnTimeout (node:internal/timers:588:17)
+    at process.processTimers (node:internal/timers:523:7)
+2026-01-26 21:21:00 [ERROR]: Database save error: getaddrinfo ENOTFOUND ac-xyj8blf-shard-00-00.yxvl5rv.mongodb.net {"service":"gps-tracker","reason":{"type":"ReplicaSetNoPrimary","servers":{},"stale":false,"compatible":true,"heartbeatFrequencyMS":10000,"localThresholdMS":15,"setName":"atlas-8081lf-shard-0","maxElectionId":"7fffffff0000000000000472","maxSetVersion":100,"commonWireVersion":0,"logicalSessionTimeoutMinutes":null}}
+MongoServerSelectionError: getaddrinfo ENOTFOUND ac-xyj8blf-shard-00-00.yxvl5rv.mongodb.net
+    at Timeout._onTimeout (C:\Users\gaurav sharma\OneDrive\Desktop\Gps\backend\gps-node\node_modules\mongodb\lib\sdam\topology.js:278:38)
+    at listOnTimeout (node:internal/timers:588:17)
+    at process.processTimers (node:internal/timers:523:7)
+2026-01-26 21:21:00 [ERROR]: Consumed more than available, clearing buffer {"service":"gps-tracker","connectionId":"::1:60667","consumed":37,"available":6}
+2026-01-26 21:21:10 [ERROR]: Database save error: getaddrinfo ENOTFOUND ac-xyj8blf-shard-00-00.yxvl5rv.mongodb.net {"service":"gps-tracker","reason":{"type":"ReplicaSetNoPrimary","servers":{},"stale":false,"compatible":true,"heartbeatFrequencyMS":10000,"localThresholdMS":15,"setName":"atlas-8081lf-shard-0","maxElectionId":"7fffffff0000000000000472","maxSetVersion":100,"commonWireVersion":0,"logicalSessionTimeoutMinutes":null}}
+MongoServerSelectionError: getaddrinfo ENOTFOUND ac-xyj8blf-shard-00-00.yxvl5rv.mongodb.net
+    at Timeout._onTimeout (C:\Users\gaurav sharma\OneDrive\Desktop\Gps\backend\gps-node\node_modules\mongodb\lib\sdam\topology.js:278:38)
+    at listOnTimeout (node:internal/timers:588:17)
+    at process.processTimers (node:internal/timers:523:7)
+2026-01-26 21:21:20 [ERROR]: Database save error: getaddrinfo ENOTFOUND ac-xyj8blf-shard-00-00.yxvl5rv.mongodb.net {"service":"gps-tracker","reason":{"type":"ReplicaSetNoPrimary","servers":{},"stale":false,"compatible":true,"heartbeatFrequencyMS":10000,"localThresholdMS":15,"setName":"atlas-8081lf-shard-0","maxElectionId":"7fffffff0000000000000472","maxSetVersion":100,"commonWireVersion":0,"logicalSessionTimeoutMinutes":null}}
+MongoServerSelectionError: getaddrinfo ENOTFOUND ac-xyj8blf-shard-00-00.yxvl5rv.mongodb.net
+    at Timeout._onTimeout (C:\Users\gaurav sharma\OneDrive\Desktop\Gps\backend\gps-node\node_modules\mongodb\lib\sdam\topology.js:278:38)
+    at listOnTimeout (node:internal/timers:588:17)
+    at process.processTimers (node:internal/timers:523:7)
+2026-01-26 21:21:30 [ERROR]: Database save error: getaddrinfo ENOTFOUND ac-xyj8blf-shard-00-00.yxvl5rv.mongodb.net {"service":"gps-tracker","reason":{"type":"ReplicaSetNoPrimary","servers":{},"stale":false,"compatible":true,"heartbeatFrequencyMS":10000,"localThresholdMS":15,"setName":"atlas-8081lf-shard-0","maxElectionId":"7fffffff0000000000000472","maxSetVersion":100,"commonWireVersion":0,"logicalSessionTimeoutMinutes":null}}
+MongoServerSelectionError: getaddrinfo ENOTFOUND ac-xyj8blf-shard-00-00.yxvl5rv.mongodb.net
+    at Timeout._onTimeout (C:\Users\gaurav sharma\OneDrive\Desktop\Gps\backend\gps-node\node_modules\mongodb\lib\sdam\topology.js:278:38)
+    at listOnTimeout (node:internal/timers:588:17)
+    at process.processTimers (node:internal/timers:523:7)
+2026-01-26 21:21:40 [ERROR]: Database save error: getaddrinfo ENOTFOUND ac-xyj8blf-shard-00-00.yxvl5rv.mongodb.net {"service":"gps-tracker","reason":{"type":"ReplicaSetNoPrimary","servers":{},"stale":false,"compatible":true,"heartbeatFrequencyMS":10000,"localThresholdMS":15,"setName":"atlas-8081lf-shard-0","maxElectionId":"7fffffff0000000000000472","maxSetVersion":100,"commonWireVersion":0,"logicalSessionTimeoutMinutes":null}}
+MongoServerSelectionError: getaddrinfo ENOTFOUND ac-xyj8blf-shard-00-00.yxvl5rv.mongodb.net
+    at Timeout._onTimeout (C:\Users\gaurav sharma\OneDrive\Desktop\Gps\backend\gps-node\node_modules\mongodb\lib\sdam\topology.js:278:38)
+    at listOnTimeout (node:internal/timers:588:17)
+    at process.processTimers (node:internal/timers:523:7)
+2026-01-26 21:21:50 [ERROR]: Database save error: getaddrinfo ENOTFOUND ac-xyj8blf-shard-00-00.yxvl5rv.mongodb.net {"service":"gps-tracker","reason":{"type":"ReplicaSetNoPrimary","servers":{},"stale":false,"compatible":true,"heartbeatFrequencyMS":10000,"localThresholdMS":15,"setName":"atlas-8081lf-shard-0","maxElectionId":"7fffffff0000000000000472","maxSetVersion":100,"commonWireVersion":0,"logicalSessionTimeoutMinutes":null}}
+MongoServerSelectionError: getaddrinfo ENOTFOUND ac-xyj8blf-shard-00-00.yxvl5rv.mongodb.net
+    at Timeout._onTimeout (C:\Users\gaurav sharma\OneDrive\Desktop\Gps\backend\gps-node\node_modules\mongodb\lib\sdam\topology.js:278:38)
+    at listOnTimeout (node:internal/timers:588:17)
+    at process.processTimers (node:internal/timers:523:7)
+2026-01-26 21:21:50 [ERROR]: Database save error: getaddrinfo ENOTFOUND ac-xyj8blf-shard-00-00.yxvl5rv.mongodb.net {"service":"gps-tracker","reason":{"type":"ReplicaSetNoPrimary","servers":{},"stale":false,"compatible":true,"heartbeatFrequencyMS":10000,"localThresholdMS":15,"setName":"atlas-8081lf-shard-0","maxElectionId":"7fffffff0000000000000472","maxSetVersion":100,"commonWireVersion":0,"logicalSessionTimeoutMinutes":null}}
+MongoServerSelectionError: getaddrinfo ENOTFOUND ac-xyj8blf-shard-00-00.yxvl5rv.mongodb.net
+    at Timeout._onTimeout (C:\Users\gaurav sharma\OneDrive\Desktop\Gps\backend\gps-node\node_modules\mongodb\lib\sdam\topology.js:278:38)
+    at listOnTimeout (node:internal/timers:588:17)
+    at process.processTimers (node:internal/timers:523:7)
+2026-01-26 21:21:50 [ERROR]: Database save error: getaddrinfo ENOTFOUND ac-xyj8blf-shard-00-00.yxvl5rv.mongodb.net {"service":"gps-tracker","reason":{"type":"ReplicaSetNoPrimary","servers":{},"stale":false,"compatible":true,"heartbeatFrequencyMS":10000,"localThresholdMS":15,"setName":"atlas-8081lf-shard-0","maxElectionId":"7fffffff0000000000000472","maxSetVersion":100,"commonWireVersion":0,"logicalSessionTimeoutMinutes":null}}
+MongoServerSelectionError: getaddrinfo ENOTFOUND ac-xyj8blf-shard-00-00.yxvl5rv.mongodb.net
+    at Timeout._onTimeout (C:\Users\gaurav sharma\OneDrive\Desktop\Gps\backend\gps-node\node_modules\mongodb\lib\sdam\topology.js:278:38)
+    at listOnTimeout (node:internal/timers:588:17)
+    at process.processTimers (node:internal/timers:523:7)
+2026-01-26 21:21:50 [ERROR]: Consumed more than available, clearing buffer {"service":"gps-tracker","connectionId":"::1:60667","consumed":13,"available":0}
+2026-01-26 21:22:00 [ERROR]: Database save error: getaddrinfo ENOTFOUND ac-xyj8blf-shard-00-00.yxvl5rv.mongodb.net {"service":"gps-tracker","reason":{"type":"ReplicaSetNoPrimary","servers":{},"stale":false,"compatible":true,"heartbeatFrequencyMS":10000,"localThresholdMS":15,"setName":"atlas-8081lf-shard-0","maxElectionId":"7fffffff0000000000000472","maxSetVersion":100,"commonWireVersion":0,"logicalSessionTimeoutMinutes":null}}
+MongoServerSelectionError: getaddrinfo ENOTFOUND ac-xyj8blf-shard-00-00.yxvl5rv.mongodb.net
+    at Timeout._onTimeout (C:\Users\gaurav sharma\OneDrive\Desktop\Gps\backend\gps-node\node_modules\mongodb\lib\sdam\topology.js:278:38)
+    at listOnTimeout (node:internal/timers:588:17)
+    at process.processTimers (node:internal/timers:523:7)
+2026-01-26 21:22:00 [ERROR]: Database save error: getaddrinfo ENOTFOUND ac-xyj8blf-shard-00-00.yxvl5rv.mongodb.net {"service":"gps-tracker","reason":{"type":"ReplicaSetNoPrimary","servers":{},"stale":false,"compatible":true,"heartbeatFrequencyMS":10000,"localThresholdMS":15,"setName":"atlas-8081lf-shard-0","maxElectionId":"7fffffff0000000000000472","maxSetVersion":100,"commonWireVersion":0,"logicalSessionTimeoutMinutes":null}}
+MongoServerSelectionError: getaddrinfo ENOTFOUND ac-xyj8blf-shard-00-00.yxvl5rv.mongodb.net
+    at Timeout._onTimeout (C:\Users\gaurav sharma\OneDrive\Desktop\Gps\backend\gps-node\node_modules\mongodb\lib\sdam\topology.js:278:38)
+    at listOnTimeout (node:internal/timers:588:17)
+    at process.processTimers (node:internal/timers:523:7)
+2026-01-26 21:22:00 [ERROR]: Consumed more than available, clearing buffer {"service":"gps-tracker","connectionId":"::1:60667","consumed":37,"available":6}
+2026-01-26 21:22:10 [ERROR]: Database save error: getaddrinfo ENOTFOUND ac-xyj8blf-shard-00-00.yxvl5rv.mongodb.net {"service":"gps-tracker","reason":{"type":"ReplicaSetNoPrimary","servers":{},"stale":false,"compatible":true,"heartbeatFrequencyMS":10000,"localThresholdMS":15,"setName":"atlas-8081lf-shard-0","maxElectionId":"7fffffff0000000000000472","maxSetVersion":100,"commonWireVersion":0,"logicalSessionTimeoutMinutes":null}}
+MongoServerSelectionError: getaddrinfo ENOTFOUND ac-xyj8blf-shard-00-00.yxvl5rv.mongodb.net
+    at Timeout._onTimeout (C:\Users\gaurav sharma\OneDrive\Desktop\Gps\backend\gps-node\node_modules\mongodb\lib\sdam\topology.js:278:38)
+    at listOnTimeout (node:internal/timers:588:17)
+    at process.processTimers (node:internal/timers:523:7)
+2026-01-26 21:22:10 [ERROR]: Database save error: getaddrinfo ENOTFOUND ac-xyj8blf-shard-00-00.yxvl5rv.mongodb.net {"service":"gps-tracker","reason":{"type":"ReplicaSetNoPrimary","servers":{},"stale":false,"compatible":true,"heartbeatFrequencyMS":10000,"localThresholdMS":15,"setName":"atlas-8081lf-shard-0","maxElectionId":"7fffffff0000000000000472","maxSetVersion":100,"commonWireVersion":0,"logicalSessionTimeoutMinutes":null}}
+MongoServerSelectionError: getaddrinfo ENOTFOUND ac-xyj8blf-shard-00-00.yxvl5rv.mongodb.net
+    at Timeout._onTimeout (C:\Users\gaurav sharma\OneDrive\Desktop\Gps\backend\gps-node\node_modules\mongodb\lib\sdam\topology.js:278:38)
+    at listOnTimeout (node:internal/timers:588:17)
+    at process.processTimers (node:internal/timers:523:7)
+2026-01-26 21:22:10 [ERROR]: Consumed more than available, clearing buffer {"service":"gps-tracker","connectionId":"::1:60667","consumed":37,"available":0}
+2026-01-26 21:22:20 [ERROR]: Database save error: getaddrinfo ENOTFOUND ac-xyj8blf-shard-00-00.yxvl5rv.mongodb.net {"service":"gps-tracker","reason":{"type":"ReplicaSetNoPrimary","servers":{},"stale":false,"compatible":true,"heartbeatFrequencyMS":10000,"localThresholdMS":15,"setName":"atlas-8081lf-shard-0","maxElectionId":"7fffffff0000000000000472","maxSetVersion":100,"commonWireVersion":0,"logicalSessionTimeoutMinutes":null}}
+MongoServerSelectionError: getaddrinfo ENOTFOUND ac-xyj8blf-shard-00-00.yxvl5rv.mongodb.net
+    at Timeout._onTimeout (C:\Users\gaurav sharma\OneDrive\Desktop\Gps\backend\gps-node\node_modules\mongodb\lib\sdam\topology.js:278:38)
+    at listOnTimeout (node:internal/timers:588:17)
+    at process.processTimers (node:internal/timers:523:7)
+2026-01-26 21:22:30 [ERROR]: Database save error: getaddrinfo ENOTFOUND ac-xyj8blf-shard-00-00.yxvl5rv.mongodb.net {"service":"gps-tracker","reason":{"type":"ReplicaSetNoPrimary","servers":{},"stale":false,"compatible":true,"heartbeatFrequencyMS":10000,"localThresholdMS":15,"setName":"atlas-8081lf-shard-0","maxElectionId":"7fffffff0000000000000472","maxSetVersion":100,"commonWireVersion":0,"logicalSessionTimeoutMinutes":null}}
+MongoServerSelectionError: getaddrinfo ENOTFOUND ac-xyj8blf-shard-00-00.yxvl5rv.mongodb.net
+    at Timeout._onTimeout (C:\Users\gaurav sharma\OneDrive\Desktop\Gps\backend\gps-node\node_modules\mongodb\lib\sdam\topology.js:278:38)
+    at listOnTimeout (node:internal/timers:588:17)
+    at process.processTimers (node:internal/timers:523:7)
+2026-01-26 21:22:40 [ERROR]: Database save error: getaddrinfo ENOTFOUND ac-xyj8blf-shard-00-00.yxvl5rv.mongodb.net {"service":"gps-tracker","reason":{"type":"ReplicaSetNoPrimary","servers":{},"stale":false,"compatible":true,"heartbeatFrequencyMS":10000,"localThresholdMS":15,"setName":"atlas-8081lf-shard-0","maxElectionId":"7fffffff0000000000000472","maxSetVersion":100,"commonWireVersion":0,"logicalSessionTimeoutMinutes":null}}
+MongoServerSelectionError: getaddrinfo ENOTFOUND ac-xyj8blf-shard-00-00.yxvl5rv.mongodb.net
+    at Timeout._onTimeout (C:\Users\gaurav sharma\OneDrive\Desktop\Gps\backend\gps-node\node_modules\mongodb\lib\sdam\topology.js:278:38)
+    at listOnTimeout (node:internal/timers:588:17)
+    at process.processTimers (node:internal/timers:523:7)
+2026-01-26 21:22:50 [ERROR]: Database save error: getaddrinfo ENOTFOUND ac-xyj8blf-shard-00-00.yxvl5rv.mongodb.net {"service":"gps-tracker","reason":{"type":"ReplicaSetNoPrimary","servers":{},"stale":false,"compatible":true,"heartbeatFrequencyMS":10000,"localThresholdMS":15,"setName":"atlas-8081lf-shard-0","maxElectionId":"7fffffff0000000000000472","maxSetVersion":100,"commonWireVersion":0,"logicalSessionTimeoutMinutes":null}}
+MongoServerSelectionError: getaddrinfo ENOTFOUND ac-xyj8blf-shard-00-00.yxvl5rv.mongodb.net
+    at Timeout._onTimeout (C:\Users\gaurav sharma\OneDrive\Desktop\Gps\backend\gps-node\node_modules\mongodb\lib\sdam\topology.js:278:38)
+    at listOnTimeout (node:internal/timers:588:17)
+    at process.processTimers (node:internal/timers:523:7)
+2026-01-26 21:22:50 [ERROR]: Consumed more than available, clearing buffer {"service":"gps-tracker","connectionId":"::1:60667","consumed":13,"available":0}
+2026-01-26 21:22:50 [ERROR]: Database save error: getaddrinfo ENOTFOUND ac-xyj8blf-shard-00-00.yxvl5rv.mongodb.net {"service":"gps-tracker","reason":{"type":"ReplicaSetNoPrimary","servers":{},"stale":false,"compatible":true,"heartbeatFrequencyMS":10000,"localThresholdMS":15,"setName":"atlas-8081lf-shard-0","maxElectionId":"7fffffff0000000000000472","maxSetVersion":100,"commonWireVersion":0,"logicalSessionTimeoutMinutes":null}}
+MongoServerSelectionError: getaddrinfo ENOTFOUND ac-xyj8blf-shard-00-00.yxvl5rv.mongodb.net
+    at Timeout._onTimeout (C:\Users\gaurav sharma\OneDrive\Desktop\Gps\backend\gps-node\node_modules\mongodb\lib\sdam\topology.js:278:38)
+    at listOnTimeout (node:internal/timers:588:17)
+    at process.processTimers (node:internal/timers:523:7)
+2026-01-26 21:23:00 [ERROR]: Database save error: getaddrinfo ENOTFOUND ac-xyj8blf-shard-00-00.yxvl5rv.mongodb.net {"service":"gps-tracker","reason":{"type":"ReplicaSetNoPrimary","servers":{},"stale":false,"compatible":true,"heartbeatFrequencyMS":10000,"localThresholdMS":15,"setName":"atlas-8081lf-shard-0","maxElectionId":"7fffffff0000000000000472","maxSetVersion":100,"commonWireVersion":0,"logicalSessionTimeoutMinutes":null}}
+MongoServerSelectionError: getaddrinfo ENOTFOUND ac-xyj8blf-shard-00-00.yxvl5rv.mongodb.net
+    at Timeout._onTimeout (C:\Users\gaurav sharma\OneDrive\Desktop\Gps\backend\gps-node\node_modules\mongodb\lib\sdam\topology.js:278:38)
+    at listOnTimeout (node:internal/timers:588:17)
+    at process.processTimers (node:internal/timers:523:7)
+2026-01-26 21:23:10 [ERROR]: Database save error: getaddrinfo ENOTFOUND ac-xyj8blf-shard-00-00.yxvl5rv.mongodb.net {"service":"gps-tracker","reason":{"type":"ReplicaSetNoPrimary","servers":{},"stale":false,"compatible":true,"heartbeatFrequencyMS":10000,"localThresholdMS":15,"setName":"atlas-8081lf-shard-0","maxElectionId":"7fffffff0000000000000472","maxSetVersion":100,"commonWireVersion":0,"logicalSessionTimeoutMinutes":null}}
+MongoServerSelectionError: getaddrinfo ENOTFOUND ac-xyj8blf-shard-00-00.yxvl5rv.mongodb.net
+    at Timeout._onTimeout (C:\Users\gaurav sharma\OneDrive\Desktop\Gps\backend\gps-node\node_modules\mongodb\lib\sdam\topology.js:278:38)
+    at listOnTimeout (node:internal/timers:588:17)
+    at process.processTimers (node:internal/timers:523:7)
+2026-01-26 21:23:10 [ERROR]: Consumed more than available, clearing buffer {"service":"gps-tracker","connectionId":"::1:60667","consumed":37,"available":0}
+2026-01-26 21:23:20 [ERROR]: Database save error: getaddrinfo ENOTFOUND ac-xyj8blf-shard-00-00.yxvl5rv.mongodb.net {"service":"gps-tracker","reason":{"type":"ReplicaSetNoPrimary","servers":{},"stale":false,"compatible":true,"heartbeatFrequencyMS":10000,"localThresholdMS":15,"setName":"atlas-8081lf-shard-0","maxElectionId":"7fffffff0000000000000472","maxSetVersion":100,"commonWireVersion":0,"logicalSessionTimeoutMinutes":null}}
+MongoServerSelectionError: getaddrinfo ENOTFOUND ac-xyj8blf-shard-00-00.yxvl5rv.mongodb.net
+    at Timeout._onTimeout (C:\Users\gaurav sharma\OneDrive\Desktop\Gps\backend\gps-node\node_modules\mongodb\lib\sdam\topology.js:278:38)
+    at listOnTimeout (node:internal/timers:588:17)
+    at process.processTimers (node:internal/timers:523:7)
+2026-01-26 21:23:30 [ERROR]: Database save error: getaddrinfo ENOTFOUND ac-xyj8blf-shard-00-00.yxvl5rv.mongodb.net {"service":"gps-tracker","reason":{"type":"ReplicaSetNoPrimary","servers":{},"stale":false,"compatible":true,"heartbeatFrequencyMS":10000,"localThresholdMS":15,"setName":"atlas-8081lf-shard-0","maxElectionId":"7fffffff0000000000000472","maxSetVersion":100,"commonWireVersion":0,"logicalSessionTimeoutMinutes":null}}
+MongoServerSelectionError: getaddrinfo ENOTFOUND ac-xyj8blf-shard-00-00.yxvl5rv.mongodb.net
+    at Timeout._onTimeout (C:\Users\gaurav sharma\OneDrive\Desktop\Gps\backend\gps-node\node_modules\mongodb\lib\sdam\topology.js:278:38)
+    at listOnTimeout (node:internal/timers:588:17)
+    at process.processTimers (node:internal/timers:523:7)
+2026-01-26 21:23:40 [ERROR]: Consumed more than available, clearing buffer {"service":"gps-tracker","connectionId":"::1:60667","consumed":13,"available":6}
+2026-01-26 21:23:41 [ERROR]: Consumed more than available, clearing buffer {"service":"gps-tracker","connectionId":"::1:60667","consumed":37,"available":0}
+2026-01-26 21:23:41 [ERROR]: Consumed more than available, clearing buffer {"service":"gps-tracker","connectionId":"::1:60667","consumed":37,"available":0}
+2026-01-26 21:23:41 [ERROR]: Consumed more than available, clearing buffer {"service":"gps-tracker","connectionId":"::1:60667","consumed":37,"available":0}
+2026-01-26 21:23:42 [ERROR]: Consumed more than available, clearing buffer {"service":"gps-tracker","connectionId":"::1:60667","consumed":37,"available":0}
+2026-01-26 21:23:43 [ERROR]: Consumed more than available, clearing buffer {"service":"gps-tracker","connectionId":"::1:60667","consumed":37,"available":0}
+2026-01-26 21:57:46 [ERROR]: Database save error: getaddrinfo ENOTFOUND ac-xyj8blf-shard-00-00.yxvl5rv.mongodb.net {"service":"gps-tracker","reason":{"type":"ReplicaSetNoPrimary","servers":{},"stale":false,"compatible":true,"heartbeatFrequencyMS":10000,"localThresholdMS":15,"setName":"atlas-8081lf-shard-0","maxElectionId":"7fffffff0000000000000472","maxSetVersion":100,"commonWireVersion":0,"logicalSessionTimeoutMinutes":null}}
+MongoServerSelectionError: getaddrinfo ENOTFOUND ac-xyj8blf-shard-00-00.yxvl5rv.mongodb.net
+    at Timeout._onTimeout (C:\Users\gaurav sharma\OneDrive\Desktop\Gps\backend\gps-node\node_modules\mongodb\lib\sdam\topology.js:278:38)
+    at listOnTimeout (node:internal/timers:588:17)
+    at process.processTimers (node:internal/timers:523:7)
+2026-01-26 21:57:46 [ERROR]: Database save error: getaddrinfo ENOTFOUND ac-xyj8blf-shard-00-00.yxvl5rv.mongodb.net {"service":"gps-tracker","reason":{"type":"ReplicaSetNoPrimary","servers":{},"stale":false,"compatible":true,"heartbeatFrequencyMS":10000,"localThresholdMS":15,"setName":"atlas-8081lf-shard-0","maxElectionId":"7fffffff0000000000000472","maxSetVersion":100,"commonWireVersion":0,"logicalSessionTimeoutMinutes":null}}
+MongoServerSelectionError: getaddrinfo ENOTFOUND ac-xyj8blf-shard-00-00.yxvl5rv.mongodb.net
+    at Timeout._onTimeout (C:\Users\gaurav sharma\OneDrive\Desktop\Gps\backend\gps-node\node_modules\mongodb\lib\sdam\topology.js:278:38)
+    at listOnTimeout (node:internal/timers:588:17)
+    at process.processTimers (node:internal/timers:523:7)
+2026-01-26 21:57:51 [ERROR]: Database save error: getaddrinfo ENOTFOUND ac-xyj8blf-shard-00-00.yxvl5rv.mongodb.net {"service":"gps-tracker","reason":{"type":"ReplicaSetNoPrimary","servers":{},"stale":false,"compatible":true,"heartbeatFrequencyMS":10000,"localThresholdMS":15,"setName":"atlas-8081lf-shard-0","maxElectionId":"7fffffff0000000000000472","maxSetVersion":100,"commonWireVersion":0,"logicalSessionTimeoutMinutes":null}}
+MongoServerSelectionError: getaddrinfo ENOTFOUND ac-xyj8blf-shard-00-00.yxvl5rv.mongodb.net
+    at Timeout._onTimeout (C:\Users\gaurav sharma\OneDrive\Desktop\Gps\backend\gps-node\node_modules\mongodb\lib\sdam\topology.js:278:38)
+    at listOnTimeout (node:internal/timers:588:17)
+    at process.processTimers (node:internal/timers:523:7)
+2026-01-26 21:57:56 [ERROR]: Database save error: getaddrinfo ENOTFOUND ac-xyj8blf-shard-00-00.yxvl5rv.mongodb.net {"service":"gps-tracker","reason":{"type":"ReplicaSetNoPrimary","servers":{},"stale":false,"compatible":true,"heartbeatFrequencyMS":10000,"localThresholdMS":15,"setName":"atlas-8081lf-shard-0","maxElectionId":"7fffffff0000000000000472","maxSetVersion":100,"commonWireVersion":0,"logicalSessionTimeoutMinutes":null}}
+MongoServerSelectionError: getaddrinfo ENOTFOUND ac-xyj8blf-shard-00-00.yxvl5rv.mongodb.net
+    at Timeout._onTimeout (C:\Users\gaurav sharma\OneDrive\Desktop\Gps\backend\gps-node\node_modules\mongodb\lib\sdam\topology.js:278:38)
+    at listOnTimeout (node:internal/timers:588:17)
+    at process.processTimers (node:internal/timers:523:7)
+2026-02-02 00:09:57 [ERROR]: GPS socket error: read ECONNRESET {"service":"gps-tracker","errno":-4077,"code":"ECONNRESET","syscall":"read"}
+Error: read ECONNRESET
+    at TCP.onStreamRead (node:internal/stream_base_commons:216:20)
+2026-02-02 00:14:06 [ERROR]: GPS socket error: read ECONNRESET {"service":"gps-tracker","errno":-4077,"code":"ECONNRESET","syscall":"read"}
+Error: read ECONNRESET
+    at TCP.onStreamRead (node:internal/stream_base_commons:216:20)
+2026-02-02 00:15:14 [ERROR]: GPS socket error: read ECONNRESET {"service":"gps-tracker","errno":-4077,"code":"ECONNRESET","syscall":"read"}
+Error: read ECONNRESET
+    at TCP.onStreamRead (node:internal/stream_base_commons:216:20)
+2026-02-02 00:18:26 [ERROR]: GPS socket error: read ECONNRESET {"service":"gps-tracker","errno":-4077,"code":"ECONNRESET","syscall":"read"}
+Error: read ECONNRESET
+    at TCP.onStreamRead (node:internal/stream_base_commons:216:20)
+2026-02-02 00:18:56 [ERROR]: GPS socket error: read ECONNRESET {"service":"gps-tracker","errno":-4077,"code":"ECONNRESET","syscall":"read"}
+Error: read ECONNRESET
+    at TCP.onStreamRead (node:internal/stream_base_commons:216:20)
+2026-02-02 00:21:11 [ERROR]: GPS socket error: read ECONNRESET {"service":"gps-tracker","errno":-4077,"code":"ECONNRESET","syscall":"read"}
+Error: read ECONNRESET
+    at TCP.onStreamRead (node:internal/stream_base_commons:216:20)
+2026-02-02 00:24:11 [ERROR]: GPS socket error: read ECONNRESET {"service":"gps-tracker","errno":-4077,"code":"ECONNRESET","syscall":"read"}
+Error: read ECONNRESET
+    at TCP.onStreamRead (node:internal/stream_base_commons:216:20)
+2026-02-02 00:29:54 [ERROR]: GPS socket error: read ECONNRESET {"service":"gps-tracker","errno":-4077,"code":"ECONNRESET","syscall":"read"}
+Error: read ECONNRESET
+    at TCP.onStreamRead (node:internal/stream_base_commons:216:20)
+2026-02-02 00:30:26 [ERROR]: GPS socket error: read ECONNRESET {"service":"gps-tracker","errno":-4077,"code":"ECONNRESET","syscall":"read"}
+Error: read ECONNRESET
+    at TCP.onStreamRead (node:internal/stream_base_commons:216:20)
+2026-02-02 00:45:37 [ERROR]: GPS socket error: read ECONNRESET {"service":"gps-tracker","errno":-4077,"code":"ECONNRESET","syscall":"read"}
+Error: read ECONNRESET
+    at TCP.onStreamRead (node:internal/stream_base_commons:216:20)
+2026-02-02 00:49:12 [ERROR]: GPS socket error: read ECONNRESET {"service":"gps-tracker","errno":-4077,"code":"ECONNRESET","syscall":"read"}
+Error: read ECONNRESET
+    at TCP.onStreamRead (node:internal/stream_base_commons:216:20)
+2026-02-02 00:51:59 [ERROR]: GPS socket error: read ECONNRESET {"service":"gps-tracker","errno":-4077,"code":"ECONNRESET","syscall":"read"}
+Error: read ECONNRESET
+    at TCP.onStreamRead (node:internal/stream_base_commons:216:20)
+2026-02-02 00:59:34 [ERROR]: GPS socket error: read ECONNRESET {"service":"gps-tracker","errno":-4077,"code":"ECONNRESET","syscall":"read"}
+Error: read ECONNRESET
+    at TCP.onStreamRead (node:internal/stream_base_commons:216:20)

@@ -239,9 +239,8 @@ class GT06ProtocolEncoder {
         pos += 2;
       }
 
-      // Message index (sequence number)
-      const currentIndex = this.messageIndex++;
-      if (this.messageIndex > 0xFFFF) this.messageIndex = 1; // Reset after max
+      // Message index (Traccar uses 0 for command frames)
+      const currentIndex = 0;
       buffer.writeUInt16BE(currentIndex, pos);
       pos += 2;
 
@@ -287,9 +286,8 @@ class GT06ProtocolEncoder {
         pos += data.length;
       }
 
-      // Message index
-      const currentIndex = this.messageIndex++;
-      if (this.messageIndex > 0xFFFF) this.messageIndex = 1;
+      // Message index (Traccar uses 0 for command frames)
+      const currentIndex = 0;
       buffer.writeUInt16BE(currentIndex, pos);
       pos += 2;
 
@@ -337,12 +335,12 @@ class GT06ProtocolEncoder {
     const now = new Date();
     const timeData = Buffer.alloc(6);
     
-    timeData.writeUInt8(now.getFullYear() - 2000, 0);
-    timeData.writeUInt8(now.getMonth() + 1, 1);
-    timeData.writeUInt8(now.getDate(), 2);
-    timeData.writeUInt8(now.getHours(), 3);
-    timeData.writeUInt8(now.getMinutes(), 4);
-    timeData.writeUInt8(now.getSeconds(), 5);
+    timeData.writeUInt8(now.getUTCFullYear() - 2000, 0);
+    timeData.writeUInt8(now.getUTCMonth() + 1, 1);
+    timeData.writeUInt8(now.getUTCDate(), 2);
+    timeData.writeUInt8(now.getUTCHours(), 3);
+    timeData.writeUInt8(now.getUTCMinutes(), 4);
+    timeData.writeUInt8(now.getUTCSeconds(), 5);
 
     return this.encodeBinaryCommand(0x8A, timeData);
   }
@@ -354,14 +352,14 @@ class GT06ProtocolEncoder {
     const response = `${address}##`;
     const responseBuffer = Buffer.from(response, 'ascii');
     
-    const totalLength = 4 + 1 + 4 + responseBuffer.length + 2 + 2 + 2;
+    const totalLength = 4 + 1 + 1 + 4 + responseBuffer.length + 2 + 2 + 2;
     const buffer = Buffer.alloc(totalLength);
     let pos = 0;
 
     // Extended header
     buffer.writeUInt16BE(0x7979, pos);
     pos += 2;
-    buffer.writeUInt16BE(5 + responseBuffer.length, pos);
+    buffer.writeUInt16BE(10 + responseBuffer.length, pos);
     pos += 2;
 
     // Message type
@@ -379,13 +377,12 @@ class GT06ProtocolEncoder {
     pos += responseBuffer.length;
 
     // Index
-    const currentIndex = this.messageIndex++;
-    if (this.messageIndex > 0xFFFF) this.messageIndex = 1;
+    const currentIndex = 0;
     buffer.writeUInt16BE(currentIndex, pos);
     pos += 2;
 
     // CRC (extended format uses offset 4)
-    const crc = this.calculateCRC16(buffer.slice(4, pos));
+    const crc = this.calculateCRC16(buffer.slice(2, pos));
     buffer.writeUInt16BE(crc, pos);
     pos += 2;
 

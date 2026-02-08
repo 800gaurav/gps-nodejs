@@ -25,10 +25,16 @@ router.get('/', async (req, res) => {
       lastSeen: device.lastSeen || device.updatedAt
     }));
     
-    res.json(transformedDevices);
+    res.json({
+      success: true,
+      devices: transformedDevices
+    });
   } catch (error) {
     console.error('Error fetching devices:', error);
-    res.status(500).json({ error: 'Failed to fetch devices' });
+    res.status(500).json({ 
+      success: false,
+      error: 'Failed to fetch devices' 
+    });
   }
 });
 
@@ -63,13 +69,17 @@ router.post('/', async (req, res) => {
     const missing = validateRequired(['deviceId', 'imei', 'vehicleName'], req.body);
     if (missing.length > 0) {
       return res.status(400).json({ 
+        success: false,
         error: `Missing required fields: ${missing.join(', ')}` 
       });
     }
 
     const { imei } = req.body;
     if (imei.length !== 15) {
-      return res.status(400).json({ error: 'IMEI must be 15 digits' });
+      return res.status(400).json({ 
+        success: false,
+        error: 'IMEI must be 15 digits' 
+      });
     }
 
     const deviceData = req.body;
@@ -92,6 +102,7 @@ router.post('/', async (req, res) => {
 
     if (existingDevice) {
       return res.status(400).json({ 
+        success: false,
         error: 'Device already exists',
         field: existingDevice.deviceId === deviceData.deviceId ? 'deviceId' : 'imei'
       });
@@ -103,9 +114,12 @@ router.post('/', async (req, res) => {
     console.log('✅ Device created successfully:', device.deviceId);
 
     res.status(201).json({
-      ...device.toJSON(),
-      isActive: true,
-      engineLocked: false
+      success: true,
+      device: {
+        ...device.toJSON(),
+        isActive: true,
+        engineLocked: false
+      }
     });
   } catch (error) {
     console.error('Error creating device:', error);
@@ -113,12 +127,16 @@ router.post('/', async (req, res) => {
     if (error.code === 11000) {
       const field = Object.keys(error.keyPattern)[0];
       return res.status(400).json({ 
+        success: false,
         error: `${field} already exists`,
         field 
       });
     }
     
-    res.status(500).json({ error: 'Failed to create device' });
+    res.status(500).json({ 
+      success: false,
+      error: 'Failed to create device' 
+    });
   }
 });
 
@@ -233,27 +251,47 @@ router.put('/:deviceId', async (req, res) => {
 });
 
 // Delete device
-router.delete('/:deviceId', async (req, res) => {
+router.delete('/:id', async (req, res) => {
   try {
-    const { deviceId } = req.params;
-    if (!deviceId) {
-      return res.status(400).json({ error: 'Device ID is required' });
+    const { id } = req.params;
+    if (!id) {
+      return res.status(400).json({ 
+        success: false,
+        error: 'Device ID is required' 
+      });
     }
 
-    const device = await Device.findOneAndDelete({ deviceId });
+    // Try to find by MongoDB _id first, then by deviceId
+    let device;
+    if (id.match(/^[0-9a-fA-F]{24}$/)) {
+      // It's a MongoDB ObjectId
+      device = await Device.findByIdAndDelete(id);
+    } else {
+      // It's a deviceId
+      device = await Device.findOneAndDelete({ deviceId: id });
+    }
     
     if (!device) {
-      return res.status(404).json({ error: 'Device not found' });
+      return res.status(404).json({ 
+        success: false,
+        error: 'Device not found' 
+      });
     }
 
     // Delete related location data
-    await Location.deleteMany({ deviceId });
+    await Location.deleteMany({ deviceId: device.deviceId });
 
-    console.log('🗑️ Device deleted:', deviceId);
-    res.json({ message: 'Device deleted successfully' });
+    console.log('🗑️ Device deleted:', device.deviceId);
+    res.json({ 
+      success: true,
+      message: 'Device deleted successfully' 
+    });
   } catch (error) {
     console.error('Error deleting device:', error);
-    res.status(500).json({ error: 'Failed to delete device' });
+    res.status(500).json({ 
+      success: false,
+      error: 'Failed to delete device' 
+    });
   }
 });
 
